@@ -25,7 +25,7 @@
   <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 w-full flex-1">
 
     <!-- ================================================================= -->
-    <!-- 0. HALAMAN UTAMA / LANDING PAGE (SEPERTI GAMBAR) -->
+    <!-- 0. HALAMAN UTAMA / LANDING PAGE -->
     <!-- ================================================================= -->
     <div id="viewLanding" class="space-y-6 py-6">
       
@@ -173,9 +173,9 @@
 
 
     <!-- ================================================================= -->
-    <!-- 2. DASHBOARD & LOGIN ANGGOTA -->
+    <!-- 2. PORTAL & BERANDA ANGGOTA (SESUAI RANCANGAN GAMBAR) -->
     <!-- ================================================================= -->
-    <div id="viewAnggota" class="space-y-6 hidden">
+    <div id="viewAnggota" class="space-y-6 hidden max-w-2xl mx-auto">
       
       <!-- FORM LOGIN ANGGOTA PIN 6-DIGIT -->
       <div id="cardLoginAnggota" class="bg-white max-w-md mx-auto p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
@@ -202,88 +202,151 @@
         </div>
       </div>
 
-      <!-- PANEL UTAMA SETELAH LOGIN ANGGOTA -->
-      <div id="panelMainAnggota" class="space-y-6 hidden">
-        <div class="flex justify-between items-center bg-emerald-900 text-white p-4 rounded-xl shadow-md">
+      <!-- RANCANGAN BERANDA ANGGOTA (MATCHES IMAGE SPEC) -->
+      <div id="panelMainAnggota" class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 hidden">
+        
+        <!-- HEADER PROFILE ANGGOTA -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center font-semibold border border-emerald-200">
+              <i data-lucide="user" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 id="memNama" class="text-base font-bold text-slate-900 leading-tight">Halo, Anggota</h3>
+              <p id="memNia" class="text-xs text-slate-500">Nomor anggota: KSP-0001</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="alert('Belum ada notifikasi baru.')" class="p-2 text-slate-600 hover:bg-slate-100 rounded-full transition">
+              <i data-lucide="bell" class="w-5 h-5"></i>
+            </button>
+            <button onclick="logoutAnggota()" title="Keluar" class="p-2 text-rose-600 hover:bg-rose-50 rounded-full transition">
+              <i data-lucide="log-out" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- TOTAL SIMPANAN SAYA (DARK GREEN CARD) -->
+        <div class="bg-emerald-950 text-white p-5 rounded-2xl space-y-4 shadow-sm">
           <div>
-            <p class="text-xs text-emerald-200">Selamat Datang,</p>
-            <h3 id="memNama" class="text-xl font-bold">-</h3>
-            <p id="memNia" class="text-xs text-emerald-300">NIA: -</p>
-          </div>
-          <button onclick="logoutAnggota()" class="bg-emerald-800 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg border border-emerald-600">
-            Keluar
-          </button>
-        </div>
-
-        <!-- SALDO MEMBER -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-            <p class="text-xs font-medium text-slate-500 uppercase">Total Simpanan Saya</p>
-            <h3 id="memSimpanan" class="text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
-          </div>
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-            <p class="text-xs font-medium text-slate-500 uppercase">Sisa Pinjaman Saya</p>
-            <h3 id="memPinjaman" class="text-2xl font-bold text-rose-600 mt-1">Rp 0</h3>
-          </div>
-        </div>
-
-        <!-- TRANSAKSI MANDIRI & SIMULASI -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
-            <h4 class="font-bold text-slate-800 border-b pb-2">Ajukan Pinjaman Baru</h4>
-            <div>
-              <label class="text-xs text-slate-600">Nominal (Rp)</label>
-              <input type="number" id="formPinjamNominal" placeholder="5000000" class="w-full p-2 border rounded-lg text-sm mt-1">
-            </div>
-            <div>
-              <label class="text-xs text-slate-600">Tenor (Bulan)</label>
-              <select id="formPinjamTenor" class="w-full p-2 border rounded-lg text-sm mt-1">
-                <option value="6">6 Bulan</option>
-                <option value="12" selected>12 Bulan</option>
-                <option value="24">24 Bulan</option>
-              </select>
-            </div>
-            <button onclick="submitPengajuanPinjaman()" class="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold">Kirim Pengajuan</button>
+            <p class="text-xs font-medium text-emerald-200/80">Total Simpanan Saya</p>
+            <h2 id="memSimpanan" class="text-2xl md:text-3xl font-bold tracking-tight mt-0.5">Rp 0</h2>
+            <p class="text-[11px] text-emerald-300/70 mt-0.5">Saldo dari seluruh jenis simpanan</p>
           </div>
 
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
-            <h4 class="font-bold text-slate-800 border-b pb-2">Setor Simpanan / Bayar Angsuran</h4>
+          <hr class="border-emerald-800/80">
+
+          <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-xs">
             <div>
-              <label class="text-xs text-slate-600">Jenis Transaksi</label>
-              <select id="formTrxJenis" class="w-full p-2 border rounded-lg text-sm mt-1">
-                <option value="setor_simpanan">Setor Simpanan</option>
-                <option value="bayar_angsuran">Bayar Angsuran</option>
-              </select>
+              <p class="text-emerald-300/70">Simpanan pokok</p>
+              <p id="memSimPokok" class="font-bold text-sm text-white mt-0.5">Rp 500.000</p>
             </div>
             <div>
-              <label class="text-xs text-slate-600">Nominal (Rp)</label>
-              <input type="number" id="formTrxNominal" placeholder="200000" class="w-full p-2 border rounded-lg text-sm mt-1">
+              <p class="text-emerald-300/70">Simpanan wajib</p>
+              <p id="memSimWajib" class="font-bold text-sm text-white mt-0.5">Rp 2.000.000</p>
             </div>
-            <button onclick="submitTransaksi()" class="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold">Proses Transaksi</button>
+            <div>
+              <p class="text-emerald-300/70">Simpanan sukarela</p>
+              <p id="memSimSukarela" class="font-bold text-sm text-white mt-0.5">Rp 5.000.000</p>
+            </div>
           </div>
         </div>
 
-        <!-- KALKULATOR SIMULASI PINJAMAN -->
-        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
-          <h4 class="font-bold text-slate-800 flex items-center gap-2 border-b pb-2">
-            <i data-lucide="calculator" class="w-5 h-5 text-indigo-600"></i> Kalkulator Simulasi Angsuran
+        <!-- PINJAMAN BERJALAN CARD -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-xs font-semibold text-slate-800">Pinjaman berjalan</p>
+              <h3 id="memPinjaman" class="text-xl font-bold text-slate-900 mt-1">Rp 0</h3>
+              <p class="text-[11px] text-slate-500">Sisa pokok pinjaman</p>
+            </div>
+            <span id="badgeStatusPinjam" class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full">
+              Aktif
+            </span>
+          </div>
+
+          <hr class="border-slate-100">
+
+          <div class="flex justify-between items-center text-xs">
+            <div>
+              <p class="text-slate-500">Angsuran berikutnya</p>
+              <p id="memAngsuranNext" class="font-bold text-slate-800 text-sm mt-0.5">Rp 450.000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-slate-500">Jatuh tempo</p>
+              <p id="memJatuhTempo" class="font-bold text-slate-800 text-sm mt-0.5">25 Okt</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- LAYANAN CEPAT (GRID 4 MENU) -->
+        <div class="space-y-3 pt-1">
+          <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Layanan cepat</h4>
+          <div class="grid grid-cols-4 gap-3 text-center">
+            
+            <button onclick="bukaModalForm('Simpanan')" class="bg-slate-50 hover:bg-emerald-50 hover:text-emerald-700 p-3 rounded-xl border border-slate-100 transition flex flex-col items-center gap-1.5 group">
+              <div class="p-2 bg-white rounded-lg shadow-xs group-hover:bg-emerald-100 text-slate-700 group-hover:text-emerald-700">
+                <i data-lucide="wallet" class="w-5 h-5"></i>
+              </div>
+              <span class="text-xs font-medium text-slate-700 group-hover:text-emerald-800">Simpanan</span>
+            </button>
+
+            <button onclick="bukaModalForm('Angsuran')" class="bg-slate-50 hover:bg-emerald-50 hover:text-emerald-700 p-3 rounded-xl border border-slate-100 transition flex flex-col items-center gap-1.5 group">
+              <div class="p-2 bg-white rounded-lg shadow-xs group-hover:bg-emerald-100 text-slate-700 group-hover:text-emerald-700">
+                <i data-lucide="calendar-check" class="w-5 h-5"></i>
+              </div>
+              <span class="text-xs font-medium text-slate-700 group-hover:text-emerald-800">Angsuran</span>
+            </button>
+
+            <button onclick="bukaModalForm('Pengajuan')" class="bg-slate-50 hover:bg-emerald-50 hover:text-emerald-700 p-3 rounded-xl border border-slate-100 transition flex flex-col items-center gap-1.5 group">
+              <div class="p-2 bg-white rounded-lg shadow-xs group-hover:bg-emerald-100 text-slate-700 group-hover:text-emerald-700">
+                <i data-lucide="file-text" class="w-5 h-5"></i>
+              </div>
+              <span class="text-xs font-medium text-slate-700 group-hover:text-emerald-800">Pengajuan</span>
+            </button>
+
+            <button onclick="bukaModalForm('Bantuan')" class="bg-slate-50 hover:bg-emerald-50 hover:text-emerald-700 p-3 rounded-xl border border-slate-100 transition flex flex-col items-center gap-1.5 group">
+              <div class="p-2 bg-white rounded-lg shadow-xs group-hover:bg-emerald-100 text-slate-700 group-hover:text-emerald-700">
+                <i data-lucide="headphones" class="w-5 h-5"></i>
+              </div>
+              <span class="text-xs font-medium text-slate-700 group-hover:text-emerald-800">Bantuan</span>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- INFORMASI KOPERASI BANNER -->
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start gap-3">
+          <i data-lucide="info" class="w-5 h-5 text-slate-600 shrink-0 mt-0.5"></i>
+          <div class="space-y-1">
+            <h5 class="text-xs font-bold text-slate-800">Informasi koperasi</h5>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Baca pengumuman terbaru dan periksa status permohonan Anda melalui menu Notifikasi.
+            </p>
+          </div>
+        </div>
+
+        <!-- KALKULATOR SIMULASI PINJAMAN (OPTIONAL TOGGLE) -->
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+          <h4 class="font-bold text-slate-800 flex items-center gap-2 border-b pb-2 text-xs">
+            <i data-lucide="calculator" class="w-4 h-4 text-indigo-600"></i> Kalkulator Simulasi Angsuran
           </h4>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label class="text-xs text-slate-600">Rencana Plafon (Rp)</label>
-              <input type="number" id="simPlafon" placeholder="10000000" class="w-full p-2 border rounded-lg text-sm mt-1" oninput="hitungSimulasi()">
+              <label class="text-[11px] text-slate-600">Plafon Pinjaman (Rp)</label>
+              <input type="number" id="simPlafon" placeholder="10000000" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white" oninput="hitungSimulasi()">
             </div>
             <div>
-              <label class="text-xs text-slate-600">Tenor (Bulan)</label>
-              <select id="simTenor" class="w-full p-2 border rounded-lg text-sm mt-1" onchange="hitungSimulasi()">
+              <label class="text-[11px] text-slate-600">Tenor (Bulan)</label>
+              <select id="simTenor" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white" onchange="hitungSimulasi()">
                 <option value="6">6 Bulan</option>
                 <option value="12" selected>12 Bulan</option>
                 <option value="24">24 Bulan</option>
               </select>
             </div>
             <div>
-              <label class="text-xs text-slate-600">Estimasi Cicilan / Bulan</label>
-              <div id="hasilSimulasi" class="p-2 bg-slate-50 border rounded-lg text-sm font-bold text-indigo-600 mt-1">Rp 0</div>
+              <label class="text-[11px] text-slate-600">Estimasi / Bulan</label>
+              <div id="hasilSimulasi" class="p-2 bg-white border rounded-lg text-xs font-bold text-emerald-700 mt-1">Rp 0</div>
             </div>
           </div>
         </div>
@@ -292,6 +355,58 @@
 
     </div>
 
+  </div>
+
+  <!-- MODAL ACTION DARI LAYANAN CEPAT -->
+  <div id="modalLayanan" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 id="modalTitle" class="font-bold text-slate-800">Form Transaksi</h3>
+        <button onclick="tutupModalForm()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- BODY MODAL SIMPANAN & ANGSURAN -->
+      <div id="modalContentTrx" class="space-y-3">
+        <div>
+          <label class="text-xs font-medium text-slate-600">Nominal (Rp)</label>
+          <input type="number" id="modalNominal" placeholder="200000" class="w-full p-2 border rounded-lg text-sm mt-1">
+        </div>
+        <button id="btnSubmitModal" onclick="prosesModalAction()" class="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700">
+          Proses
+        </button>
+      </div>
+
+      <!-- BODY MODAL PENGAJUAN PINJAMAN -->
+      <div id="modalContentPinjam" class="space-y-3 hidden">
+        <div>
+          <label class="text-xs font-medium text-slate-600">Nominal Pinjaman (Rp)</label>
+          <input type="number" id="modalPinjamNominal" placeholder="5000000" class="w-full p-2 border rounded-lg text-sm mt-1">
+        </div>
+        <div>
+          <label class="text-xs font-medium text-slate-600">Tenor (Bulan)</label>
+          <select id="modalPinjamTenor" class="w-full p-2 border rounded-lg text-sm mt-1">
+            <option value="6">6 Bulan</option>
+            <option value="12" selected>12 Bulan</option>
+            <option value="24">24 Bulan</option>
+          </select>
+        </div>
+        <button onclick="submitModalPinjaman()" class="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">
+          Kirim Pengajuan
+        </button>
+      </div>
+
+      <!-- BODY MODAL BANTUAN -->
+      <div id="modalContentBantuan" class="space-y-3 hidden text-center py-2">
+        <i data-lucide="headphones" class="w-10 h-10 text-emerald-600 mx-auto"></i>
+        <h4 class="font-bold text-sm text-slate-800">Layanan Customer Service KSP</h4>
+        <p class="text-xs text-slate-600">Silakan hubungi pengurus atau sekretariat KSP Kopkar Launtanama melalui Layanan WhatsApp di bawah ini.</p>
+        <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 text-white text-xs px-4 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition">
+          <i data-lucide="message-square" class="w-4 h-4"></i> Hubungi CS via WhatsApp
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- FOOTER -->
@@ -303,6 +418,7 @@
     lucide.createIcons();
 
     let currentAnggota = null;
+    let currentLayananAction = '';
     
     // URL Web App Google Apps Script Anda
     const apiUrl = "https://script.google.com/macros/s/AKfycbzKbjVFd125WCxnlRB_puk4JW0GgizhAoer7YNUpcxXVVK2RskYJYjcEXbTviT1FxM6/exec";
@@ -331,6 +447,29 @@
       document.getElementById('viewPengurus').classList.add('hidden');
       document.getElementById('viewAnggota').classList.add('hidden');
       document.getElementById('headerNav').classList.add('hidden');
+    }
+
+    // Modal Form Layanan Cepat
+    function bukaModalForm(jenis) {
+      currentLayananAction = jenis;
+      document.getElementById('modalLayanan').classList.remove('hidden');
+      document.getElementById('modalTitle').innerText = "Layanan " + jenis;
+
+      document.getElementById('modalContentTrx').classList.add('hidden');
+      document.getElementById('modalContentPinjam').classList.add('hidden');
+      document.getElementById('modalContentBantuan').classList.add('hidden');
+
+      if (jenis === 'Simpanan' || jenis === 'Angsuran') {
+        document.getElementById('modalContentTrx').classList.remove('hidden');
+      } else if (jenis === 'Pengajuan') {
+        document.getElementById('modalContentPinjam').classList.remove('hidden');
+      } else if (jenis === 'Bantuan') {
+        document.getElementById('modalContentBantuan').classList.remove('hidden');
+      }
+    }
+
+    function tutupModalForm() {
+      document.getElementById('modalLayanan').classList.add('hidden');
     }
 
     // Fungsi Navigasi Tab Admin / Pengurus
@@ -429,10 +568,16 @@
 
         if (data.status) {
           currentAnggota = data.data;
-          document.getElementById('memNama').innerText = currentAnggota.nama;
-          document.getElementById('memNia').innerText = "NIA: " + currentAnggota.nia;
+          document.getElementById('memNama').innerText = "Halo, " + currentAnggota.nama;
+          document.getElementById('memNia').innerText = "Nomor anggota: " + currentAnggota.nia;
           document.getElementById('memSimpanan').innerText = formatRupiah(currentAnggota.simpanan);
           document.getElementById('memPinjaman').innerText = formatRupiah(currentAnggota.pinjaman);
+
+          // Rincian Dummy Komponen Simpanan
+          const simpananTotal = currentAnggota.simpanan || 0;
+          document.getElementById('memSimPokok').innerText = formatRupiah(500000);
+          document.getElementById('memSimWajib').innerText = formatRupiah(2000000);
+          document.getElementById('memSimSukarela').innerText = formatRupiah(Math.max(0, simpananTotal - 2500000));
 
           document.getElementById('cardLoginAnggota').classList.add('hidden');
           document.getElementById('panelMainAnggota').classList.remove('hidden');
@@ -450,40 +595,23 @@
       document.getElementById('panelMainAnggota').classList.add('hidden');
     }
 
-    async function submitPengajuanPinjaman() {
-      const jumlah = document.getElementById('formPinjamNominal').value;
-      const tenor = document.getElementById('formPinjamTenor').value;
-
-      if (!jumlah) return alert("Masukkan nominal!");
-
-      try {
-        const res = await fetch(apiUrl, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'aju_pinjaman', nia: currentAnggota.nia, jumlah: Number(jumlah), tenor: Number(tenor) })
-        });
-        const data = await res.json();
-        alert(data.message);
-        document.getElementById('formPinjamNominal').value = '';
-      } catch (err) {
-        alert("Error: " + err.message);
-      }
-    }
-
-    async function submitTransaksi() {
-      const jenis = document.getElementById('formTrxJenis').value;
-      const nominal = document.getElementById('formTrxNominal').value;
-
+    async function prosesModalAction() {
+      const nominal = document.getElementById('modalNominal').value;
       if (!nominal) return alert("Masukkan nominal!");
 
+      const jenisAction = currentLayananAction === 'Simpanan' ? 'setor_simpanan' : 'bayar_angsuran';
+
       try {
         const res = await fetch(apiUrl, {
           method: 'POST',
-          body: JSON.stringify({ action: jenis, nia: currentAnggota.nia, nominal: Number(nominal) })
+          body: JSON.stringify({ action: jenisAction, nia: currentAnggota.nia, nominal: Number(nominal) })
         });
         const data = await res.json();
         alert(data.message);
-        document.getElementById('formTrxNominal').value = '';
-        
+        document.getElementById('modalNominal').value = '';
+        tutupModalForm();
+
+        // Refresh Saldo
         const resSaldo = await fetch(`${apiUrl}?action=cek_saldo&nia=${currentAnggota.nia}`);
         const dataSaldo = await resSaldo.json();
         if (dataSaldo.status) {
@@ -495,13 +623,33 @@
       }
     }
 
+    async function submitModalPinjaman() {
+      const jumlah = document.getElementById('modalPinjamNominal').value;
+      const tenor = document.getElementById('modalPinjamTenor').value;
+
+      if (!jumlah) return alert("Masukkan nominal!");
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'aju_pinjaman', nia: currentAnggota.nia, jumlah: Number(jumlah), tenor: Number(tenor) })
+        });
+        const data = await res.json();
+        alert(data.message);
+        document.getElementById('modalPinjamNominal').value = '';
+        tutupModalForm();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
     function hitungSimulasi() {
       const plafon = Number(document.getElementById('simPlafon').value) || 0;
       const tenor = Number(document.getElementById('simTenor').value) || 12;
       
       const jasaBungaPerBulan = plafon * 0.01;
       const pokokPerBulan = plafon / tenor;
-      const totalCicilanPerBulan = pokokPerBulan + jasaBungaPerBuran;
+      const totalCicilanPerBulan = pokokPerBulan + jasaBungaPerBulan;
       
       document.getElementById('hasilSimulasi').innerText = formatRupiah(totalCicilanPerBulan);
     }
