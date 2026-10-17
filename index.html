@@ -38,7 +38,6 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-        
         <div onclick="pilihPortal('pengurus')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
           <div class="space-y-3">
             <div class="inline-flex p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
@@ -46,7 +45,7 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Pengurus</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
-              Monitoring 4 jenis pinjaman, persetujuan pengajuan, import data simpanan & pinjaman serentak, serta ekspor rekapitulasi.
+              Monitoring 4 jenis pinjaman, persetujuan pengajuan, verifikasi simpanan kategori Management/Staff/Pelaksana, & impor/ekspor data.
             </p>
           </div>
           <div>
@@ -72,17 +71,16 @@
             </span>
           </div>
         </div>
-
       </div>
     </div>
 
 
     <!-- ================================================================= -->
-    <!-- 1. DASHBOARD PENGURUS (PORTAL PENGURUS LENGKAP) -->
+    <!-- 1. DASHBOARD PENGURUS -->
     <!-- ================================================================= -->
     <div id="viewPengurus" class="space-y-6 hidden">
       
-      <!-- MENU TAB & TOMBOL AKSI PENGURUS UTAMAKAN KELENGKAPAN FITUR -->
+      <!-- MENU TAB & TOMBOL AKSI PENGURUS -->
       <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3 justify-between items-center">
         <div class="flex flex-wrap gap-2">
           <button onclick="switchTabAdmin('tabKpi')" id="btnTabKpi" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2">
@@ -144,10 +142,9 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN (DENGAN RENTANG TANGGAL, VERIFIKASI BATCH & UPLOAD CEPAT) -->
+      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN -->
       <div id="contentTabApproval" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-3">
-          
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex flex-wrap justify-between items-center gap-3">
             <div class="flex items-center gap-2">
               <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
@@ -155,7 +152,6 @@
               </h3>
               <span id="badgeCountLabel" class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded-full font-bold">1 Belum Disetujui</span>
             </div>
-
             <div class="flex flex-wrap items-center gap-2 text-xs">
               <div class="flex items-center gap-1 bg-white p-1 border rounded-lg">
                 <span class="text-slate-500 px-1">Dari:</span>
@@ -163,14 +159,13 @@
                 <span class="text-slate-500 px-1">s/d:</span>
                 <input type="date" id="filterTglAkhir" class="focus:outline-none" onchange="renderTablePending()">
               </div>
-              <label class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-blue-700 transition cursor-pointer flex items-center gap-1" title="Upload CSV No Reg & Nama untuk setujui kilat">
+              <label class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-blue-700 transition cursor-pointer flex items-center gap-1">
                 <i data-lucide="upload" class="w-3.5 h-3.5"></i> Upload Setujui Cepat
                 <input type="file" accept=".csv" class="hidden" onchange="importPersetujuanCepat(event)">
               </label>
             </div>
           </div>
 
-          <!-- PANEL AKSI BATCH TERPILIH -->
           <div class="px-4 py-2 bg-indigo-50/70 border-b border-indigo-100 flex flex-wrap justify-between items-center text-xs">
             <div class="flex items-center gap-2">
               <span class="font-semibold text-indigo-900">Aksi Massal Terpilih:</span>
@@ -178,7 +173,6 @@
                 <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Setujui Terpilih & Jadwal Cair
               </button>
             </div>
-            <span class="text-slate-500 italic">*Pilih centang 'Pilih Semua' dan hilangkan centang bila ada anggota yang tidak disetujui.</span>
           </div>
 
           <div class="overflow-x-auto px-4 pb-4">
@@ -193,27 +187,25 @@
                   <th class="p-3">Plafon</th>
                   <th class="p-3">Tenor</th>
                   <th class="p-3">Rencana Cair</th>
-                  <th class="p-3 text-center">Aksi (Setuju / Edit Tolak)</th>
+                  <th class="p-3 text-center">Aksi</th>
                 </tr>
               </thead>
-              <tbody id="tablePendingLoans" class="divide-y divide-slate-100">
-                <!-- Dinamis JS -->
-              </tbody>
+              <tbody id="tablePendingLoans" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- KONTEN TAB 3: DATA SIMPANAN (DENGAN IMPORT SIMPANAN & VERIFIKASI RENTANG BULAN) -->
+      <!-- KONTEN TAB 3: DATA SIMPANAN ANGGOTA (DENGAN FILTER KATEGORI MANAGEMENT, CENTANG & RENTANG BULAN TAHUN) -->
       <div id="contentTabSimpanan" class="space-y-6 hidden">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
           
           <div class="flex flex-wrap justify-between items-center gap-4 border-b pb-4">
             <div>
               <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                <i data-lucide="wallet" class="w-5 h-5 text-emerald-600"></i> Pengelolaan Data Simpanan Anggota Realtime
+                <i data-lucide="wallet" class="w-5 h-5 text-emerald-600"></i> Pengelolaan & Verifikasi Simpanan Anggota
               </h3>
-              <p class="text-xs text-slate-500">Import file simpanan atau verifikasi pembayaran simpanan wajib rentang bulan secara rinci.</p>
+              <p class="text-xs text-slate-500">Filter berdasarkan kategori (Management/Staff/Pelaksana), centang nama anggota, dan tentukan rentang bulan pembayaran.</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2 text-xs">
@@ -224,55 +216,80 @@
             </div>
           </div>
 
-          <!-- PANEL VERIFIKASI RENTANG BULAN / TAHUN UNTUK NON-POTONG GAJI -->
-          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3 text-xs">
-            <p class="font-bold text-slate-800 flex items-center gap-1.5">
-              <i data-lucide="calendar-range" class="w-4 h-4 text-indigo-600"></i> Rentang Verifikasi Pembayaran Simpanan Wajib (Non-Potong Gaji / Manual)
-            </p>
-            <div class="flex flex-wrap items-center gap-3">
-              <div>
-                <label class="text-slate-500 block mb-1">Dari Bulan / Tahun:</label>
-                <div class="flex gap-1">
-                  <select id="verifBulanMulai" class="p-1.5 bg-white border rounded-lg font-medium">
-                    <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
-                    <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
-                    <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
-                    <option value="Oktober" selected>Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
-                  </select>
-                  <select id="verifTahunMulai" class="p-1.5 bg-white border rounded-lg font-medium">
-                    <option value="2025">2025</option><option value="2026" selected>2026</option>
-                  </select>
-                </div>
+          <!-- PANEL FILTER KATEGORI & RENTANG VERIFIKASI PEMBAYARAN -->
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-4 text-xs">
+            
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+              <!-- PILIHAN KATEGORI ANGGOTA -->
+              <div class="flex items-center gap-2">
+                <label class="font-bold text-slate-700 flex items-center gap-1.5">
+                  <i data-lucide="filter" class="w-4 h-4 text-indigo-600"></i> Filter Kategori Anggota:
+                </label>
+                <select id="filterKategoriSimpanan" class="p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-800 focus:outline-none focus:border-indigo-500" onchange="renderTabelSimpananPengurus()">
+                  <option value="Semua">-- Semua Kategori --</option>
+                  <option value="Management" selected>Management (Non-Potong Gaji / Transfer)</option>
+                  <option value="Staff">Staff</option>
+                  <option value="Pelaksana">Pelaksana</option>
+                </select>
               </div>
 
-              <div>
-                <label class="text-slate-500 block mb-1">Sampai Bulan / Tahun:</label>
-                <div class="flex gap-1">
-                  <select id="verifBulanAkhir" class="p-1.5 bg-white border rounded-lg font-medium">
-                    <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
-                    <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
-                    <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
-                    <option value="Oktober" selected>Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
-                  </select>
-                  <select id="verifTahunAkhir" class="p-1.5 bg-white border rounded-lg font-medium">
-                    <option value="2025">2025</option><option value="2026" selected>2026</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="flex items-end">
-                <button onclick="terapkanVerifikasiRentangSimpanan()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                  Verifikasi & Update Saldo Rentang Ini
-                </button>
+              <div class="text-slate-500 text-[11px] italic">
+                *Centang nama anggota yang akan diverifikasi pembayarannya pada rentang bulan/tahun di bawah.
               </div>
             </div>
+
+            <!-- RENTANG BULAN & TAHUN PEMBAYARAN -->
+            <div class="space-y-2">
+              <p class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="calendar-range" class="w-4 h-4 text-indigo-600"></i> Tentukan Rentang Bulan & Tahun Pembayaran Simpanan Wajib / Sukarela:
+              </p>
+              <div class="flex flex-wrap items-center gap-3">
+                <div>
+                  <label class="text-slate-500 block mb-1">Dari Bulan / Tahun:</label>
+                  <div class="flex gap-1">
+                    <select id="verifBulanMulai" class="p-1.5 bg-white border rounded-lg font-medium">
+                      <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
+                      <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
+                      <option value="Oktober" selected>Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
+                    </select>
+                    <select id="verifTahunMulai" class="p-1.5 bg-white border rounded-lg font-medium">
+                      <option value="2025">2025</option><option value="2026" selected>2026</option><option value="2027">2027</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="text-slate-500 block mb-1">Sampai Bulan / Tahun:</label>
+                  <div class="flex gap-1">
+                    <select id="verifBulanAkhir" class="p-1.5 bg-white border rounded-lg font-medium">
+                      <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
+                      <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
+                      <option value="Oktober">Oktober</option><option value="November" selected>November</option><option value="Desember">Desember</option>
+                    </select>
+                    <select id="verifTahunAkhir" class="p-1.5 bg-white border rounded-lg font-medium">
+                      <option value="2025">2025</option><option value="2026" selected>2026</option><option value="2027">2027</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex items-end">
+                  <button onclick="terapkanVerifikasiRentangSimpanan()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5 shadow-xs">
+                    <i data-lucide="check-check" class="w-4 h-4"></i> Verifikasi Pembayaran Anggota Terpilih
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <!-- TABEL DATA SIMPANAN ANGGOTA -->
+          <!-- TABEL DATA SIMPANAN ANGGOTA DENGAN CHECKBOX -->
           <div class="overflow-x-auto border rounded-xl">
             <table class="w-full text-left text-sm">
               <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
                 <tr>
+                  <th class="p-3"><input type="checkbox" id="selectAllSimpanan" onclick="toggleSelectAllSimpanan(this)"></th>
                   <th class="p-3">No. Register</th>
                   <th class="p-3">Nama Anggota</th>
                   <th class="p-3">Kategori</th>
@@ -280,7 +297,7 @@
                   <th class="p-3">Simp. Wajib</th>
                   <th class="p-3">Simp. Sukarela</th>
                   <th class="p-3 font-bold text-emerald-700">Total Simpanan</th>
-                  <th class="p-3 text-center">Status Verifikasi Perusahaan</th>
+                  <th class="p-3 text-center">Status Verifikasi</th>
                 </tr>
               </thead>
               <tbody id="tableSimpananPengurus" class="divide-y divide-slate-100">
@@ -292,14 +309,13 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA (RESTRUKTURISASI TENOR BERJALAN) -->
+      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA -->
       <div id="contentTabPinjaman" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-2">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
             <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
               <i data-lucide="credit-card" class="w-5 h-5 text-amber-600"></i> Rekap Pinjaman Berjalan & Restrukturisasi Tenor
             </h3>
-            <span class="text-xs text-slate-500">Ubah tenor di tengah pembayaran transaksi</span>
           </div>
           <div class="overflow-x-auto px-4 pb-4">
             <table class="w-full text-left text-sm">
@@ -307,17 +323,15 @@
                 <tr>
                   <th class="p-3">No. Register</th>
                   <th class="p-3">Nama</th>
-                  <th class="p-3">Kategori Pinjaman</th>
+                  <th class="p-3">Kategori</th>
                   <th class="p-3">Sisa Pokok</th>
-                  <th class="p-3 font-bold text-indigo-700">Angsuran / Bulan</th>
+                  <th class="p-3 font-bold text-indigo-700">Angsuran/Bulan</th>
                   <th class="p-3">Sisa Tenor</th>
                   <th class="p-3">Akhir Potongan</th>
                   <th class="p-3 text-center">Aksi Ubah Tenor</th>
                 </tr>
               </thead>
-              <tbody id="tablePinjamanAnggota" class="divide-y divide-slate-100">
-                <!-- Dinamis JS -->
-              </tbody>
+              <tbody id="tablePinjamanAnggota" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
@@ -348,12 +362,8 @@
           </button>
         </div>
 
-        <!-- NOTIFIKASI PENCAIRAN / DRAFT EDIT PENGURUS -->
-        <div id="boxNotifikasiAnggota" class="space-y-3">
-          <!-- Dinamis JS -->
-        </div>
+        <div id="boxNotifikasiAnggota" class="space-y-3"></div>
 
-        <!-- KARTU TOTAL SIMPANAN -->
         <div class="bg-emerald-950 text-white p-5 rounded-2xl space-y-4 shadow-sm">
           <div>
             <p class="text-xs font-medium text-emerald-200/80">Total Simpanan Saya</p>
@@ -376,7 +386,6 @@
           </div>
         </div>
 
-        <!-- REKAPITULASI POTONGAN GAJI BULANAN -->
         <div class="p-4 bg-amber-50/80 rounded-2xl border border-amber-200/80 text-xs space-y-4 text-amber-950">
           <div class="flex flex-wrap justify-between items-center gap-2 border-b border-amber-200 pb-3">
             <div class="flex items-center gap-2 font-bold text-amber-900 text-sm">
@@ -406,16 +415,13 @@
           </div>
         </div>
 
-        <!-- STATUS PEMBAYARAN POTONG GAJI -->
         <div id="boxStatusPembayaranGaji" class="p-4 rounded-2xl border text-xs space-y-2 shadow-xs"></div>
 
-        <!-- TOMBOL PENGAJUAN MANDIRI -->
         <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex justify-end items-center gap-2">
           <button onclick="bukaModalForm('Pengajuan')" class="text-xs bg-indigo-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">Pinjam Baru</button>
           <button onclick="bukaModalForm('Topup')" class="text-xs bg-amber-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-amber-700 transition">Top-Up Pinjaman</button>
         </div>
 
-        <!-- TABEL RINCIAN PINJAMAN AKTIF & RIWAYAT -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-2">
           <div class="p-4 border-b border-slate-100 bg-slate-50">
             <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
@@ -435,9 +441,7 @@
                   <th class="p-3">Periode</th>
                 </tr>
               </thead>
-              <tbody id="tableRiwayatPinjamanAnggota" class="divide-y divide-slate-100">
-                <!-- Dinamis JS -->
-              </tbody>
+              <tbody id="tableRiwayatPinjamanAnggota" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
@@ -448,23 +452,20 @@
   </div>
 
   <!-- MODAL MODAL PENGURUS & SISTEM -->
-  <!-- MODAL 1: SETUJUI BATCH TERPILIH DENGAN PENETAPAN TANGGAL PENCAIRAN -->
   <div id="modalPencairanBatch" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white max-w-sm w-full rounded-2xl shadow-xl p-6 space-y-4">
       <h3 class="font-bold text-slate-800 text-sm">Konfirmasi Tanggal Pencairan Massal</h3>
-      <p class="text-xs text-slate-500">Tetapkan tanggal pencairan dana untuk data pengajuan terpilih:</p>
       <div>
         <label class="text-xs font-semibold text-slate-700">Tanggal Pencairan Dana</label>
         <input type="date" id="inputBatchTglCair" value="2026-10-20" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white">
       </div>
       <div class="flex justify-end gap-2 pt-2">
         <button onclick="tutupModal('modalPencairanBatch')" class="px-3 py-1.5 bg-slate-200 text-slate-700 text-xs rounded-lg font-semibold">Batal</button>
-        <button onclick="eksekusiSetujuiBatch()" class="px-3 py-1.5 bg-emerald-600 text-white text-xs rounded-lg font-semibold">Setujui & Teruskan ke Anggota</button>
+        <button onclick="eksekusiSetujuiBatch()" class="px-3 py-1.5 bg-emerald-600 text-white text-xs rounded-lg font-semibold">Setujui & Teruskan</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: EDIT / TOLAK OLEH PENGURUS -->
   <div id="modalEditTolak" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-6 space-y-4">
       <div class="flex justify-between items-center border-b pb-2">
@@ -503,7 +504,6 @@
     </div>
   </div>
 
-  <!-- MODAL 3: RESTRUKTURISASI TENOR BERJALAN -->
   <div id="modalRestrukturisasi" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-6 space-y-4">
       <div class="flex justify-between items-center border-b pb-2">
@@ -521,20 +521,19 @@
           <p id="restructInfoSisaPokok" class="font-bold text-indigo-700 text-sm">-</p>
         </div>
         <div>
-          <label class="font-semibold text-slate-700">Tenor Baru yang Diinginkan (Bulan)</label>
+          <label class="font-semibold text-slate-700">Tenor Baru (Bulan)</label>
           <input type="number" id="restructTenorBaru" value="12" class="w-full p-2 border rounded-lg mt-1 font-bold bg-white" oninput="hitungPreviewRestrukturisasi()">
         </div>
         <div class="p-3 bg-slate-50 rounded-xl border space-y-1 font-mono">
-          <div class="flex justify-between"><span>Angsuran Pokok Baru/Bln:</span> <span id="prevRestructPokok">Rp 0</span></div>
+          <div class="flex justify-between"><span>Angsuran Pokok/Bln:</span> <span id="prevRestructPokok">Rp 0</span></div>
           <div class="flex justify-between"><span>Bunga Tetap (1.5%):</span> <span id="prevRestructBunga">Rp 0</span></div>
-          <div class="flex justify-between border-t pt-1 font-bold text-emerald-700 text-sm"><span>Total Angsuran Baru/Bln:</span> <span id="prevRestructTotal">Rp 0</span></div>
+          <div class="flex justify-between border-t pt-1 font-bold text-emerald-700 text-sm"><span>Total Angsuran/Bln:</span> <span id="prevRestructTotal">Rp 0</span></div>
         </div>
       </div>
       <button onclick="simpanRestrukturisasiTenor()" class="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold text-xs hover:bg-emerald-700">Simpan Perubahan Tenor</button>
     </div>
   </div>
 
-  <!-- MODAL 4: EXPORT PENCAIRAN PERIODE TERTENTU -->
   <div id="modalExportPencairan" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white max-w-sm w-full rounded-2xl shadow-xl p-6 space-y-4">
       <h3 class="font-bold text-slate-800 text-sm">Eksport Data Pencairan Periode</h3>
@@ -576,10 +575,12 @@
       simSukarela: 0
     };
 
+    // Data Master Simpanan Semua Anggota (Mendukung Kategori Management, Staff, Pelaksana)
     let dataSimpananSemuaAnggota = [
-      { nia: "KSP-1001", nama: "Budi Santoso", tipe: "Staff", simPokok: 500000, simWajib: 2200000, simSukarela: 0, terverifikasiOtomatis: true },
-      { nia: "KSP-1002", nama: "Siti Aminah", tipe: "Pelaksana", simPokok: 500000, simWajib: 1200000, simSukarela: 100000, terverifikasiOtomatis: true },
-      { nia: "KSP-1003", nama: "Ahmad Fauzi", tipe: "Management", simPokok: 1000000, simWajib: 2400000, simSukarela: 500000, terverifikasiOtomatis: false }
+      { nia: "KSP-3001", nama: "Drs. Bambang Haryono", tipe: "Management", simPokok: 1000000, simWajib: 5000000, simSukarela: 1500000, statusVerif: "Belum Dibatayarkan" },
+      { nia: "KSP-3002", nama: "Ir. Hendra Wijaya", tipe: "Management", simPokok: 1000000, simWajib: 4500000, simSukarela: 2000000, statusVerif: "Belum Dibatayarkan" },
+      { nia: "KSP-1001", nama: "Budi Santoso", tipe: "Staff", simPokok: 500000, simWajib: 2200000, simSukarela: 0, statusVerif: "Terverifikasi Otomatis" },
+      { nia: "KSP-1002", nama: "Siti Aminah", tipe: "Pelaksana", simPokok: 500000, simWajib: 1200000, simSukarela: 100000, statusVerif: "Terverifikasi Otomatis" }
     ];
 
     let daftarPengajuan = [
@@ -662,7 +663,85 @@
       }
     }
 
-    // --- RENDER TABEL PENGURUS ---
+    // --- RENDER TABEL SIMPANAN PENGURUS (KATEGORI MANAGEMENT & CENTANG ANGGOTA) ---
+    function renderTabelSimpananPengurus() {
+      const tbody = document.getElementById('tableSimpananPengurus');
+      const katFilter = document.getElementById('filterKategoriSimpanan').value;
+
+      let filteredData = dataSimpananSemuaAnggota;
+      if (katFilter !== 'Semua') {
+        filteredData = dataSimpananSemuaAnggota.filter(x => x.tipe === katFilter);
+      }
+
+      tbody.innerHTML = '';
+      if (filteredData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-slate-400">Tidak ada data anggota pada kategori ini.</td></tr>`;
+        return;
+      }
+
+      filteredData.forEach(item => {
+        const total = item.simPokok + item.simWajib + item.simSukarela;
+        const isTerverif = item.statusVerif.includes("Terverifikasi");
+        const badgeVerif = isTerverif 
+          ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-1 rounded-full font-bold">${item.statusVerif}</span>`
+          : `<span class="bg-rose-100 text-rose-800 text-[10px] px-2.5 py-1 rounded-full font-bold">${item.statusVerif}</span>`;
+
+        tbody.innerHTML += `
+          <tr class="border-b border-slate-100 hover:bg-slate-50 text-xs">
+            <td class="p-3"><input type="checkbox" class="simpananCheckbox" value="${item.nia}" ${item.tipe==='Management'?'checked':''}></td>
+            <td class="p-3 font-mono font-bold">${item.nia}</td>
+            <td class="p-3 font-medium text-slate-800">${item.nama}</td>
+            <td class="p-3"><span class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded font-semibold">${item.tipe}</span></td>
+            <td class="p-3">${formatRupiah(item.simPokok)}</td>
+            <td class="p-3 font-semibold text-slate-700">${formatRupiah(item.simWajib)}</td>
+            <td class="p-3 text-slate-600">${formatRupiah(item.simSukarela)}</td>
+            <td class="p-3 font-bold text-emerald-700">${formatRupiah(total)}</td>
+            <td class="p-3 text-center">${badgeVerif}</td>
+          </tr>
+        `;
+      });
+      lucide.createIcons();
+    }
+
+    function toggleSelectAllSimpanan(source) {
+      document.querySelectorAll('.simpananCheckbox').forEach(cb => cb.checked = source.checked);
+    }
+
+    // Verifikasi Pembayaran Berdasarkan Anggota Terpilih & Rentang Bulan
+    function terapkanVerifikasiRentangSimpanan() {
+      const selected = document.querySelectorAll('.simpananCheckbox:checked');
+      if (selected.length === 0) return alert("Pilih / centang minimal satu nama anggota terlebih dahulu!");
+
+      const bMulai = document.getElementById('verifBulanMulai').value;
+      const tMulai = document.getElementById('verifTahunMulai').value;
+      const bAkhir = document.getElementById('verifBulanAkhir').value;
+      const tAkhir = document.getElementById('verifTahunAkhir').value;
+
+      const daftarNiaTerpilih = Array.from(selected).map(cb => cb.value);
+
+      dataSimpananSemuaAnggota.forEach(item => {
+        if (daftarNiaTerpilih.includes(item.nia)) {
+          // Menambah nominal simpanan wajib sesuai penambahan verifikasi rentang bulan
+          item.simWajib += 200000; 
+          item.statusVerif = `Terverifikasi (${bMulai} ${tMulai} - ${bAkhir} ${tAkhir})`;
+        }
+      });
+
+      renderTabelSimpananPengurus();
+      alert(`Berhasil memverifikasi pembayaran simpanan wajib untuk ${daftarNiaTerpilih.length} anggota terpilih dari rentang ${bMulai} ${tMulai} s.d. ${bAkhir} ${tAkhir}! Saldo simpanan telah diperbarui.`);
+    }
+
+    function importDataSimpananPengurus(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      dataSimpananSemuaAnggota.forEach(item => {
+        item.simWajib += 100000;
+      });
+      renderTabelSimpananPengurus();
+      alert("Data simpanan berhasil di-import! Kolom Pokok, Wajib, dan Sukarela telah otomatis disesuaikan.");
+    }
+
+    // --- RENDER TABEL PERSETUJUAN PINJAMAN ---
     function renderTablePending() {
       const tbody = document.getElementById('tablePendingLoans');
       const tglMulai = document.getElementById('filterTglMulai').value;
@@ -675,7 +754,7 @@
       const count = filtered.length;
       document.getElementById('badgePendingCount').innerText = count;
       document.getElementById('statPendingCount').innerText = count;
-      document.getElementById('badgeCountLabel').innerText = `${count} Pengajuan Belum Disetujui`;
+      document.getElementById('badgeCountLabel').innerText = `${count} Belum Disetujui`;
 
       tbody.innerHTML = '';
       if (filtered.length === 0) {
@@ -792,55 +871,6 @@
       alert("Upload persetujuan cepat berhasil dieksekusi!");
     }
 
-    function renderTabelSimpananPengurus() {
-      const tbody = document.getElementById('tableSimpananPengurus');
-      tbody.innerHTML = '';
-      dataSimpananSemuaAnggota.forEach(item => {
-        const total = item.simPokok + item.simWajib + item.simSukarela;
-        const badgeVerif = item.terverifikasiOtomatis 
-          ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-1 rounded-full font-bold">Terverifikasi Otomatis (Perusahaan)</span>`
-          : `<span class="bg-amber-100 text-amber-800 text-[10px] px-2.5 py-1 rounded-full font-bold">Manual / Non-Potong Gaji</span>`;
-
-        tbody.innerHTML += `
-          <tr class="border-b border-slate-100 hover:bg-slate-50 text-xs">
-            <td class="p-3 font-mono font-bold">${item.nia}</td>
-            <td class="p-3 font-medium">${item.nama}</td>
-            <td class="p-3">${item.tipe}</td>
-            <td class="p-3">${formatRupiah(item.simPokok)}</td>
-            <td class="p-3">${formatRupiah(item.simWajib)}</td>
-            <td class="p-3">${formatRupiah(item.simSukarela)}</td>
-            <td class="p-3 font-bold text-emerald-700">${formatRupiah(total)}</td>
-            <td class="p-3 text-center">${badgeVerif}</td>
-          </tr>
-        `;
-      });
-      lucide.createIcons();
-    }
-
-    function importDataSimpananPengurus(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      dataSimpananSemuaAnggota.forEach(item => {
-        item.simWajib += 100000;
-        item.simSukarela += 25000;
-      });
-      renderTabelSimpananPengurus();
-      alert("Data simpanan berhasil di-import! Kolom Simpanan Pokok, Simpanan Wajib, dan Sukarela diperbarui.");
-    }
-
-    function terapkanVerifikasiRentangSimpanan() {
-      const bMulai = document.getElementById('verifBulanMulai').value;
-      const tMulai = document.getElementById('verifTahunMulai').value;
-      const bAkhir = document.getElementById('verifBulanAkhir').value;
-      const tAkhir = document.getElementById('verifTahunAkhir').value;
-
-      dataSimpananSemuaAnggota.forEach(item => {
-        item.simWajib += 200000;
-      });
-      renderTabelSimpananPengurus();
-      alert(`Verifikasi simpanan wajib rentang ${bMulai} ${tMulai} s.d. ${bAkhir} ${tAkhir} berhasil diterapkan!`);
-    }
-
     function renderTablePinjamanAktif() {
       const tbody = document.getElementById('tablePinjamanAnggota');
       tbody.innerHTML = '';
@@ -896,7 +926,7 @@
 
       tutupModal('modalRestrukturisasi');
       renderTablePinjamanAktif();
-      alert("Perubahan tenor berhasil disimpan! Tagihan per bulan dan akhir potongan diperbarui.");
+      alert("Perubahan tenor berhasil disimpan!");
     }
 
     function exportDataCSV(tipe) {
@@ -934,7 +964,6 @@
       link.click();
       tutupModal('modalExportPencairan');
     }
-
 
     // --- PORTAL ANGGOTA ---
     function muatDataAnggotaPortal() {
