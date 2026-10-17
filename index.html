@@ -63,7 +63,7 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Anggota</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
-              Simpanan, pinjaman, top-up, preview cicilan real-time, upload bukti transfer mandiri (Management).
+              Simpanan, pinjaman aktif & riwayat, top-up, preview cicilan real-time, upload bukti transfer mandiri.
             </p>
           </div>
           <div>
@@ -82,7 +82,6 @@
     <!-- ================================================================= -->
     <div id="viewPengurus" class="space-y-6 hidden">
       
-      <!-- SUB MENU NAVIGATION PENGURUS -->
       <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3 justify-between items-center">
         <div class="flex flex-wrap gap-2">
           <button onclick="switchTabAdmin('tabKpi')" id="btnTabKpi" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2">
@@ -99,7 +98,6 @@
           </button>
         </div>
 
-        <!-- Tombol Global Export / Import Pengurus -->
         <div class="flex gap-2">
           <button onclick="exportDataCSV('pengurus')" class="bg-emerald-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5">
             <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Data
@@ -119,11 +117,8 @@
               <h2 class="text-xl font-bold text-slate-900">Dashboard Pengurus</h2>
               <p class="text-xs text-slate-500 mt-0.5">KSP KOPKAR LAUNTANAMA - REALTIME DATA</p>
             </div>
-            <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-full">
-              Bulanan
-            </span>
+            <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-full">Bulanan</span>
           </div>
-
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="space-y-1">
               <p class="text-xs font-medium text-slate-500">Anggota aktif</p>
@@ -144,7 +139,7 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN & BATCH VERIFIKASI -->
+      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN -->
       <div id="contentTabApproval" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-3">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
@@ -152,8 +147,8 @@
               <i data-lucide="file-text" class="w-5 h-5 text-indigo-600"></i> Daftar Pengajuan Pinjaman & Verifikasi Berkelompok
             </h3>
             <div class="space-x-2">
-              <button onclick="batchApprove('Disetujui')" class="bg-emerald-600 text-white text-xs px-3 py-1.5 rounded font-semibold hover:bg-emerald-700">Setujui Terpilih (Batch)</button>
-              <button onclick="batchApprove('Ditolak')" class="bg-rose-600 text-white text-xs px-3 py-1.5 rounded font-semibold hover:bg-rose-700">Tolak Terpilih (Batch)</button>
+              <button onclick="batchApprove('Disetujui')" class="bg-emerald-600 text-white text-xs px-3 py-1.5 rounded font-semibold hover:bg-emerald-700">Setujui Terpilih</button>
+              <button onclick="batchApprove('Ditolak')" class="bg-rose-600 text-white text-xs px-3 py-1.5 rounded font-semibold hover:bg-rose-700">Tolak Terpilih</button>
             </div>
           </div>
           <div class="overflow-x-auto px-4 pb-4">
@@ -165,8 +160,8 @@
                   <th class="p-3">No. Register</th>
                   <th class="p-3">Nominal</th>
                   <th class="p-3">Tenor</th>
-                  <th class="p-3">Jenis Pengajuan</th>
-                  <th class="p-3 text-center">Aksi Satuan</th>
+                  <th class="p-3">Jenis</th>
+                  <th class="p-3 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody id="tablePendingLoans" class="divide-y divide-slate-100">
@@ -177,14 +172,14 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 3: DATA SIMPANAN ANGGOTA -->
+      <!-- KONTEN TAB 3: DATA SIMPANAN PENGURUS -->
       <div id="contentTabSimpanan" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
             <h3 class="font-bold text-slate-800 flex items-center gap-2">
               <i data-lucide="wallet" class="w-5 h-5 text-emerald-600"></i> Rincian Simpanan Realtime per Anggota
             </h3>
-            <button onclick="loadDataSimpananPengurus()" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg font-medium hover:bg-indigo-100 transition">Refresh Data</button>
+            <button onclick="loadDataSimpananPengurus()" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg font-medium">Refresh</button>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
@@ -192,29 +187,29 @@
                 <tr>
                   <th class="p-3">No. Register</th>
                   <th class="p-3">Nama Anggota</th>
-                  <th class="p-3">Tipe Anggota</th>
-                  <th class="p-3">Simpanan Pokok</th>
-                  <th class="p-3">Simpanan Wajib</th>
-                  <th class="p-3">Simpanan Sukarela</th>
-                  <th class="p-3 font-bold text-emerald-700">Total Simpanan</th>
+                  <th class="p-3">Tipe</th>
+                  <th class="p-3">Simp. Pokok</th>
+                  <th class="p-3">Simp. Wajib</th>
+                  <th class="p-3">Simp. Sukarela</th>
+                  <th class="p-3 font-bold text-emerald-700">Total</th>
                 </tr>
               </thead>
               <tbody id="tableSimpananAnggota" class="divide-y divide-slate-100">
-                <tr><td colspan="7" class="p-4 text-center text-slate-400">Memuat data simpanan...</td></tr>
+                <tr><td colspan="7" class="p-4 text-center text-slate-400">Memuat data...</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA -->
+      <!-- KONTEN TAB 4: DATA PINJAMAN PENGURUS (LENGKAP DENGAN BUNGA) -->
       <div id="contentTabPinjaman" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
             <h3 class="font-bold text-slate-800 flex items-center gap-2">
               <i data-lucide="credit-card" class="w-5 h-5 text-amber-600"></i> Rincian Pinjaman & Periode Potongan Anggota
             </h3>
-            <button onclick="loadDataPinjamanPengurus()" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg font-medium hover:bg-indigo-100 transition">Refresh Data</button>
+            <button onclick="loadDataPinjamanPengurus()" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg font-medium">Refresh</button>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
@@ -231,7 +226,7 @@
                 </tr>
               </thead>
               <tbody id="tablePinjamanAnggota" class="divide-y divide-slate-100">
-                <tr><td colspan="8" class="p-4 text-center text-slate-400">Memuat data pinjaman...</td></tr>
+                <tr><td colspan="8" class="p-4 text-center text-slate-400">Memuat data...</td></tr>
               </tbody>
             </table>
           </div>
@@ -242,9 +237,9 @@
 
 
     <!-- ================================================================= -->
-    <!-- 2. PORTAL ANGGOTA -->
+    <!-- 2. PORTAL ANGGOTA (DENGAN TABEL PINJAMAN KHUSUS TANPA KOLOM BUNGA & ADA RIWAYAT) -->
     <!-- ================================================================= -->
-    <div id="viewAnggota" class="space-y-6 hidden max-w-2xl mx-auto">
+    <div id="viewAnggota" class="space-y-6 hidden max-w-4xl mx-auto">
       
       <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
         
@@ -255,7 +250,7 @@
             </div>
             <div>
               <h3 id="memNama" class="text-base font-bold text-slate-900 leading-tight">Halo, Budi Santoso</h3>
-              <p id="memInfoTipe" class="text-xs text-slate-500">No. Register: KSP-1001 | Tipe: <span class="font-semibold text-indigo-600" id="badgeTipeAnggota">Staff</span></p>
+              <p id="memInfoTipe" class="text-xs text-slate-500">No. Register: <span id="memRegText">KSP-1001</span> | Tipe: <span class="font-semibold text-indigo-600" id="badgeTipeAnggota">Staff</span></p>
             </div>
           </div>
           <div class="flex items-center gap-2">
@@ -290,22 +285,49 @@
           </div>
         </div>
 
-        <!-- INFORMASI PEMBAYARAN TAGIHAN BERDASARKAN TIPE -->
+        <!-- INFORMASI PEMBAYARAN TAGIHAN -->
         <div id="boxInfoMetodeBayar" class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 text-xs space-y-1 text-indigo-900">
           <p class="font-bold flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4"></i> Sistem Pembayaran Tagihan Anda:</p>
           <p id="textMetodeBayarDetail">Potong gaji otomatis (diverifikasi oleh pengurus setelah perusahaan melakukan transfer).</p>
         </div>
 
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <div class="flex justify-between items-start">
+          <div class="flex justify-between items-center">
             <div>
-              <p class="text-xs font-semibold text-slate-800">Pinjaman berjalan / Sisa Tagihan</p>
-              <h3 id="memPinjaman" class="text-xl font-bold text-slate-900 mt-1">Rp 0</h3>
+              <p class="text-xs font-semibold text-slate-800">Layanan Pengajuan Pinjaman</p>
+              <p class="text-[11px] text-slate-500">Ajukan pinjaman baru atau lakukan top-up pinjaman aktif.</p>
             </div>
             <div class="space-x-1">
               <button onclick="bukaModalForm('Pengajuan')" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-indigo-700 transition">Pinjam Baru</button>
               <button onclick="bukaModalForm('Topup')" class="text-xs bg-amber-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-amber-700 transition">Top-Up Pinjaman</button>
             </div>
+          </div>
+        </div>
+
+        <!-- TABEL RINCIAN PINJAMAN AKTIF & RIWAYAT (KHUSUS PORTAL ANGGOTA - TANPA KOLOM BUNGA) -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-2">
+          <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+            <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
+              <i data-lucide="history" class="w-4 h-4 text-indigo-600"></i> Rincian Pinjaman Aktif & Riwayat Pinjaman Saya
+            </h4>
+            <span class="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono">Sesuai Login</span>
+          </div>
+          <div class="overflow-x-auto px-4 pb-4">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
+                <tr>
+                  <th class="p-3">Status</th>
+                  <th class="p-3">Jumlah Pinjaman</th>
+                  <th class="p-3 font-bold text-indigo-700">Angsuran / Bulan</th>
+                  <th class="p-3">Tenor</th>
+                  <th class="p-3">Awal Potongan</th>
+                  <th class="p-3">Akhir Potongan</th>
+                </tr>
+              </thead>
+              <tbody id="tableRiwayatPinjamanAnggota" class="divide-y divide-slate-100">
+                <tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat riwayat pinjaman...</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -345,7 +367,7 @@
 
   </div>
 
-  <!-- MODAL ACTION DARI LAYANAN CEPAT & PENGAJUAN / TOP-UP -->
+  <!-- MODAL ACTION / PENGAJUAN PINJAMAN -->
   <div id="modalLayanan" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-6 space-y-4">
       <div class="flex justify-between items-center border-b pb-3">
@@ -355,7 +377,6 @@
         </button>
       </div>
 
-      <!-- FORM PINJAMAN / TOP-UP DENGAN LIVE PREVIEW ANGSURAN -->
       <div id="modalContentPinjam" class="space-y-3 hidden">
         <div>
           <label class="text-xs font-medium text-slate-600" id="labelModalNominalPinjam">Nominal Pinjaman (Rp)</label>
@@ -375,7 +396,7 @@
           <input type="number" id="modalPinjamTenorCustom" placeholder="Jumlah bulan" value="12" class="w-full p-2 border rounded-lg text-xs mt-1 hidden" oninput="updateModalPreview()">
         </div>
 
-        <!-- DISPLAY LIVE PREVIEW TAGIHAN SEBELUM DIKIRIM -->
+        <!-- PREVIEW TAGIHAN SEBELUM KIRIM -->
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1.5 font-medium text-slate-700">
           <p class="font-bold text-indigo-900 border-b pb-1">Preview Tagihan per Bulan:</p>
           <div class="flex justify-between"><span>Pokok Bulanan:</span> <span id="previewPokok" class="font-bold">Rp 0</span></div>
@@ -385,22 +406,6 @@
 
         <button onclick="submitModalPinjamanDirect()" class="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">
           Kirim Pengajuan
-        </button>
-      </div>
-
-      <!-- MODAL UPLOAD BUKTI TRANSFER (KHUSUS TIPE MANAGEMENT) -->
-      <div id="modalContentTransferManagement" class="space-y-3 hidden">
-        <p class="text-xs text-slate-600">Karena Anda masuk dalam tingkat <b>Management</b>, pembayaran tagihan/angsuran dilakukan dengan transfer manual dan mengunggah bukti transfer.</p>
-        <div>
-          <label class="text-xs font-medium text-slate-600">Nominal Transfer (Rp)</label>
-          <input type="number" id="mgNominal" placeholder="500000" class="w-full p-2 border rounded-lg text-sm mt-1">
-        </div>
-        <div>
-          <label class="text-xs font-medium text-slate-600">Upload Bukti Transfer (Gambar/PDF)</label>
-          <input type="file" id="mgBuktiFile" class="w-full p-2 border rounded-lg text-xs mt-1 bg-slate-50">
-        </div>
-        <button onclick="submitBuktiManagement()" class="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700">
-          Kirim Bukti Transfer
         </button>
       </div>
     </div>
@@ -414,11 +419,11 @@
   <script>
     lucide.createIcons();
 
-    // Data Simulasi Anggota (Tipe bisa diubah: 'Pelaksana', 'Staff', 'Management')
+    // Data Simulasi Anggota yang Sedang Login
     let currentAnggota = { 
       nia: "KSP-1001", 
       nama: "Budi Santoso", 
-      tipe: "Staff", // Pelaksana / Staff / Management
+      tipe: "Staff", 
       sisaPinjaman: 2500000 
     };
     
@@ -452,26 +457,51 @@
       document.getElementById('headerNav').classList.add('hidden');
     }
 
-    // Aturan Simpanan Wajib & Metode Pembayaran Berdasarkan Tipe Anggota
     function muatDataAnggotaPortal() {
       document.getElementById('memNama').innerText = "Halo, " + currentAnggota.nama;
+      document.getElementById('memRegText').innerText = currentAnggota.nia;
       document.getElementById('badgeTipeAnggota').innerText = currentAnggota.tipe;
-      document.getElementById('memPinjaman').innerText = formatRupiah(currentAnggota.sisaPinjaman);
 
-      let simpananWajibNominal = 100000;
-      if (currentAnggota.tipe === 'Pelaksana') {
-        simpananWajibNominal = 50000;
-        document.getElementById('textMetodeBayarDetail').innerText = "Sistem potong gaji otomatis (diverifikasi oleh pengurus setelah perusahaan mentransfer dana).";
-      } else if (currentAnggota.tipe === 'Staff') {
-        simpananWajibNominal = 100000;
-        document.getElementById('textMetodeBayarDetail').innerText = "Sistem potong gaji otomatis (diverifikasi oleh pengurus setelah perusahaan mentransfer dana).";
-      } else if (currentAnggota.tipe === 'Management') {
-        simpananWajibNominal = 100000;
-        document.getElementById('textMetodeBayarDetail').innerText = "Pembayaran tagihan via transfer manual personal dengan mengupload bukti transfer di web app.";
-      }
-
+      let simpananWajibNominal = currentAnggota.tipe === 'Pelaksana' ? 50000 : 100000;
       document.getElementById('infoSimpananWajibKet').innerText = `Simp. Wajib otomatis: ${formatRupiah(simpananWajibNominal)} / bulan`;
       document.getElementById('memSimWajib').innerText = formatRupiah(simpananWajibNominal * 12);
+
+      if (currentAnggota.tipe === 'Management') {
+        document.getElementById('textMetodeBayarDetail').innerText = "Pembayaran tagihan via transfer manual personal dengan mengupload bukti transfer.";
+      } else {
+        document.getElementById('textMetodeBayarDetail').innerText = "Sistem potong gaji otomatis (diverifikasi oleh pengurus setelah perusahaan melakukan transfer).";
+      }
+
+      loadRiwayatPinjamanAnggotaLogin();
+    }
+
+    // Memuat Riwayat Pinjaman Khusus Anggota yang Sedang Login (Tanpa Kolom Bunga)
+    async function loadRiwayatPinjamanAnggotaLogin() {
+      const tableBody = document.getElementById('tableRiwayatPinjamanAnggota');
+      // Data simulasi pinjaman sesuai login (bisa diganti fetch API dengan filter NIA)
+      const dataPinjamanSaya = [
+        { status: "Aktif", jumlah: 5000000, tenor: 12, awal: "Nov 2026", akhir: "Okt 2027" },
+        { status: "Lunas", jumlah: 3000000, tenor: 6, awal: "Jan 2025", akhir: "Jun 2025" }
+      ];
+
+      tableBody.innerHTML = '';
+      dataPinjamanSaya.forEach(item => {
+        const bungaBulan = item.jumlah * 0.015;
+        const pokokBulan = item.jumlah / item.tenor;
+        const totalBulan = bungaBulan + pokokBulan;
+        const badgeColor = item.status === 'Aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600';
+
+        tableBody.innerHTML += `
+          <tr class="border-b border-slate-100 hover:bg-slate-50">
+            <td class="p-3"><span class="${badgeColor} text-[10px] px-2.5 py-0.5 rounded font-bold">${item.status}</span></td>
+            <td class="p-3 font-semibold">${formatRupiah(item.jumlah)}</td>
+            <td class="p-3 font-bold text-indigo-700">${formatRupiah(totalBulan)}</td>
+            <td class="p-3">${item.tenor} Bulan</td>
+            <td class="p-3 text-xs font-mono bg-slate-50">${item.awal}</td>
+            <td class="p-3 text-xs font-mono bg-slate-50">${item.akhir}</td>
+          </tr>
+        `;
+      });
     }
 
     function handleTenorChange(prefix) {
@@ -492,30 +522,24 @@
     function bukaModalForm(jenis) {
       currentLayananAction = jenis;
       document.getElementById('modalLayanan').classList.remove('hidden');
-      document.getElementById('modalContentPinjam').classList.add('hidden');
-      document.getElementById('modalContentTransferManagement').classList.add('hidden');
-
-      if (jenis === 'Pengajuan' || jenis === 'Topup') {
-        document.getElementById('modalContentPinjam').classList.remove('hidden');
-        document.getElementById('modalTitle').innerText = jenis === 'Topup' ? "Top-Up Pinjaman (Pelunasan Sisa & Baru)" : "Pengajuan Pinjaman Baru";
-        document.getElementById('labelModalNominalPinjam').innerText = jenis === 'Topup' ? "Nominal Top-Up Pinjaman Baru (Rp)" : "Nominal Pinjaman (Rp)";
-        updateModalPreview();
-      }
+      document.getElementById('modalContentPinjam').classList.remove('hidden');
+      document.getElementById('modalTitle').innerText = jenis === 'Topup' ? "Top-Up Pinjaman (Pelunasan Sisa & Baru)" : "Pengajuan Pinjaman Baru";
+      document.getElementById('labelModalNominalPinjam').innerText = jenis === 'Topup' ? "Nominal Top-Up Pinjaman Baru (Rp)" : "Nominal Pinjaman (Rp)";
+      updateModalPreview();
     }
 
     function tutupModalForm() {
       document.getElementById('modalLayanan').classList.add('hidden');
     }
 
-    // Live Preview Tagihan Sebelum Pengajuan / Top-up Dikirim
     function updateModalPreview() {
       const nominal = Number(document.getElementById('modalPinjamNominal').value) || 0;
       const selectTenor = document.getElementById('modalPinjamTenorSelect').value;
       let tenor = selectTenor === 'custom' ? (Number(document.getElementById('modalPinjamTenorCustom').value) || 1) : Number(selectTenor);
       if (tenor <= 0) tenor = 1;
 
-      const bungaPerBulan = nominal * 0.015; // 1.5% tetap
-      const pokokPerBulan = nominal / tenor; // Pembagi tenor
+      const bungaPerBulan = nominal * 0.015;
+      const pokokPerBulan = nominal / tenor;
       const totalPerBulan = bungaPerBulan + pokokPerBulan;
 
       document.getElementById('previewPokok').innerText = formatRupiah(pokokPerBulan);
@@ -552,12 +576,9 @@
       }
     }
 
-    // FITUR EXPORT & IMPORT DATA
     function exportDataCSV(tipe) {
       let csvContent = "data:text/csv;charset=utf-8,No.Register,Nama,Tipe,SimpananPokok,SimpananWajib,SimpananSukarela\n";
       csvContent += "KSP-1001,Budi Santoso,Staff,500000,1200000,0\n";
-      csvContent += "KSP-1002,Siti Aminah,Pelaksana,500000,600000,150000\n";
-      
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
@@ -570,22 +591,15 @@
     function importDataCSV(event) {
       const file = event.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        alert("Data CSV berhasil di-import dan disinkronkan ke sistem!");
-      };
-      reader.readAsText(file);
+      alert("Data CSV berhasil di-import dan disinkronkan ke sistem!");
     }
 
-    // FITUR VERIFIKASI BERKELOMPOK (BATCH APPROVAL)
     function toggleSelectAll(source) {
-      checkboxes = document.querySelectorAll('.batchCheckbox');
-      checkboxes.forEach(cb => cb.checked = source.checked);
+      document.querySelectorAll('.batchCheckbox').forEach(cb => cb.checked = source.checked);
     }
 
     async function loadDashboardData() {
-      const tableBody = document.getElementById('tablePendingLoans');
-      tableBody.innerHTML = `
+      document.getElementById('tablePendingLoans').innerHTML = `
         <tr>
           <td><input type="checkbox" class="batchCheckbox" value="P-001"></td>
           <td class="p-3 font-mono text-xs font-bold">P-001</td>
@@ -596,18 +610,6 @@
           <td class="p-3 text-center space-x-1">
             <button onclick="approveLoan('P-001', 'Disetujui')" class="bg-emerald-600 text-white text-xs px-2 py-1 rounded">Setujui</button>
             <button onclick="approveLoan('P-001', 'Ditolak')" class="bg-rose-600 text-white text-xs px-2 py-1 rounded">Tolak</button>
-          </td>
-        </tr>
-        <tr>
-          <td><input type="checkbox" class="batchCheckbox" value="P-002"></td>
-          <td class="p-3 font-mono text-xs font-bold">P-002</td>
-          <td class="p-3">KSP-1003</td>
-          <td class="p-3 font-semibold">Rp 3.000.000 (Top-Up)</td>
-          <td class="p-3">10 Bln</td>
-          <td class="p-3"><span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-bold">Top-Up</span></td>
-          <td class="p-3 text-center space-x-1">
-            <button onclick="approveLoan('P-002', 'Disetujui')" class="bg-emerald-600 text-white text-xs px-2 py-1 rounded">Setujui</button>
-            <button onclick="approveLoan('P-002', 'Ditolak')" class="bg-rose-600 text-white text-xs px-2 py-1 rounded">Tolak</button>
           </td>
         </tr>
       `;
@@ -622,8 +624,7 @@
     }
 
     async function loadDataSimpananPengurus() {
-      const tableBody = document.getElementById('tableSimpananAnggota');
-      tableBody.innerHTML = `
+      document.getElementById('tableSimpananAnggota').innerHTML = `
         <tr class="border-b border-slate-100">
           <td class="p-3 font-mono font-bold">KSP-1001</td>
           <td class="p-3 font-medium">Budi Santoso</td>
@@ -637,8 +638,7 @@
     }
 
     async function loadDataPinjamanPengurus() {
-      const tableBody = document.getElementById('tablePinjamanAnggota');
-      tableBody.innerHTML = `
+      document.getElementById('tablePinjamanAnggota').innerHTML = `
         <tr class="border-b border-slate-100">
           <td class="p-3 font-mono font-bold">KSP-1001</td>
           <td class="p-3 font-medium">Budi Santoso</td>
@@ -669,8 +669,8 @@
       let tenor = selectTenor === 'custom' ? (Number(document.getElementById('simTenorCustom').value) || 1) : Number(selectTenor);
       if (tenor <= 0) tenor = 1;
       
-      const bungaPerBulan = plafon * 0.015;  // 1.5% tetap per bulan
-      const pokokPerBulan = plafon / tenor;   // Pokok menyesuaikan tenor
+      const bungaPerBulan = plafon * 0.015;
+      const pokokPerBulan = plafon / tenor;
       const totalCicilanPerBulan = bungaPerBulan + pokokPerBulan;
       
       document.getElementById('hasilSimulasi').innerText = formatRupiah(totalCicilanPerBulan);
