@@ -82,7 +82,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- 1. DASHBOARD PENGURUS -->
+    <!-- 1. DASHBOARD PENGURUS (SESUAI RANCANGAN GAMBAR) -->
     <!-- ================================================================= -->
     <div id="viewPengurus" class="space-y-6 hidden">
       
@@ -99,36 +99,151 @@
         </button>
       </div>
 
-      <!-- KONTEN TAB 1: RINGKASAN & KPI -->
+      <!-- KONTEN TAB 1: RINGKASAN EKSEKUTIF (MATCHES IMAGE SPEC) -->
       <div id="contentTabKpi" class="space-y-6">
-        <div class="flex items-center justify-between">
-          <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-            <i data-lucide="trending-up" class="text-indigo-600"></i> Dashboard Pengurus & Keuangan
-          </h2>
-          <button onclick="loadDashboardData()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5 transition">
-            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Segarkan Data
-          </button>
+        
+        <!-- HEADER DASHBOARD PENGURUS -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+          <div class="flex justify-between items-start border-b pb-4">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">Dashboard Pengurus</h2>
+              <p class="text-xs text-slate-500 mt-0.5">CONTOH TATA LETAK - DATA FIKTIF</p>
+            </div>
+            <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-full">
+              Bulanan
+            </span>
+          </div>
+
+          <!-- 6 METRIK UTAMA KEUANGAN & OPERASIONAL -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- 1. Anggota Aktif -->
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Anggota aktif</p>
+              <h3 class="text-2xl font-bold text-slate-900">385</h3>
+              <p class="text-xs text-slate-500">Dari 420 terdaftar</p>
+            </div>
+
+            <!-- 2. Total Aset -->
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Total aset</p>
+              <h3 class="text-2xl font-bold text-slate-900">Rp2,4 M</h3>
+              <p class="text-xs text-slate-500">Posisi akhir periode</p>
+            </div>
+
+            <!-- 3. Outstanding Pinjaman -->
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Outstanding pinjaman</p>
+              <h3 class="text-2xl font-bold text-slate-900">Rp1,6 M</h3>
+              <p class="text-xs text-slate-500">Sisa pokok pinjaman</p>
+            </div>
+
+            <!-- 4. Kas dan Bank -->
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Kas dan bank</p>
+              <h3 class="text-2xl font-bold text-slate-900">Rp420 jt</h3>
+              <p class="text-xs text-slate-500">Saldo tercatat</p>
+            </div>
+
+            <!-- 5. Pendapatan Bulan Ini -->
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Pendapatan bulan ini</p>
+              <h3 class="text-2xl font-bold text-slate-900">Rp52 jt</h3>
+              <p class="text-xs text-slate-500">Akumulasi bulan berjalan</p>
+            </div>
+
+            <!-- 6. Hasil Usaha Sementara -->
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Hasil usaha sementara</p>
+              <h3 class="text-2xl font-bold text-slate-900">Rp18 jt</h3>
+              <p class="text-xs text-slate-500">Sebelum penyesuaian akhir</p>
+            </div>
+
+          </div>
         </div>
 
-        <!-- KPI METRICS -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-            <p class="text-xs font-medium text-slate-500 uppercase">Total Aset KSP</p>
-            <h3 id="admTotalAset" class="text-2xl font-bold text-slate-900 mt-1">Rp 0</h3>
+        <!-- GRAFIK UTAMA: TREN SIMPANAN DAN PINJAMAN -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+          <h3 class="font-bold text-slate-800 text-base">Grafik utama</h3>
+          
+          <div class="p-5 bg-slate-50 rounded-xl border border-slate-200/60 space-y-4">
+            <div class="flex justify-between items-center">
+              <h4 class="font-bold text-slate-900 text-sm">Tren simpanan dan pinjaman</h4>
+            </div>
+
+            <!-- SIMULASI GRAFIK GARIS (VISUAL MOCKUP) -->
+            <div class="relative h-48 w-full flex items-end justify-between px-6 pt-6 pb-2 border-b border-slate-200 text-xs text-slate-400 font-mono">
+              <div class="absolute top-2 left-6 text-[10px]">Rp1.8K</div>
+              <div class="absolute top-1/3 left-6 text-[10px]">Rp1.4K</div>
+              <div class="absolute top-2/3 left-6 text-[10px]">Rp900</div>
+              <div class="absolute bottom-10 left-6 text-[10px]">Rp0</div>
+
+              <!-- Garis Tren Simpanan & Pinjaman SVG/CSS -->
+              <div class="w-full h-full flex justify-between items-center relative">
+                <svg class="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
+                  <!-- Garis Biru (Simpanan) -->
+                  <path d="M 0,110 Q 150,95 300,85 T 600,60" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+                  <!-- Garis Hijau (Outstanding Pinjaman) -->
+                  <path d="M 0,85 Q 150,75 300,65 T 600,35" fill="none" stroke="#10b981" stroke-width="2.5" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- LABEL BULAN -->
+            <div class="flex justify-between text-xs text-slate-600 font-medium px-4">
+              <span>Mei</span>
+              <span>Jun</span>
+              <span>Jul</span>
+              <span>Agu</span>
+              <span>Sep</span>
+              <span>Okt</span>
+            </div>
+
+            <!-- LEGENDA GRAFIK -->
+            <div class="flex items-center gap-6 pt-2 text-xs font-medium text-slate-700">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> Simpanan
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Outstanding pinjaman
+              </div>
+            </div>
           </div>
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-            <p class="text-xs font-medium text-slate-500 uppercase">Total Simpanan</p>
-            <h3 id="admTotalSimpanan" class="text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
-          </div>
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-            <p class="text-xs font-medium text-slate-500 uppercase">Pinjaman Beredar</p>
-            <h3 id="admTotalPinjaman" class="text-2xl font-bold text-amber-600 mt-1">Rp 0</h3>
-          </div>
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-            <p class="text-xs font-medium text-slate-500 uppercase">Pending Approval</p>
-            <h3 id="admPendingCount" class="text-2xl font-bold text-rose-600 mt-1">0</h3>
-          </div>
+
+          <p class="text-[11px] text-slate-500 italic">Angka grafik dalam jutaan rupiah; gunakan data pembukuan yang telah direkonsiliasi untuk produksi.</p>
         </div>
+
+        <!-- PEKERJAAN YANG PERLU DITINDAKLANJUTI -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+          <h3 class="font-bold text-slate-900 text-base">Pekerjaan yang perlu ditindaklanjuti</h3>
+
+          <div class="divide-y divide-slate-100 text-sm">
+            
+            <div class="py-3 flex items-center gap-4">
+              <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold flex items-center justify-center text-xs shrink-0">5</span>
+              <span class="text-slate-700 font-medium">Pengajuan pinjaman menunggu keputusan</span>
+            </div>
+
+            <div class="py-3 flex items-center gap-4">
+              <span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 font-bold flex items-center justify-center text-xs shrink-0">8</span>
+              <span class="text-slate-700 font-medium">Angsuran lewat jatuh tempo</span>
+            </div>
+
+            <div class="py-3 flex items-center gap-4">
+              <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 font-bold flex items-center justify-center text-xs shrink-0">2</span>
+              <span class="text-slate-700 font-medium">Rekonsiliasi transaksi belum selesai</span>
+            </div>
+
+            <div class="py-3 flex items-center gap-4">
+              <span class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs shrink-0">1</span>
+              <span class="text-slate-700 font-medium">Tutup kas harian belum dikonfirmasi</span>
+            </div>
+
+          </div>
+
+          <p class="text-[11px] text-slate-400 pt-2 border-t">Seluruh angka di halaman contoh ini hanya untuk menunjukkan susunan komponen.</p>
+        </div>
+
       </div>
 
       <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN -->
@@ -173,7 +288,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- 2. PORTAL ANGGOTA (LANGSUNG TAMPIL TANPA LOGIN) -->
+    <!-- 2. PORTAL ANGGOTA -->
     <!-- ================================================================= -->
     <div id="viewAnggota" class="space-y-6 hidden max-w-2xl mx-auto">
       
@@ -342,7 +457,6 @@
         </button>
       </div>
 
-      <!-- BODY MODAL SIMPANAN & ANGSURAN -->
       <div id="modalContentTrx" class="space-y-3">
         <div>
           <label class="text-xs font-medium text-slate-600">Nominal (Rp)</label>
@@ -353,7 +467,6 @@
         </button>
       </div>
 
-      <!-- BODY MODAL PENGAJUAN PINJAMAN -->
       <div id="modalContentPinjam" class="space-y-3 hidden">
         <div>
           <label class="text-xs font-medium text-slate-600">Nominal Pinjaman (Rp)</label>
@@ -372,7 +485,6 @@
         </button>
       </div>
 
-      <!-- BODY MODAL BANTUAN -->
       <div id="modalContentBantuan" class="space-y-3 hidden text-center py-2">
         <i data-lucide="headphones" class="w-10 h-10 text-emerald-600 mx-auto"></i>
         <h4 class="font-bold text-sm text-slate-800">Layanan Customer Service KSP</h4>
@@ -392,7 +504,6 @@
   <script>
     lucide.createIcons();
 
-    // Default menggunakan NIA 1001 secara otomatis tanpa perlu login password
     let currentAnggota = { nia: "1001", nama: "Budi Santoso" };
     let currentLayananAction = '';
     
@@ -402,7 +513,6 @@
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num || 0);
     }
 
-    // Navigasi Antar Portal
     function pilihPortal(role) {
       document.getElementById('viewLanding').classList.add('hidden');
       document.getElementById('headerNav').classList.remove('hidden');
@@ -425,7 +535,6 @@
       document.getElementById('headerNav').classList.add('hidden');
     }
 
-    // Muat data anggota otomatis tanpa login
     async function muatDataAnggotaOtomatis() {
       try {
         const res = await fetch(`${apiUrl}?action=cek_saldo&nia=${currentAnggota.nia}`);
@@ -442,7 +551,6 @@
       }
     }
 
-    // Modal Form Layanan Cepat
     function bukaModalForm(jenis) {
       currentLayananAction = jenis;
       document.getElementById('modalLayanan').classList.remove('hidden');
@@ -465,7 +573,6 @@
       document.getElementById('modalLayanan').classList.add('hidden');
     }
 
-    // Fungsi Navigasi Tab Admin / Pengurus
     function switchTabAdmin(tabName) {
       document.getElementById('contentTabKpi').classList.add('hidden');
       document.getElementById('contentTabApproval').classList.add('hidden');
@@ -489,16 +596,6 @@
 
     async function loadDashboardData() {
       try {
-        const resSum = await fetch(`${apiUrl}?action=admin_dashboard`);
-        const dataSum = await resSum.json();
-
-        if (dataSum.status) {
-          document.getElementById('admTotalAset').innerText = formatRupiah(dataSum.data.total_aset);
-          document.getElementById('admTotalSimpanan').innerText = formatRupiah(dataSum.data.total_simpanan);
-          document.getElementById('admTotalPinjaman').innerText = formatRupiah(dataSum.data.total_pinjaman);
-          document.getElementById('admPendingCount').innerText = dataSum.data.pending_approval;
-        }
-
         const resLoans = await fetch(`${apiUrl}?action=get_pending_loans`);
         const dataLoans = await resLoans.json();
 
