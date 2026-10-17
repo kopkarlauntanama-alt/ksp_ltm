@@ -27,19 +27,18 @@
 
   <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
 
-    <!-- CONFIGURATION CARD (API URL AUTO-FILLED) -->
+    <!-- CONFIGURATION CARD (API URL AUTO-DETECTED) -->
     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-3 items-center justify-between">
       <div class="flex items-center gap-2 text-sm text-slate-600">
         <i data-lucide="link" class="w-4 h-4 text-indigo-600"></i>
         <span><strong>Web App API URL:</strong></span>
       </div>
-      <input type="text" id="apiUrl" value="https://script.google.com/macros/s/AKfycbwWSvO7xOf75z62VjV5DQyOO9BZ9X2VVlRS6Vjikudep5d_Nfm229cAvwd4ML_1SsX8/exec" 
-             class="flex-1 w-full text-sm p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+      <input type="text" id="apiUrl" value="<?= scriptUrl ?>" readonly
+             class="flex-1 w-full text-sm p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-500 outline-none">
       <button onclick="initApp()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition">
         <i data-lucide="refresh-cw" class="w-4 h-4"></i> Muat Data
       </button>
     </div>
-
 
     <!-- ================================================================= -->
     <!-- 1. DASHBOARD PENGURUS (EXECUTIVE & FINANCIAL REPORT) -->
@@ -98,7 +97,6 @@
         </div>
       </div>
     </div>
-
 
     <!-- ================================================================= -->
     <!-- 2. DASHBOARD & LOGIN ANGGOTA -->
@@ -243,19 +241,13 @@
     }
 
     function getApiUrl() {
-      const url = document.getElementById('apiUrl').value.trim();
-      if (!url) {
-        alert("Harap isi Web App API URL Google Apps Script Anda terlebih dahulu!");
-        return null;
-      }
-      return url;
+      return document.getElementById('apiUrl').value.trim();
     }
 
     function initApp() {
       loadDashboardData();
     }
 
-    // Auto-load saat halaman web pertama kali dibuka
     window.addEventListener('DOMContentLoaded', () => {
       initApp();
     });
