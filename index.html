@@ -46,7 +46,7 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Pengurus</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
-              Monitoring 4 jenis pinjaman berjalan, persetujuan batch, verifikasi potongan gaji perusahaan/mandiri, export-import data.
+              Monitoring 4 jenis pinjaman berjalan, persetujuan batch, verifikasi potongan gaji perusahaan/mandiri, export-import data[cite: 5].
             </p>
           </div>
           <div>
@@ -63,7 +63,7 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Anggota</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
-              Lihat rincian & total potongan gaji bulanan dengan filter bulan & tahun, pengajuan baru, dan top-up.
+              Lihat rincian & total potongan gaji bulanan dengan filter bulan & tahun, pengajuan baru, dan top-up[cite: 5].
             </p>
           </div>
           <div>
@@ -288,7 +288,7 @@
           </div>
         </div>
 
-        <!-- CARD AKUMULASI POTONGAN GAJI BULANAN DENGAN FILTER BULAN + TAHUN -->
+        <!-- CARD AKUMULASI POTONGAN GAJI BULANAN DENGAN FILTER BULAN LENGKAP (TERMASUK OKTOBER) -->
         <div class="p-4 bg-amber-50/80 rounded-2xl border border-amber-200/80 text-xs space-y-4 text-amber-950">
           
           <div class="flex flex-wrap justify-between items-center gap-2 border-b border-amber-200 pb-3">
@@ -297,7 +297,7 @@
               <span>INFORMASI & AKUMULASI TOTAL POTONGAN GAJI BULANAN SAYA</span>
             </div>
             
-            <!-- FILTER BULAN DAN TAHUN -->
+            <!-- FILTER BULAN DAN TAHUN DENGAN OKTOBER LENGKAP -->
             <div class="flex items-center gap-2">
               <select id="filterPotonganBulan" class="p-1.5 bg-white border border-amber-300 rounded-lg text-xs font-semibold text-slate-700 focus:outline-none" onchange="updateAkumulasiPotonganGaji()">
                 <option value="Januari">Januari</option>
@@ -309,6 +309,7 @@
                 <option value="Juli">Juli</option>
                 <option value="Agustus">Agustus</option>
                 <option value="September">September</option>
+                <option value="Oktober">Oktober</option>
                 <option value="November" selected>November</option>
                 <option value="Desember">Desember</option>
               </select>
@@ -462,10 +463,18 @@
           <div>
             <label class="text-xs font-medium text-slate-600">Bulan Pencairan</label>
             <select id="modalBulanCair" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white">
-              <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
-              <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
-              <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
-              <option value="November" selected>November</option><option value="Desember">Desember</option>
+              <option value="Januari">Januari</option>
+              <option value="Februari">Februari</option>
+              <option value="Maret">Maret</option>
+              <option value="April">April</option>
+              <option value="Mei">Mei</option>
+              <option value="Juni">Juni</option>
+              <option value="Juli">Juli</option>
+              <option value="Agustus">Agustus</option>
+              <option value="September">September</option>
+              <option value="Oktober">Oktober</option>
+              <option value="November" selected>November</option>
+              <option value="Desember">Desember</option>
             </select>
           </div>
           <div>
@@ -581,7 +590,6 @@
       loadRiwayatPinjamanAnggotaLogin();
     }
 
-    // Fungsi Pembaruan Akumulasi Potongan Gaji Berdasarkan Pilihan Filter Bulan & Tahun
     function updateAkumulasiPotonganGaji() {
       const bulanSelected = document.getElementById('filterPotonganBulan').value;
       const tahunSelected = document.getElementById('filterPotonganTahun').value;
@@ -594,11 +602,12 @@
       let angsTempo = 0;
       let angsJatim = 0;
 
-      // Simulasi variasi tagihan berdasarkan filter bulan
-      if (bulanSelected === 'Desember' && tahunSelected === '2026') {
-        angsTempo = 350000; // Contoh ada transaksi barang tempo di bulan Desember
+      if (bulanSelected === 'Oktober' && tahunSelected === '2026') {
+        angsTempo = 150000; // Contoh simulasi tagihan tempo bulan Oktober
+      } else if (bulanSelected === 'Desember' && tahunSelected === '2026') {
+        angsTempo = 350000;
       } else if (tahunSelected === '2025') {
-        angsBarang = 0; // Belum ada pinjaman barang di 2025
+        angsBarang = 0;
       }
 
       document.getElementById('summarySimpWajib').innerText = formatRupiah(simWajib);
