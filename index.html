@@ -204,7 +204,7 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA (BUNGA 1.5% & POKOK/TENOR) -->
+      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA -->
       <div id="contentTabPinjaman" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
@@ -361,7 +361,7 @@
           </div>
         </div>
 
-        <!-- KALKULATOR SIMULASI PINJAMAN (BUNGA 1.5% TETAP & POKOK / TENOR) -->
+        <!-- KALKULATOR SIMULASI PINJAMAN (DENGAN PILIHAN TENOR CUSTOM) -->
         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
           <h4 class="font-bold text-slate-800 flex items-center gap-2 border-b pb-2 text-xs">
             <i data-lucide="calculator" class="w-4 h-4 text-indigo-600"></i> Kalkulator Simulasi Angsuran (Bunga 1.5%)
@@ -373,12 +373,16 @@
             </div>
             <div>
               <label class="text-[11px] text-slate-600">Tenor (Bulan)</label>
-              <select id="simTenor" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white" onchange="hitungSimulasi()">
+              <select id="simTenorSelect" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white" onchange="handleTenorChange('sim')">
+                <option value="3">3 Bulan</option>
                 <option value="5">5 Bulan</option>
-                <option value="6">6 Bulan</option>
+                <option value="10">10 Bulan</option>
                 <option value="12" selected>12 Bulan</option>
+                <option value="18">18 Bulan</option>
                 <option value="24">24 Bulan</option>
+                <option value="custom">Custom Bulan...</option>
               </select>
+              <input type="number" id="simTenorCustom" placeholder="Masukkan jumlah bulan" value="12" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white hidden" oninput="hitungSimulasi()">
             </div>
             <div>
               <label class="text-[11px] text-slate-600">Total Angsuran / Bulan</label>
@@ -420,12 +424,16 @@
         </div>
         <div>
           <label class="text-xs font-medium text-slate-600">Tenor (Bulan)</label>
-          <select id="modalPinjamTenor" class="w-full p-2 border rounded-lg text-sm mt-1">
+          <select id="modalPinjamTenorSelect" class="w-full p-2 border rounded-lg text-sm mt-1" onchange="handleTenorChange('modal')">
+            <option value="3">3 Bulan</option>
             <option value="5">5 Bulan</option>
-            <option value="6">6 Bulan</option>
+            <option value="10">10 Bulan</option>
             <option value="12" selected>12 Bulan</option>
+            <option value="18">18 Bulan</option>
             <option value="24">24 Bulan</option>
+            <option value="custom">Custom Bulan...</option>
           </select>
+          <input type="number" id="modalPinjamTenorCustom" placeholder="Masukkan jumlah bulan" value="12" class="w-full p-2 border rounded-lg text-sm mt-1 hidden">
         </div>
         <button onclick="submitModalPinjamanDirect()" class="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">
           Kirim Pengajuan
@@ -481,6 +489,23 @@
       document.getElementById('viewPengurus').classList.add('hidden');
       document.getElementById('viewAnggota').classList.add('hidden');
       document.getElementById('headerNav').classList.add('hidden');
+    }
+
+    // Fungsi Mengatur Tampilan Input Custom Tenor
+    function handleTenorChange(prefix) {
+      const selectElem = document.getElementById(prefix === 'sim' ? 'simTenorSelect' : 'modalPinjamTenorSelect');
+      const customInput = document.getElementById(prefix === 'sim' ? 'simTenorCustom' : 'modalPinjamTenorCustom');
+
+      if (selectElem.value === 'custom') {
+        customInput.classList.remove('hidden');
+        customInput.focus();
+      } else {
+        customInput.classList.add('hidden');
+        customInput.value = selectElem.value;
+      }
+      if (prefix === 'sim') {
+        hitungSimulasi();
+      }
     }
 
     async function muatDataAnggotaOtomatis() {
@@ -609,7 +634,6 @@
       }
     }
 
-    // Fungsi Ambil Data Realtime Pinjaman Pengurus (Bunga 1.5% Tetap & Pokok/Tenor)
     async function loadDataPinjamanPengurus() {
       const tableBody = document.getElementById('tablePinjamanAnggota');
       tableBody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">Memuat data realtime...</td></tr>`;
@@ -622,7 +646,6 @@
             const pinjaman = Number(item.jumlah_pinjaman) || 0;
             const tenor = Number(item.tenor) || 1;
             
-            // Perhitungan Sesuai Aturan Baru
             const bungaPerBulan = pinjaman * 0.015; // 1.5% tetap
             const pokokPerBulan = pinjaman / tenor; // Pembagi tenor
             const angsuranPerBulan = bungaPerBulan + pokokPerBulan;
@@ -685,14 +708,15 @@
 
     async function submitModalPinjamanDirect() {
       const jumlah = document.getElementById('modalPinjamNominal').value;
-      const tenor = document.getElementById('modalPinjamTenor').value;
+      const selectTenor = document.getElementById('modalPinjamTenorSelect').value;
+      let tenor = selectTenor === 'custom' ? Number(document.getElementById('modalPinjamTenorCustom').value) : Number(selectTenor);
 
-      if (!jumlah) return alert("Masukkan nominal!");
+      if (!jumlah || !tenor || tenor <= 0) return alert("Masukkan nominal dan tenor yang valid!");
 
       try {
         const res = await fetch(apiUrl, {
           method: 'POST',
-          body: JSON.stringify({ action: 'aju_pinjaman', nia: currentAnggota.nia, jumlah: Number(jumlah), tenor: Number(tenor) })
+          body: JSON.stringify({ action: 'aju_pinjaman', nia: currentAnggota.nia, jumlah: Number(jumlah), tenor: tenor })
         });
         const data = await res.json();
         alert(data.message);
@@ -703,10 +727,12 @@
       }
     }
 
-    // Kalkulator Simulasi dengan Bunga 1.5% Tetap & Pokok Berdasarkan Tenor
+    // Kalkulator Simulasi dengan Pilihan Tenor 3/5/10/12/18/24/Custom
     function hitungSimulasi() {
       const plafon = Number(document.getElementById('simPlafon').value) || 0;
-      const tenor = Number(document.getElementById('simTenor').value) || 12;
+      const selectTenor = document.getElementById('simTenorSelect').value;
+      let tenor = selectTenor === 'custom' ? (Number(document.getElementById('simTenorCustom').value) || 1) : Number(selectTenor);
+      if (tenor <= 0) tenor = 1;
       
       const bungaPerBulan = plafon * 0.015;  // 1.5% tetap per bulan
       const pokokPerBulan = plafon / tenor;   // Pokok menyesuaikan tenor
