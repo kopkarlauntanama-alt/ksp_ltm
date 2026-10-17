@@ -1,1 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard KSP Kopkar Launtanama</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans">
 
+  <!-- TOP BAR / HEADER -->
+  <header class="bg-indigo-900 text-white p-4 shadow-md flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <i data-lucide="building-2" class="w-7 h-7 text-indigo-300"></i>
+      <h1 class="text-xl font-bold tracking-wide">KSP KOPKAR LAUNTANAMA</h1>
+    </div>
+    <!-- ROLE SELECTOR -->
+    <div class="flex items-center gap-3 bg-indigo-950 px-3 py-1.5 rounded-lg border border-indigo-700">
+      <span class="text-xs text-indigo-200">Mode Tampilan:</span>
+      <select id="roleSelector" onchange="switchRole()" class="bg-indigo-900 text-white text-sm font-semibold focus:outline-none cursor-pointer">
+        <option value="pengurus">Login Pengurus (Admin)</option>
+        <option value="anggota">Login Anggota (Portal)</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+
+    <!-- CONFIGURATION CARD (API URL AUTO-FILLED) -->
+    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-3 items-center justify-between">
+      <div class="flex items-center gap-2 text-sm text-slate-600">
+        <i data-lucide="link" class="w-4 h-4 text-indigo-600"></i>
+        <span><strong>Web App API URL:</strong></span>
+      </div>
+      <input type="text" id="apiUrl" value="https://script.google.com/macros/s/AKfycbwShZWQ2yGNQ5Uh-4rfWDgPuHQWK7gHt6gd0HMOevRglvjHgxMKd5DRy00a0Pqz1lCs/exec" 
+             class="flex-1 w-full text-sm p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+      <button onclick="initApp()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition">
+        <i data-lucide="refresh-cw" class="w-4 h-4"></i> Muat Data
+      </button>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- 1. DASHBOARD PENGURUS (EXECUTIVE & FINANCIAL REPORT) -->
+    <!-- ================================================================= -->
+    <div id="viewPengurus" class="space-y-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+          <i data-lucide="layout-dashboard" class="text-indigo-600"></i> Dashboard Pengurus & Keuangan
+        </h2>
+        <span class="text-xs bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-semibold">Mode Pengawasan</span>
+      </div>
+
+      <!-- KPI METRICS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+          <p class="text-xs font-medium text-slate-500 uppercase">Total Aset KSP</p>
+          <h3 id="admTotalAset" class="text-2xl font-bold text-slate-900 mt-1">Rp 0</h3>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+          <p class="text-xs font-medium text-slate-500 uppercase">Total Simpanan</p>
+          <h3 id="admTotalSimpanan" class="text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+          <p class="text-xs font-medium text-slate-500 uppercase">Pinjaman Beredar</p>
+          <h3 id="admTotalPinjaman" class="text-2xl font-bold text-amber-600 mt-1">Rp 0</h3>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+          <p class="text-xs font-medium text-slate-500 uppercase">Pending Approval</p>
+          <h3 id="admPendingCount" class="text-2xl font-bold text-rose-600 mt-1">0</h3>
+        </div>
+      </div>
+
+      <!-- TABEL PENGAJUAN PINJAMAN -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="p-4 border-b border-slate-100 bg-slate-50">
+          <h3 class="font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="file-text" class="w-5 h-5 text-indigo-600"></i> Pengajuan Pinjaman Menunggu Persetujuan
+          </h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
+              <tr>
+                <th class="p-3">ID Pinjaman</th>
+                <th class="p-3">NIA</th>
+                <th class="p-3">Nominal</th>
+                <th class="p-3">Tenor</th>
+                <th class="p-3">Tanggal</th>
+                <th class="p-3 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tablePendingLoans" class="divide-y divide-slate-100">
+              <tr><td colspan="6" class="p-4 text-center text-slate-400">Tekan 'Muat Data' untuk melihat data.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- 2. DASHBOARD & LOGIN ANGGOTA -->
+    <!-- ================================================================= -->
+    <div id="viewAnggota" class="space-y-6 hidden">
+      
+      <!-- FORM LOGIN ANGGOTA PIN 6-DIGIT -->
+      <div id="cardLoginAnggota" class="bg-white max-w-md mx-auto p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
+        <div class="text-center">
+          <div class="inline-flex p-3 bg-emerald-50 text-emerald-600 rounded-full mb-2">
+            <i data-lucide="shield-check" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-800">Login Portal Anggota</h3>
+          <p class="text-xs text-slate-500">Masukkan NIA dan PIN 6-digit Anda</p>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs font-medium text-slate-600">Nomor Induk Anggota (NIA)</label>
+            <input type="text" id="loginNia" placeholder="Contoh: 1001" value="1001" class="w-full p-2 border border-slate-300 rounded-lg text-sm mt-1 outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+          <div>
+            <label class="text-xs font-medium text-slate-600">PIN 6-Digit</label>
+            <input type="password" id="loginPin" placeholder="******" maxlength="6" value="123456" class="w-full p-2 border border-slate-300 rounded-lg text-sm mt-1 outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+          <button onclick="submitLoginAnggota()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg font-semibold text-sm transition">
+            Masuk Portal
+          </button>
+        </div>
+      </div>
+
+      <!-- PANEL UTAMA SETELAH LOGIN ANGGOTA -->
+      <div id="panelMainAnggota" class="space-y-6 hidden">
+        <div class="flex justify-between items-center bg-emerald-900 text-white p-4 rounded-xl shadow-md">
+          <div>
+            <p class="text-xs text-emerald-200">Selamat Datang,</p>
+            <h3 id="memNama" class="text-xl font-bold">-</h3>
+            <p id="memNia" class="text-xs text-emerald-300">NIA: -</p>
+          </div>
+          <button onclick="logoutAnggota()" class="bg-emerald-800 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg border border-emerald-600">
+            Keluar
+          </button>
+        </div>
+
+        <!-- SALDO MEMBER -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <p class="text-xs font-medium text-slate-500 uppercase">Total Simpanan Saya</p>
+            <h3 id="memSimpanan" class="text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
+          </div>
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <p class="text-xs font-medium text-slate-500 uppercase">Sisa Pinjaman Saya</p>
+            <h3 id="memPinjaman" class="text-2xl font-bold text-rose-600 mt-1">Rp 0</h3>
+          </div>
+        </div>
+
+        <!-- TRANSAKSI MANDIRI & SIMULASI -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+            <h4 class="font-bold text-slate-800 border-b pb-2">Ajukan Pinjaman Baru</h4>
+            <div>
+              <label class="text-xs text-slate-600">Nominal (Rp)</label>
+              <input type="number" id="formPinjamNominal" placeholder="5000000" class="w-full p-2 border rounded-lg text-sm mt-1">
+            </div>
+            <div>
+              <label class="text-xs text-slate-600">Tenor (Bulan)</label>
+              <select id="formPinjamTenor" class="w-full p-2 border rounded-lg text-sm mt-1">
+                <option value="6">6 Bulan</option>
+                <option value="12" selected>12 Bulan</option>
+                <option value="24">24 Bulan</option>
+              </select>
+            </div>
+            <button onclick="submitPengajuanPinjaman()" class="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold">Kirim Pengajuan</button>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+            <h4 class="font-bold text-slate-800 border-b pb-2">Setor Simpanan / Bayar Angsuran</h4>
+            <div>
+              <label class="text-xs text-slate-600">Jenis Transaksi</label>
+              <select id="formTrxJenis" class="w-full p-2 border rounded-lg text-sm mt-1">
+                <option value="setor_simpanan">Setor Simpanan</option>
+                <option value="bayar_angsuran">Bayar Angsuran</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-slate-600">Nominal (Rp)</label>
+              <input type="number" id="formTrxNominal" placeholder="200000" class="w-full p-2 border rounded-lg text-sm mt-1">
+            </div>
+            <button onclick="submitTransaksi()" class="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold">Proses Transaksi</button>
+          </div>
+        </div>
+
+        <!-- KALKULATOR SIMULASI PINJAMAN -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+          <h4 class="font-bold text-slate-800 flex items-center gap-2 border-b pb-2">
+            <i data-lucide="calculator" class="w-5 h-5 text-indigo-600"></i> Kalkulator Simulasi Angsuran
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label class="text-xs text-slate-600">Rencana Plafon (Rp)</label>
+              <input type="number" id="simPlafon" placeholder="10000000" class="w-full p-2 border rounded-lg text-sm mt-1" oninput="hitungSimulasi()">
+            </div>
+            <div>
+              <label class="text-xs text-slate-600">Tenor (Bulan)</label>
+              <select id="simTenor" class="w-full p-2 border rounded-lg text-sm mt-1" onchange="hitungSimulasi()">
+                <option value="6">6 Bulan</option>
+                <option value="12" selected>12 Bulan</option>
+                <option value="24">24 Bulan</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-slate-600">Estimasi Cicilan / Bulan</label>
+              <div id="hasilSimulasi" class="p-2 bg-slate-50 border rounded-lg text-sm font-bold text-indigo-600 mt-1">Rp 0</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    let currentAnggota = null;
+
+    function formatRupiah(num) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num || 0);
+    }
+
+    function switchRole() {
+      const role = document.getElementById('roleSelector').value;
+      if (role === 'pengurus') {
+        document.getElementById('viewPengurus').classList.remove('hidden');
+        document.getElementById('viewAnggota').classList.add('hidden');
+      } else {
+        document.getElementById('viewPengurus').classList.add('hidden');
+        document.getElementById('viewAnggota').classList.remove('hidden');
+      }
+    }
+
+    function getApiUrl() {
+      const url = document.getElementById('apiUrl').value.trim();
+      if (!url) {
+        alert("Harap isi Web App API URL Google Apps Script Anda terlebih dahulu!");
+        return null;
+      }
+      return url;
+    }
+
+    function initApp() {
+      loadDashboardData();
+    }
+
+    // Auto-load saat halaman web pertama kali dibuka
+    window.addEventListener('DOMContentLoaded', () => {
+      initApp();
+    });
+
+    // DASHBOARD PENGURUS
+    async function loadDashboardData() {
+      const apiUrl = getApiUrl();
+      if (!apiUrl) return;
+
+      try {
+        const resSum = await fetch(`${apiUrl}?action=admin_dashboard`);
+        const dataSum = await resSum.json();
+
+        if (dataSum.status) {
+          document.getElementById('admTotalAset').innerText = formatRupiah(dataSum.data.total_aset);
+          document.getElementById('admTotalSimpanan').innerText = formatRupiah(dataSum.data.total_simpanan);
+          document.getElementById('admTotalPinjaman').innerText = formatRupiah(dataSum.data.total_pinjaman);
+          document.getElementById('admPendingCount').innerText = dataSum.data.pending_approval;
+        }
+
+        const resLoans = await fetch(`${apiUrl}?action=get_pending_loans`);
+        const dataLoans = await resLoans.json();
+
+        const tableBody = document.getElementById('tablePendingLoans');
+        tableBody.innerHTML = '';
+
+        if (dataLoans.status && dataLoans.data.list.length > 0) {
+          dataLoans.data.list.forEach(item => {
+            tableBody.innerHTML += `
+              <tr class="border-b border-slate-100">
+                <td class="p-3 font-mono text-xs font-bold">${item.id_pinjaman}</td>
+                <td class="p-3">${item.nia}</td>
+                <td class="p-3 font-semibold">${formatRupiah(item.jumlah)}</td>
+                <td class="p-3">${item.tenor} Bln</td>
+                <td class="p-3 text-xs">${new Date(item.tanggal).toLocaleDateString('id-ID')}</td>
+                <td class="p-3 text-center space-x-1">
+                  <button onclick="approveLoan('${item.id_pinjaman}', 'Disetujui')" class="bg-emerald-600 text-white text-xs px-2 py-1 rounded">Setujui</button>
+                  <button onclick="approveLoan('${item.id_pinjaman}', 'Ditolak')" class="bg-rose-600 text-white text-xs px-2 py-1 rounded">Tolak</button>
+                </td>
+              </tr>
+            `;
+          });
+        } else {
+          tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">Tidak ada pengajuan pinjaman pending.</td></tr>`;
+        }
+      } catch (err) {
+        alert("Gagal memuat data dari API: " + err.message);
+      }
+    }
+
+    async function approveLoan(idPinjaman, status) {
+      const apiUrl = getApiUrl();
+      if (!apiUrl) return;
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'approve_pinjaman', id_pinjaman: idPinjaman, status: status })
+        });
+        const data = await res.json();
+        alert(data.message);
+        loadDashboardData();
+      } catch (err) {
+        alert("Gagal memproses approval: " + err.message);
+      }
+    }
+
+    // LOGIN & PORTAL ANGGOTA
+    async function submitLoginAnggota() {
+      const apiUrl = getApiUrl();
+      const nia = document.getElementById('loginNia').value.trim();
+      const pin = document.getElementById('loginPin').value.trim();
+
+      if (!apiUrl || !nia || !pin) {
+        alert("Lengkapi NIA dan PIN!");
+        return;
+      }
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'login_anggota', nia: nia, pin: pin })
+        });
+        const data = await res.json();
+
+        if (data.status) {
+          currentAnggota = data.data;
+          document.getElementById('memNama').innerText = currentAnggota.nama;
+          document.getElementById('memNia').innerText = "NIA: " + currentAnggota.nia;
+          document.getElementById('memSimpanan').innerText = formatRupiah(currentAnggota.simpanan);
+          document.getElementById('memPinjaman').innerText = formatRupiah(currentAnggota.pinjaman);
+
+          document.getElementById('cardLoginAnggota').classList.add('hidden');
+          document.getElementById('panelMainAnggota').classList.remove('hidden');
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        alert("Login Gagal: " + err.message);
+      }
+    }
+
+    function logoutAnggota() {
+      currentAnggota = null;
+      document.getElementById('cardLoginAnggota').classList.remove('hidden');
+      document.getElementById('panelMainAnggota').classList.add('hidden');
+    }
+
+    async function submitPengajuanPinjaman() {
+      const apiUrl = getApiUrl();
+      const jumlah = document.getElementById('formPinjamNominal').value;
+      const tenor = document.getElementById('formPinjamTenor').value;
+
+      if (!apiUrl || !jumlah) return alert("Masukkan nominal!");
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'aju_pinjaman', nia: currentAnggota.nia, jumlah: Number(jumlah), tenor: Number(tenor) })
+        });
+        const data = await res.json();
+        alert(data.message);
+        document.getElementById('formPinjamNominal').value = '';
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    async function submitTransaksi() {
+      const apiUrl = getApiUrl();
+      const jenis = document.getElementById('formTrxJenis').value;
+      const nominal = document.getElementById('formTrxNominal').value;
+
+      if (!apiUrl || !nominal) return alert("Masukkan nominal!");
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: jenis, nia: currentAnggota.nia, nominal: Number(nominal) })
+        });
+        const data = await res.json();
+        alert(data.message);
+        document.getElementById('formTrxNominal').value = '';
+        
+        const resSaldo = await fetch(`${apiUrl}?action=cek_saldo&nia=${currentAnggota.nia}`);
+        const dataSaldo = await resSaldo.json();
+        if (dataSaldo.status) {
+          document.getElementById('memSimpanan').innerText = formatRupiah(dataSaldo.data.simpanan);
+          document.getElementById('memPinjaman').innerText = formatRupiah(dataSaldo.data.pinjaman);
+        }
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    function hitungSimulasi() {
+      const plafon = Number(document.getElementById('simPlafon').value) || 0;
+      const tenor = Number(document.getElementById('simTenor').value) || 12;
+      
+      const jasaBungaPerBulan = plafon * 0.01;
+      const pokokPerBulan = plafon / tenor;
+      const totalCicilanPerBulan = pokokPerBulan + jasaBungaPerBulan;
+      
+      document.getElementById('hasilSimulasi').innerText = formatRupiah(totalCicilanPerBulan);
+    }
+  </script>
+</body>
+</html>
