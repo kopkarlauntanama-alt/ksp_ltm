@@ -25,7 +25,7 @@
   <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 w-full flex-1">
 
     <!-- ================================================================= -->
-    <!-- 0. HALAMAN UTAMA / LANDING PAGE -->
+    <!-- 0. HALAMAN UTAMA / LANDING PAGE (DENGAN 3 PORTAL) -->
     <!-- ================================================================= -->
     <div id="viewLanding" class="space-y-6 py-6">
       
@@ -34,10 +34,11 @@
           <i data-lucide="landmark" class="w-8 h-8"></i>
         </div>
         <h2 class="text-2xl md:text-3xl font-bold tracking-wide">SISTEM INFORMASI KSP</h2>
-        <p class="text-sm md:text-base text-emerald-200/80">Satu sistem terpadu, pengelolaan simpanan, pinjaman, & verifikasi otomatis potongan gaji perusahaan</p>
+        <p class="text-sm md:text-base text-emerald-200/80">Satu sistem terpadu, pengelolaan simpanan, pinjaman, & verifikasi potongan gaji</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <!-- PORTAL 1: PENGURUS -->
         <div onclick="pilihPortal('pengurus')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
           <div class="space-y-3">
             <div class="inline-flex p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
@@ -50,11 +51,12 @@
           </div>
           <div>
             <span class="inline-block text-xs font-semibold bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">
-              Akses internal
+              Akses Internal
             </span>
           </div>
         </div>
 
+        <!-- PORTAL 2: ANGGOTA REGULER -->
         <div onclick="pilihPortal('anggota')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-emerald-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
           <div class="space-y-3">
             <div class="inline-flex p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
@@ -62,16 +64,35 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Anggota</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
-              Cek rincian simpanan, akumulasi potongan gaji bulanan, status realtime verifikasi potong gaji perusahaan, & pengajuan mandiri.
+              Cek rincian simpanan pokok/wajib/sukarela, akumulasi potongan gaji bulanan, status verifikasi perusahaan, & pengajuan pinjaman.
             </p>
           </div>
           <div>
             <span class="inline-block text-xs font-semibold bg-blue-50 text-blue-700 px-3 py-1 rounded-full">
-              Akses pribadi
+              Akses Karyawan
+            </span>
+          </div>
+        </div>
+
+        <!-- PORTAL 3: ANGGOTA KHUSUS -->
+        <div onclick="pilihPortal('anggotaKhusus')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-purple-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="inline-flex p-2.5 bg-purple-50 text-purple-600 rounded-xl">
+              <i data-lucide="user-check" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Portal Anggota Khusus</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Khusus anggota bebas simpanan pokok/wajib/sukarela dan tanpa pemotongan gaji perusahaan, dengan layanan pinjaman mandiri.
+            </p>
+          </div>
+          <div>
+            <span class="inline-block text-xs font-semibold bg-purple-50 text-purple-700 px-3 py-1 rounded-full">
+              Kategori Khusus
             </span>
           </div>
         </div>
       </div>
+
     </div>
 
 
@@ -115,7 +136,7 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 1: RINGKASAN EKSEKUTIF (DENGAN INFORMASI STATUS VERIFIKASI GAJI UTAMA) -->
+      <!-- KONTEN TAB 1: RINGKASAN EKSEKUTIF -->
       <div id="contentTabKpi" class="space-y-6">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
           <div class="flex justify-between items-start border-b pb-4">
@@ -130,7 +151,7 @@
             <div class="space-y-1 p-4 bg-slate-50 rounded-xl border">
               <p class="text-xs font-medium text-slate-500">Anggota Aktif</p>
               <h3 class="text-2xl font-bold text-slate-900">385</h3>
-              <p class="text-xs text-slate-500">Pelaksana, Staff, & Management</p>
+              <p class="text-xs text-slate-500">Pelaksana, Staff, & Management/Khusus</p>
             </div>
             <div class="space-y-1 p-4 bg-slate-50 rounded-xl border">
               <p class="text-xs font-medium text-slate-500">Total Aset</p>
@@ -143,18 +164,15 @@
               <p class="text-xs text-slate-500">Butuh verifikasi pengurus</p>
             </div>
             
-            <!-- WIDGET INFORMASI VERIFIKASI POTONG GAJI PERUSAHAAN (POIN BARU) -->
             <div class="space-y-1 p-4 bg-indigo-50/70 rounded-xl border border-indigo-200">
               <p class="text-xs font-semibold text-indigo-900">Potong Gaji Bulan Ini (Oktober 2026)</p>
-              <div id="widgetStatusGajiHeader" class="pt-1">
-                <!-- Status Terbayar/Belum Terbayar Diisi JS -->
-              </div>
+              <div id="widgetStatusGajiHeader" class="pt-1"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- KONTEN TAB BARU: MENU VERIFIKASI PEMBAYARAN POTONG GAJI PERUSAHAAN -->
+      <!-- KONTEN TAB: MENU VERIFIKASI PEMBAYARAN POTONG GAJI PERUSAHAAN -->
       <div id="contentTabVerifGaji" class="space-y-6 hidden">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
           <div class="flex justify-between items-center border-b pb-4">
@@ -179,15 +197,13 @@
                   <th class="p-3 text-center">Aksi Verifikasi Pengurus</th>
                 </tr>
               </thead>
-              <tbody id="tableVerifGajiPerusahaan" class="divide-y divide-slate-100">
-                <!-- Dinamis JS -->
-              </tbody>
+              <tbody id="tableVerifGajiPerusahaan" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN -->
+      <!-- KONTEN TAB: PERSETUJUAN PINJAMAN -->
       <div id="contentTabApproval" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-3">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex flex-wrap justify-between items-center gap-3">
@@ -241,16 +257,15 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 3: DATA SIMPANAN ANGGOTA -->
+      <!-- KONTEN TAB: DATA SIMPANAN ANGGOTA -->
       <div id="contentTabSimpanan" class="space-y-6 hidden">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-          
           <div class="flex flex-wrap justify-between items-center gap-4 border-b pb-4">
             <div>
               <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
                 <i data-lucide="wallet" class="w-5 h-5 text-emerald-600"></i> Pengelolaan & Verifikasi Simpanan Anggota
               </h3>
-              <p class="text-xs text-slate-500">Filter berdasarkan kategori (Management/Staff/Pelaksana), centang nama anggota, dan tentukan rentang bulan pembayaran.</p>
+              <p class="text-xs text-slate-500">Filter berdasarkan kategori (Management/Staff/Pelaksana/Khusus), centang nama anggota, dan tentukan rentang bulan pembayaran.</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2 text-xs">
@@ -261,7 +276,6 @@
             </div>
           </div>
 
-          <!-- PANEL FILTER KATEGORI & RENTANG VERIFIKASI PEMBAYARAN -->
           <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-4 text-xs">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
               <div class="flex items-center gap-2">
@@ -270,18 +284,14 @@
                 </label>
                 <select id="filterKategoriSimpanan" class="p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-800 focus:outline-none focus:border-indigo-500" onchange="renderTabelSimpananPengurus()">
                   <option value="Semua">-- Semua Kategori --</option>
-                  <option value="Management">Management (Non-Potong Gaji / Transfer)</option>
+                  <option value="Management">Management</option>
                   <option value="Staff">Staff</option>
                   <option value="Pelaksana">Pelaksana</option>
+                  <option value="Khusus">Anggota Khusus (Bebas Simpanan Wajib/Pokok)</option>
                 </select>
-              </div>
-
-              <div class="text-slate-500 text-[11px] italic">
-                *Centang nama anggota yang akan diverifikasi pembayarannya pada rentang bulan/tahun di bawah.
               </div>
             </div>
 
-            <!-- RENTANG BULAN & TAHUN PEMBAYARAN -->
             <div class="space-y-2">
               <p class="font-bold text-slate-800 flex items-center gap-1.5">
                 <i data-lucide="calendar-range" class="w-4 h-4 text-indigo-600"></i> Tentukan Rentang Bulan & Tahun Pembayaran Simpanan Wajib / Sukarela:
@@ -326,7 +336,6 @@
             </div>
           </div>
 
-          <!-- TABEL DATA SIMPANAN ANGGOTA DENGAN CHECKBOX -->
           <div class="overflow-x-auto border rounded-xl">
             <table class="w-full text-left text-sm">
               <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
@@ -345,11 +354,10 @@
               <tbody id="tableSimpananPengurus" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
-
         </div>
       </div>
 
-      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA -->
+      <!-- KONTEN TAB: DATA PINJAMAN ANGGOTA -->
       <div id="contentTabPinjaman" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-2">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
@@ -381,7 +389,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- 2. PORTAL ANGGOTA -->
+    <!-- 2. PORTAL ANGGOTA (REGULER / KARYAWAN) -->
     <!-- ================================================================= -->
     <div id="viewAnggota" class="space-y-6 hidden max-w-4xl mx-auto">
       
@@ -455,7 +463,7 @@
           </div>
         </div>
 
-        <!-- STATUS REALTIME PEMBAYARAN POTONG GAJI DARI PERUSAHAAN (POIN BARU) -->
+        <!-- STATUS REALTIME PEMBAYARAN POTONG GAJI PERUSAHAAN -->
         <div id="boxStatusPembayaranGaji" class="p-4 rounded-2xl border text-xs space-y-2 shadow-xs"></div>
 
         <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex justify-end items-center gap-2">
@@ -490,9 +498,97 @@
       </div>
     </div>
 
+
+    <!-- ================================================================= -->
+    <!-- 3. PORTAL ANGGOTA KHUSUS (BEBAS SIMPANAN WAJIB/POKOK & TANPA POTONG GAJI) -->
+    <!-- ================================================================= -->
+    <div id="viewAnggotaKhusus" class="space-y-6 hidden max-w-4xl mx-auto">
+      
+      <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+        
+        <div class="flex items-center justify-between border-b pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 bg-purple-100 text-purple-800 rounded-full flex items-center justify-center font-semibold border border-purple-200">
+              <i data-lucide="user-check" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 id="memKhususNama" class="text-base font-bold text-slate-900 leading-tight">Halo, Dr. Anton Wijaya</h3>
+              <p id="memKhususInfoTipe" class="text-xs text-slate-500">No. Register: <span id="memKhususRegText">KSP-9001</span> | Tipe: <span class="font-semibold text-purple-700">Anggota Khusus</span></p>
+            </div>
+          </div>
+          <button onclick="kembaliKeMenuUtama()" title="Menu Utama" class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition">
+            <i data-lucide="home" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div id="boxNotifikasiAnggotaKhusus" class="space-y-3"></div>
+
+        <!-- KARTU RINGKASAN SIMPANAN (BEBAS SIMPANAN WAJIB / POKOK) -->
+        <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-4 shadow-sm border border-purple-900">
+          <div>
+            <div class="flex justify-between items-center">
+              <p class="text-xs font-medium text-purple-200/80">Total Simpanan Saya</p>
+              <span class="bg-purple-800 text-purple-200 text-[10px] px-2 py-0.5 rounded-full font-bold">Bebas Simpanan Wajib & Pokok</span>
+            </div>
+            <h2 id="memKhususTotalSimpanan" class="text-2xl md:text-3xl font-bold tracking-tight mt-1">Rp 0</h2>
+          </div>
+          <hr class="border-slate-800">
+          <div class="grid grid-cols-3 gap-y-3 gap-x-2 text-xs">
+            <div>
+              <p class="text-slate-400">Simpanan Pokok</p>
+              <p class="font-bold text-sm text-slate-300 mt-0.5">Rp 0 (Dibebaskan)</p>
+            </div>
+            <div>
+              <p class="text-slate-400">Simpanan Wajib</p>
+              <p class="font-bold text-sm text-slate-300 mt-0.5">Rp 0 (Dibebaskan)</p>
+            </div>
+            <div>
+              <p class="text-slate-400">Simpanan Sukarela</p>
+              <p id="memKhususSimSukarela" class="font-bold text-sm text-purple-300 mt-0.5">Rp 0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOMBOL PENGAJUAN PINJAMAN MANDIRI -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center">
+          <span class="text-xs font-semibold text-slate-600">Layanan Pinjaman Mandiri Anggota Khusus</span>
+          <div class="flex gap-2">
+            <button onclick="bukaModalForm('Pengajuan')" class="text-xs bg-indigo-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">Pinjam Baru</button>
+            <button onclick="bukaModalForm('Topup')" class="text-xs bg-amber-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-amber-700 transition">Top-Up Pinjaman</button>
+          </div>
+        </div>
+
+        <!-- TABEL RINCIAN PINJAMAN AKTIF ANGGOTA KHUSUS -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-2">
+          <div class="p-4 border-b border-slate-100 bg-slate-50">
+            <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
+              <i data-lucide="history" class="w-4 h-4 text-purple-600"></i> Rincian Pinjaman Aktif & Status Pengajuan Saya
+            </h4>
+          </div>
+          <div class="overflow-x-auto px-4 pb-4">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
+                <tr>
+                  <th class="p-3">Tanggal</th>
+                  <th class="p-3">Kategori Pinjaman</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3">Plafon</th>
+                  <th class="p-3">Angsuran/Bulan</th>
+                  <th class="p-3">Tenor</th>
+                  <th class="p-3">Periode</th>
+                </tr>
+              </thead>
+              <tbody id="tableRiwayatPinjamanAnggotaKhusus" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
-  <!-- MODAL-MODAL PERUSAHAAN & PENGURUS -->
+  <!-- MODAL MODAL PENGURUS & SISTEM -->
   <div id="modalPencairanBatch" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white max-w-sm w-full rounded-2xl shadow-xl p-6 space-y-4">
       <h3 class="font-bold text-slate-800 text-sm">Konfirmasi Tanggal Pencairan Massal</h3>
@@ -607,13 +703,12 @@
   <script>
     lucide.createIcons();
 
-    // STATE PUSAT PEMBAYARAN POTONG GAJI PERUSAHAAN
     let daftarTagihanGajiPerusahaan = [
       { id: "TG-2026-09", periode: "September 2026", nominal: 142500000, terbayar: true, tglVerif: "2026-09-28" },
       { id: "TG-2026-10", periode: "Oktober 2026", nominal: 148750000, terbayar: false, tglVerif: "-" }
     ];
 
-    let currentAnggota = { 
+    let currentAnggotaReguler = { 
       nia: "KSP-1001", 
       nama: "Budi Santoso", 
       tipe: "Staff", 
@@ -622,23 +717,36 @@
       simSukarela: 100000
     };
 
+    // STATE ANGGOTA KHUSUS (BEBAS SIMPANAN WAJIB & POKOK)
+    let currentAnggotaKhusus = {
+      nia: "KSP-9001",
+      nama: "Dr. Anton Wijaya",
+      tipe: "Khusus",
+      simPokok: 0,
+      simWajib: 0,
+      simSukarela: 0 // Hanya bertambah jika ada permintaan khusus
+    };
+
     let dataSimpananSemuaAnggota = [
+      { nia: "KSP-9001", nama: "Dr. Anton Wijaya", tipe: "Khusus", simPokok: 0, simWajib: 0, simSukarela: 0, statusVerif: "Bebas Simpanan Wajib/Pokok" },
       { nia: "KSP-3001", nama: "Drs. Bambang Haryono", tipe: "Management", simPokok: 1000000, simWajib: 5000000, simSukarela: 1500000, statusVerif: "Manual / Non-Potong Gaji" },
       { nia: "KSP-1001", nama: "Budi Santoso", tipe: "Staff", simPokok: 500000, simWajib: 2200000, simSukarela: 100000, statusVerif: "Belum Dibatayarkan" },
       { nia: "KSP-1002", nama: "Siti Aminah", tipe: "Pelaksana", simPokok: 500000, simWajib: 1200000, simSukarela: 100000, statusVerif: "Belum Dibatayarkan" }
     ];
 
     let daftarPengajuan = [
-      { id: "P-001", tanggal: "2026-10-18", nia: "KSP-1001", nama: "Budi Santoso", kategori: "Pinjaman Uang", plafon: 5000000, tenor: 12, status: "Pending", bulanCair: "November", tahunCair: "2026" }
+      { id: "P-001", tanggal: "2026-10-18", nia: "KSP-1001", nama: "Budi Santoso", kategori: "Pinjaman Uang", plafon: 5000000, tenor: 12, status: "Pending", bulanCair: "November", tahunCair: "2026" },
+      { id: "P-002", tanggal: "2026-10-17", nia: "KSP-9001", nama: "Dr. Anton Wijaya", kategori: "Pinjaman Barang", plafon: 12000000, tenor: 24, status: "Pending", bulanCair: "November", tahunCair: "2026" }
     ];
 
     let daftarPinjamanAktif = [
-      { id: "L-101", nia: "KSP-1001", nama: "Budi Santoso", kategori: "Pinjaman Uang", sisaPokok: 2500000, angsuranPerBulan: 491667, tenorSisa: 6, akhirPotongan: "Okt 2027" }
+      { id: "L-101", nia: "KSP-1001", nama: "Budi Santoso", kategori: "Pinjaman Uang", sisaPokok: 2500000, angsuranPerBulan: 491667, tenorSisa: 6, akhirPotongan: "Okt 2027" },
+      { id: "L-102", nia: "KSP-9001", nama: "Dr. Anton Wijaya", kategori: "Pinjaman Barang", sisaPokok: 10000000, angsuranPerBulan: 566667, tenorSisa: 20, akhirPotongan: "Jun 2028" }
     ];
 
     let notifikasiAnggota = {
       tipe: "info",
-      pesan: "Pengajuan Pinjaman Uang sebesar Rp 5.000.000 sedang dalam antrean verifikasi pengurus."
+      pesan: "Pengajuan Pinjaman Anda sedang dalam antrean verifikasi pengurus."
     };
 
     function formatRupiah(num) {
@@ -659,18 +767,24 @@
     function pilihPortal(role) {
       document.getElementById('viewLanding').classList.add('hidden');
       document.getElementById('headerNav').classList.remove('hidden');
+
+      document.getElementById('viewPengurus').classList.add('hidden');
+      document.getElementById('viewAnggota').classList.add('hidden');
+      document.getElementById('viewAnggotaKhusus').classList.add('hidden');
+
       if (role === 'pengurus') {
         document.getElementById('viewPengurus').classList.remove('hidden');
-        document.getElementById('viewAnggota').classList.add('hidden');
         renderHeaderWidgetGaji();
         renderTableVerifGajiPerusahaan();
         renderTablePending();
         renderTabelSimpananPengurus();
         renderTablePinjamanAktif();
-      } else {
-        document.getElementById('viewPengurus').classList.add('hidden');
+      } else if (role === 'anggota') {
         document.getElementById('viewAnggota').classList.remove('hidden');
         muatDataAnggotaPortal();
+      } else if (role === 'anggotaKhusus') {
+        document.getElementById('viewAnggotaKhusus').classList.remove('hidden');
+        muatDataAnggotaKhususPortal();
       }
     }
 
@@ -678,6 +792,7 @@
       document.getElementById('viewLanding').classList.remove('hidden');
       document.getElementById('viewPengurus').classList.add('hidden');
       document.getElementById('viewAnggota').classList.add('hidden');
+      document.getElementById('viewAnggotaKhusus').classList.add('hidden');
       document.getElementById('headerNav').classList.add('hidden');
     }
 
@@ -717,7 +832,6 @@
       }
     }
 
-    // --- WIDGET INFORMASI TAMPILAN DEPAN DASHBOARD PENGURUS ---
     function renderHeaderWidgetGaji() {
       const tgBulanIni = daftarTagihanGajiPerusahaan.find(x => x.periode === "Oktober 2026");
       const container = document.getElementById('widgetStatusGajiHeader');
@@ -737,7 +851,6 @@
       lucide.createIcons();
     }
 
-    // --- RENDER & EKSEKUSI VERIFIKASI PEMBAYARAN POTONG GAJI PERUSAHAAN ---
     function renderTableVerifGajiPerusahaan() {
       const tbody = document.getElementById('tableVerifGajiPerusahaan');
       tbody.innerHTML = '';
@@ -763,7 +876,6 @@
       lucide.createIcons();
     }
 
-    // OTOMATISASI PENAMBAHAN SIMPANAN WAJIB & SUKARELA SAAT DIVERIFIKASI
     function verifikasiTagihanGajiPerusahaan(id) {
       const item = daftarTagihanGajiPerusahaan.find(x => x.id === id);
       if (!item) return;
@@ -771,7 +883,6 @@
       item.terbayar = true;
       item.tglVerif = new Date().toISOString().slice(0, 10);
 
-      // Otomatis menambah Simpanan Wajib & Sukarela seluruh Anggota Staff & Pelaksana
       dataSimpananSemuaAnggota.forEach(ang => {
         if (ang.tipe === "Staff" || ang.tipe === "Pelaksana") {
           ang.simWajib += 100000;
@@ -780,20 +891,18 @@
         }
       });
 
-      // Otomatis meng-update data anggota aktif (Budi Santoso)
-      if (currentAnggota.tipe === "Staff" || currentAnggota.tipe === "Pelaksana") {
-        currentAnggota.simWajib += 100000;
-        currentAnggota.simSukarela += 25000;
+      if (currentAnggotaReguler.tipe === "Staff" || currentAnggotaReguler.tipe === "Pelaksana") {
+        currentAnggotaReguler.simWajib += 100000;
+        currentAnggotaReguler.simSukarela += 25000;
       }
 
       renderTableVerifGajiPerusahaan();
       renderHeaderWidgetGaji();
       renderTabelSimpananPengurus();
 
-      alert(`Pembayaran Potong Gaji Perusahaan ${item.periode} Berhasil Diverifikasi!\nSistem telah otomatis melunasi simpanan wajib & sukarela seluruh anggota kategori Staff dan Pelaksana.`);
+      alert(`Pembayaran Potong Gaji Perusahaan ${item.periode} Berhasil Diverifikasi!`);
     }
 
-    // --- RENDER TABEL SIMPANAN PENGURUS ---
     function renderTabelSimpananPengurus() {
       const tbody = document.getElementById('tableSimpananPengurus');
       const katFilter = document.getElementById('filterKategoriSimpanan').value;
@@ -811,7 +920,7 @@
 
       filteredData.forEach(item => {
         const total = item.simPokok + item.simWajib + item.simSukarela;
-        const isTerverif = item.statusVerif.includes("Terverifikasi");
+        const isTerverif = item.statusVerif.includes("Terverifikasi") || item.statusVerif.includes("Bebas");
         const badgeVerif = isTerverif 
           ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-1 rounded-full font-bold">${item.statusVerif}</span>`
           : `<span class="bg-rose-100 text-rose-800 text-[10px] px-2.5 py-1 rounded-full font-bold">${item.statusVerif}</span>`;
@@ -850,26 +959,27 @@
 
       dataSimpananSemuaAnggota.forEach(item => {
         if (daftarNiaTerpilih.includes(item.nia)) {
-          item.simWajib += 200000; 
+          if (item.tipe !== "Khusus") {
+            item.simWajib += 200000; 
+          }
           item.statusVerif = `Terverifikasi (${bMulai} ${tMulai} - ${bAkhir} ${tAkhir})`;
         }
       });
 
       renderTabelSimpananPengurus();
-      alert(`Berhasil memverifikasi pembayaran simpanan wajib untuk ${daftarNiaTerpilih.length} anggota terpilih!`);
+      alert(`Berhasil memverifikasi pembayaran simpanan untuk ${daftarNiaTerpilih.length} anggota terpilih!`);
     }
 
     function importDataSimpananPengurus(event) {
       const file = event.target.files[0];
       if (!file) return;
       dataSimpananSemuaAnggota.forEach(item => {
-        item.simWajib += 100000;
+        if (item.tipe !== "Khusus") item.simWajib += 100000;
       });
       renderTabelSimpananPengurus();
       alert("Data simpanan berhasil di-import!");
     }
 
-    // --- RENDER TABEL PERSETUJUAN PINJAMAN ---
     function renderTablePending() {
       const tbody = document.getElementById('tablePendingLoans');
       const tglMulai = document.getElementById('filterTglMulai').value;
@@ -954,7 +1064,7 @@
       tutupModal('modalPencairanBatch');
       renderTablePending();
       renderTablePinjamanAktif();
-      alert("Pengajuan berhasil disetujui, dipindahkan ke data pinjaman, dan notifikasi dikirim ke anggota!");
+      alert("Pengajuan berhasil disetujui, dipindahkan ke data pinjaman, dan notifikasi dikirim!");
     }
 
     function bukaModalEditTolak(id) {
@@ -1093,15 +1203,15 @@
       tutupModal('modalExportPencairan');
     }
 
-    // --- PORTAL ANGGOTA (BERHUBUNGAN LANGSUNG DENGAN STATUS VERIFIKASI GAJI PERUSAHAAN) ---
+    // --- PORTAL ANGGOTA REGULER ---
     function muatDataAnggotaPortal() {
-      document.getElementById('memNama').innerText = "Halo, " + currentAnggota.nama;
-      document.getElementById('memRegText').innerText = currentAnggota.nia;
-      document.getElementById('badgeTipeAnggota').innerText = currentAnggota.tipe;
-      document.getElementById('memTotalSimpanan').innerText = formatRupiah(currentAnggota.simPokok + currentAnggota.simWajib + currentAnggota.simSukarela);
-      document.getElementById('memSimPokok').innerText = formatRupiah(currentAnggota.simPokok);
-      document.getElementById('memSimWajib').innerText = formatRupiah(currentAnggota.simWajib);
-      document.getElementById('memSimSukarela').innerText = formatRupiah(currentAnggota.simSukarela);
+      document.getElementById('memNama').innerText = "Halo, " + currentAnggotaReguler.nama;
+      document.getElementById('memRegText').innerText = currentAnggotaReguler.nia;
+      document.getElementById('badgeTipeAnggota').innerText = currentAnggotaReguler.tipe;
+      document.getElementById('memTotalSimpanan').innerText = formatRupiah(currentAnggotaReguler.simPokok + currentAnggotaReguler.simWajib + currentAnggotaReguler.simSukarela);
+      document.getElementById('memSimPokok').innerText = formatRupiah(currentAnggotaReguler.simPokok);
+      document.getElementById('memSimWajib').innerText = formatRupiah(currentAnggotaReguler.simWajib);
+      document.getElementById('memSimSukarela').innerText = formatRupiah(currentAnggotaReguler.simSukarela);
 
       const notifBox = document.getElementById('boxNotifikasiAnggota');
       if (notifikasiAnggota.tipe === 'dicairkan') {
@@ -1135,6 +1245,34 @@
       lucide.createIcons();
     }
 
+    // --- PORTAL ANGGOTA KHUSUS (BEBAS SIMPANAN WAJIB/POKOK & TANPA POTONG GAJI) ---
+    function muatDataAnggotaKhususPortal() {
+      document.getElementById('memKhususNama').innerText = "Halo, " + currentAnggotaKhusus.nama;
+      document.getElementById('memKhususRegText').innerText = currentAnggotaKhusus.nia;
+      document.getElementById('memKhususTotalSimpanan').innerText = formatRupiah(currentAnggotaKhusus.simSukarela);
+      document.getElementById('memKhususSimSukarela').innerText = formatRupiah(currentAnggotaKhusus.simSukarela);
+
+      const notifBox = document.getElementById('boxNotifikasiAnggotaKhusus');
+      if (notifikasiAnggota.tipe === 'dicairkan') {
+        notifBox.innerHTML = `
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900 space-y-2">
+            <p class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Informasi Pencairan Dana:</p>
+            <p>${notifikasiAnggota.pesan}</p>
+          </div>
+        `;
+      } else {
+        notifBox.innerHTML = `
+          <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl text-xs text-purple-950">
+            <p class="font-bold flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4 text-purple-600"></i> Portal Anggota Khusus:</p>
+            <p class="mt-1">${notifikasiAnggota.pesan}</p>
+          </div>
+        `;
+      }
+
+      renderRiwayatPinjamanAnggotaKhusus();
+      lucide.createIcons();
+    }
+
     function setujuiPerubahanOlehAnggota(isSetuju) {
       if (isSetuju) {
         alert("Anda telah menyetujui perubahan dari pengurus!");
@@ -1162,7 +1300,6 @@
       document.getElementById('summaryAngsBarang').innerText = formatRupiah(angsBarang);
       document.getElementById('summaryTotalPotongan').innerText = formatRupiah(total);
 
-      // INFORMASI STATUS PEMBAYARAN DI PORTAL ANGGOTA BERDASARKAN STATUS VERIFIKASI PENGURUS
       const tagihanPerusahaan = daftarTagihanGajiPerusahaan.find(x => x.periode === filterKey);
       const isLunas = tagihanPerusahaan ? tagihanPerusahaan.terbayar : false;
 
@@ -1177,7 +1314,7 @@
             </span>
             <span class="bg-emerald-600 text-white text-xs px-2.5 py-0.5 rounded-full font-bold">TERBAYAR (LUNAS)</span>
           </div>
-          <p class="text-slate-600">Potongan gaji Anda periode <span class="font-bold">${filterKey}</span> telah diverifikasi terbayar oleh pengurus. Simpanan Wajib & Sukarela Anda otomatis bertambah.</p>
+          <p class="text-slate-600">Potongan gaji Anda periode <span class="font-bold">${filterKey}</span> telah diverifikasi terbayar oleh pengurus.</p>
         `;
       } else {
         boxStatus.className = "p-4 bg-rose-50 rounded-2xl border border-rose-200 text-xs space-y-2 text-rose-950";
@@ -1198,13 +1335,37 @@
     function renderRiwayatPinjamanAnggota() {
       const tbody = document.getElementById('tableRiwayatPinjamanAnggota');
       tbody.innerHTML = '';
-      daftarPengajuan.forEach(p => {
+      const list = daftarPengajuan.filter(x => x.nia === currentAnggotaReguler.nia);
+      list.forEach(p => {
         tbody.innerHTML += `
           <tr class="border-b border-slate-100 text-xs">
             <td class="p-3 font-mono">${p.tanggal}</td>
             <td class="p-3 font-medium">${p.kategori}</td>
             <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">${p.status}</span></td>
             <td class="p-3 font-semibold">${formatRupiah(p.plafon)}</td>
+            <td class="p-3">-</td>
+            <td class="p-3">${p.tenor} Bulan</td>
+            <td class="p-3 font-mono">${p.bulanCair} ${p.tahunCair}</td>
+          </tr>
+        `;
+      });
+    }
+
+    function renderRiwayatPinjamanAnggotaKhusus() {
+      const tbody = document.getElementById('tableRiwayatPinjamanAnggotaKhusus');
+      tbody.innerHTML = '';
+      const list = daftarPengajuan.filter(x => x.nia === currentAnggotaKhusus.nia);
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Belum ada riwayat pengajuan pinjaman.</td></tr>`;
+        return;
+      }
+      list.forEach(p => {
+        tbody.innerHTML += `
+          <tr class="border-b border-slate-100 text-xs">
+            <td class="p-3 font-mono">${p.tanggal}</td>
+            <td class="p-3 font-medium text-slate-800">${p.kategori}</td>
+            <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">${p.status}</span></td>
+            <td class="p-3 font-semibold text-purple-700">${formatRupiah(p.plafon)}</td>
             <td class="p-3">-</td>
             <td class="p-3">${p.tenor} Bulan</td>
             <td class="p-3 font-mono">${p.bulanCair} ${p.tahunCair}</td>
