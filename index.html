@@ -28,13 +28,12 @@
     <!-- 0. HALAMAN UTAMA / LANDING PAGE -->
     <!-- ================================================================= -->
     <div id="viewLanding" class="space-y-6 py-6">
-      
       <div class="bg-emerald-950 text-white p-8 md:p-10 rounded-2xl shadow-md text-center space-y-3">
         <div class="inline-flex p-3 bg-emerald-900/60 rounded-full text-emerald-300 mb-1">
           <i data-lucide="landmark" class="w-8 h-8"></i>
         </div>
         <h2 class="text-2xl md:text-3xl font-bold tracking-wide">SISTEM INFORMASI KSP</h2>
-        <p class="text-sm md:text-base text-emerald-200/80">Satu sistem, dua portal, manajemen persetujuan pinjaman & rekap potongan gaji</p>
+        <p class="text-sm md:text-base text-emerald-200/80">Manajemen Simpanan Terintegrasi, Verifikasi Pembayaran & Rekap Potongan Gaji</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
@@ -45,12 +44,10 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Pengurus</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
-              Manajemen persetujuan pinjaman, edit nominal/tenor, upload persetujuan cepat, restrukturisasi tenor di tengah jalan, & ekspor data pencairan.
+              Manajemen simpanan, import data pembayaran, filter verifikasi rentang bulan wajib, dan persetujuan pinjaman.
             </p>
           </div>
-          <div>
-            <span class="inline-block text-xs font-semibold bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">Akses internal</span>
-          </div>
+          <div><span class="inline-block text-xs font-semibold bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">Akses internal</span></div>
         </div>
 
         <div onclick="pilihPortal('anggota')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-emerald-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
@@ -60,12 +57,10 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Anggota</h3>
             <p class="text-sm text-slate-600 leading-relaxed">
-              Info status pencairan, persetujuan perubahan pengurus, rincian potongan gaji bulanan, dan pengajuan mandiri.
+              Cek rincian simpanan pokok, wajib, sukarela, serta status verifikasi pembayaran bulanan secara transparan.
             </p>
           </div>
-          <div>
-            <span class="inline-block text-xs font-semibold bg-blue-50 text-blue-700 px-3 py-1 rounded-full">Akses pribadi</span>
-          </div>
+          <div><span class="inline-block text-xs font-semibold bg-blue-50 text-blue-700 px-3 py-1 rounded-full">Akses pribadi</span></div>
         </div>
       </div>
     </div>
@@ -79,178 +74,129 @@
       <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3 justify-between items-center">
         <div class="flex flex-wrap gap-2">
           <button onclick="switchTabAdmin('tabKpi')" id="btnTabKpi" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2">
-            <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Ringkasan Eksekutif
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Ringkasan
           </button>
           <button onclick="switchTabAdmin('tabApproval')" id="btnTabApproval" class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200">
-            <i data-lucide="file-text" class="w-4 h-4"></i> Persetujuan Pinjaman 
-            <span id="badgePendingCount" class="bg-rose-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">1</span>
+            <i data-lucide="file-text" class="w-4 h-4"></i> Persetujuan Pinjaman
           </button>
           <button onclick="switchTabAdmin('tabSimpanan')" id="btnTabSimpanan" class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200">
-            <i data-lucide="wallet" class="w-4 h-4"></i> Simpanan
+            <i data-lucide="wallet" class="w-4 h-4"></i> Simpanan Anggota
           </button>
           <button onclick="switchTabAdmin('tabPinjaman')" id="btnTabPinjaman" class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200">
-            <i data-lucide="credit-card" class="w-4 h-4"></i> Data Pinjaman Anggota
+            <i data-lucide="credit-card" class="w-4 h-4"></i> Pinjaman Berjalan
           </button>
-        </div>
-
-        <div class="flex flex-wrap gap-2">
-          <button onclick="bukaModalExportPencairan()" class="bg-amber-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-amber-700 transition flex items-center gap-1.5">
-            <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Data Pencairan Periode
-          </button>
-          <label class="bg-purple-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-purple-700 transition flex items-center gap-1.5 cursor-pointer">
-            <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i> Import Bank Jatim / Barang Tempo
-            <input type="file" accept=".csv" class="hidden" onchange="importDataSerentakPengurus(event)">
-          </label>
         </div>
       </div>
 
-      <!-- KONTEN TAB 1: RINGKASAN EKSEKUTIF -->
+      <!-- KONTEN TAB 1: RINGKASAN -->
       <div id="contentTabKpi" class="space-y-6">
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
-          <div class="flex justify-between items-start border-b pb-4">
-            <div>
-              <h2 class="text-xl font-bold text-slate-900">Dashboard Pengurus</h2>
-              <p class="text-xs text-slate-500 mt-0.5">KSP KOPKAR LAUNTANAMA - REALTIME DATA</p>
-            </div>
-            <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-full">Bulanan</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Anggota aktif</p>
-              <h3 class="text-2xl font-bold text-slate-900">385</h3>
-            </div>
-            <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Total aset</p>
-              <h3 class="text-2xl font-bold text-slate-900">Rp2,4 M</h3>
-            </div>
-            <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Pengajuan Pending</p>
-              <h3 id="statPendingCount" class="text-2xl font-bold text-rose-600">1</h3>
-            </div>
-          </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+          <h2 class="text-xl font-bold text-slate-900">Dashboard Pengurus KSP Kopkar Launtanama</h2>
+          <p class="text-xs text-slate-500">Gunakan menu di atas untuk mengelola data simpanan dan verifikasi pembayaran.</p>
         </div>
       </div>
 
-      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN (DENGAN FILTER TANGGAL & UPLOAD PERSETUJUAN) -->
+      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN -->
       <div id="contentTabApproval" class="space-y-6 hidden">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-3">
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+          <h3 class="font-bold text-slate-800 text-sm">Daftar Pengajuan Pending</h3>
+          <p class="text-xs text-slate-500 mt-1">Belum ada pengajuan pinjaman baru.</p>
+        </div>
+      </div>
+
+      <!-- KONTEN TAB 3: DATA SIMPANAN (DENGAN IMPORT & RENTANG BULAN VERIFIKASI) -->
+      <div id="contentTabSimpanan" class="space-y-6 hidden">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
           
-          <div class="p-4 border-b border-slate-100 bg-slate-50 flex flex-wrap justify-between items-center gap-3">
-            <div class="flex items-center gap-2">
-              <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
-                <i data-lucide="file-text" class="w-5 h-5 text-indigo-600"></i> Persetujuan Pinjaman 
+          <div class="flex flex-wrap justify-between items-center gap-4 border-b pb-4">
+            <div>
+              <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                <i data-lucide="wallet" class="w-5 h-5 text-emerald-600"></i> Pengelolaan & Verifikasi Simpanan Anggota
               </h3>
-              <span id="badgeCountLabel" class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded-full font-bold">1 Pengajuan Belum Disetujui</span>
+              <p class="text-xs text-slate-500">Import data pembayaran atau verifikasi rentang bulan simpanan wajib non-potong gaji.</p>
             </div>
 
-            <!-- FILTER RENTANG TANGGAL & UPLOAD PERSETUJUAN CEPAT -->
+            <!-- TOMBOL IMPORT & FILTER RENTANG BULAN -->
             <div class="flex flex-wrap items-center gap-2 text-xs">
-              <div class="flex items-center gap-1 bg-white p-1 border rounded-lg">
-                <span class="text-slate-500 px-1">Dari:</span>
-                <input type="date" id="filterTglMulai" class="focus:outline-none" onchange="renderTablePending()">
-                <span class="text-slate-500 px-1">s/d:</span>
-                <input type="date" id="filterTglAkhir" class="focus:outline-none" onchange="renderTablePending()">
-              </div>
-              <label class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-blue-700 transition cursor-pointer flex items-center gap-1" title="Upload CSV No Reg & Nama untuk setujui kilat">
-                <i data-lucide="upload" class="w-3.5 h-3.5"></i> Upload Setujui Cepat
-                <input type="file" accept=".csv" class="hidden" onchange="importPersetujuanCepat(event)">
+              <label class="bg-purple-600 text-white px-3 py-2 rounded-lg font-semibold hover:bg-purple-700 transition cursor-pointer flex items-center gap-1.5 shadow-xs">
+                <i data-lucide="upload" class="w-4 h-4"></i> Import Data Simpanan (CSV)
+                <input type="file" accept=".csv" class="hidden" onchange="importDataSimpananPengurus(event)">
               </label>
             </div>
           </div>
 
-          <!-- PANEL AKSI BATCH TERPILIH -->
-          <div class="px-4 py-2 bg-indigo-50/70 border-b border-indigo-100 flex flex-wrap justify-between items-center text-xs">
-            <div class="flex items-center gap-2">
-              <span class="font-semibold text-indigo-900">Aksi Massal Terpilih:</span>
-              <button onclick="bukaModalPencairanBatch()" class="bg-emerald-600 text-white px-3 py-1.5 rounded font-semibold hover:bg-emerald-700 transition flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Setujui Terpilih & Jadwal Cair
-              </button>
+          <!-- PANEL RENTANG BULAN TAHUN VERIFIKASI PEMBAYARAN Wajib -->
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3 text-xs">
+            <p class="font-bold text-slate-800 flex items-center gap-1.5">
+              <i data-lucide="calendar-range" class="w-4 h-4 text-indigo-600"></i> Rentang Verifikasi Pembayaran Simpanan Wajib (Non-Potong Gaji / Manual)
+            </p>
+            <div class="flex flex-wrap items-center gap-3">
+              <div>
+                <label class="text-slate-500 block mb-1">Dari Bulan / Tahun:</label>
+                <div class="flex gap-1">
+                  <select id="verifBulanMulai" class="p-1.5 bg-white border rounded-lg font-medium">
+                    <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
+                    <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
+                    <option value="Oktober" selected>Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
+                  </select>
+                  <select id="verifTahunMulai" class="p-1.5 bg-white border rounded-lg font-medium">
+                    <option value="2025">2025</option><option value="2026" selected>2026</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="text-slate-500 block mb-1">Sampai Bulan / Tahun:</label>
+                <div class="flex gap-1">
+                  <select id="verifBulanAkhir" class="p-1.5 bg-white border rounded-lg font-medium">
+                    <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
+                    <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
+                    <option value="Oktober" selected>Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
+                  </select>
+                  <select id="verifTahunAkhir" class="p-1.5 bg-white border rounded-lg font-medium">
+                    <option value="2025">2025</option><option value="2026" selected>2026</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex items-end">
+                <button onclick="terapkanVerifikasiRentangSimpanan()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                  Verifikasi & Update Saldo Rentang Ini
+                </button>
+              </div>
             </div>
-            <span class="text-slate-500 italic">*Catatan: Uncheck baris tertentu jika tidak ingin ikut terpilih setelah klik Pilih Semua.</span>
           </div>
 
-          <div class="overflow-x-auto px-4 pb-4">
-            <table class="w-full text-left text-sm">
-              <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
-                <tr>
-                  <th class="p-3"><input type="checkbox" id="selectAllBatch" onclick="toggleSelectAll(this)"></th>
-                  <th class="p-3">Tanggal Pengajuan</th>
-                  <th class="p-3">No. Register</th>
-                  <th class="p-3">Nama</th>
-                  <th class="p-3">Kategori</th>
-                  <th class="p-3">Plafon</th>
-                  <th class="p-3">Tenor</th>
-                  <th class="p-3">Rencana Cair</th>
-                  <th class="p-3 text-center">Aksi (Setuju / Edit Tolak)</th>
-                </tr>
-              </thead>
-              <tbody id="tablePendingLoans" class="divide-y divide-slate-100">
-                <!-- Dinamis JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- KONTEN TAB 3: DATA SIMPANAN -->
-      <div id="contentTabSimpanan" class="space-y-6 hidden">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-          <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-            <h3 class="font-bold text-slate-800 text-sm">Rincian Simpanan Anggota</h3>
-          </div>
-          <div class="overflow-x-auto">
+          <!-- TABEL DATA SIMPANAN ANGGOTA -->
+          <div class="overflow-x-auto border rounded-xl">
             <table class="w-full text-left text-sm">
               <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
                 <tr>
                   <th class="p-3">No. Register</th>
                   <th class="p-3">Nama Anggota</th>
+                  <th class="p-3">Kategori</th>
                   <th class="p-3">Simp. Pokok</th>
                   <th class="p-3">Simp. Wajib</th>
-                  <th class="p-3 font-bold text-emerald-700">Total</th>
+                  <th class="p-3">Simp. Sukarela</th>
+                  <th class="p-3 font-bold text-emerald-700">Total Simpanan</th>
+                  <th class="p-3 text-center">Status Verifikasi Perusahaan</th>
                 </tr>
               </thead>
-              <tbody id="tableSimpananAnggota" class="divide-y divide-slate-100">
-                <tr>
-                  <td class="p-3 font-mono font-bold">KSP-1001</td>
-                  <td class="p-3 font-medium">Budi Santoso</td>
-                  <td class="p-3">Rp 500.000</td>
-                  <td class="p-3">Rp 1.200.000</td>
-                  <td class="p-3 font-bold text-emerald-600">Rp 1.700.000</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA (DENGAN FITUR RESTRUKTURISASI TENOR) -->
-      <div id="contentTabPinjaman" class="space-y-6 hidden">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-          <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-              <i data-lucide="credit-card" class="w-5 h-5 text-amber-600"></i> Rekap & Restrukturisasi Pinjaman Berjalan
-            </h3>
-            <span class="text-xs text-slate-500">Pengurus dapat mengubah tenor di tengah pembayaran</span>
-          </div>
-          <div class="overflow-x-auto px-4 pb-4">
-            <table class="w-full text-left text-sm">
-              <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
-                <tr>
-                  <th class="p-3">No. Register</th>
-                  <th class="p-3">Nama</th>
-                  <th class="p-3">Kategori</th>
-                  <th class="p-3">Sisa Pokok</th>
-                  <th class="p-3 font-bold text-indigo-700">Angsuran/Bulan</th>
-                  <th class="p-3">Sisa Tenor</th>
-                  <th class="p-3">Akhir Potongan</th>
-                  <th class="p-3 text-center">Aksi Ubah Tenor</th>
-                </tr>
-              </thead>
-              <tbody id="tablePinjamanAnggota" class="divide-y divide-slate-100">
+              <tbody id="tableSimpananPengurus" class="divide-y divide-slate-100">
                 <!-- Dinamis JS -->
               </tbody>
             </table>
           </div>
+
+        </div>
+      </div>
+
+      <!-- KONTEN TAB 4: PINJAMAN BERJALAN -->
+      <div id="contentTabPinjaman" class="space-y-6 hidden">
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+          <h3 class="font-bold text-slate-800 text-sm">Data Pinjaman Berjalan</h3>
         </div>
       </div>
 
@@ -270,8 +216,8 @@
               <i data-lucide="user" class="w-6 h-6"></i>
             </div>
             <div>
-              <h3 id="memNama" class="text-base font-bold text-slate-900 leading-tight">Halo, Budi Santoso</h3>
-              <p id="memInfoTipe" class="text-xs text-slate-500">No. Register: <span id="memRegText">KSP-1001</span> | Tipe: <span class="font-semibold text-indigo-600" id="badgeTipeAnggota">Staff</span></p>
+              <h3 id="memNama" class="text-base font-bold text-slate-900 leading-tight">Budi Santoso</h3>
+              <p id="memInfoTipe" class="text-xs text-slate-500">No. Register: <span id="memRegText">KSP-1001</span> | Tipe: <span class="font-semibold text-indigo-600">Staff</span></p>
             </div>
           </div>
           <button onclick="kembaliKeMenuUtama()" title="Menu Utama" class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition">
@@ -279,198 +225,34 @@
           </button>
         </div>
 
-        <!-- NOTIFIKASI PENCAIRAN / PERSETUJUAN EDIT OLEH PENGURUS -->
-        <div id="boxNotifikasiAnggota" class="space-y-3">
-          <!-- Diisi dinamis -->
-        </div>
-
+        <!-- KARTU TOTAL SIMPANAN ANGGOTA -->
         <div class="bg-emerald-950 text-white p-5 rounded-2xl space-y-4 shadow-sm">
           <div>
-            <p class="text-xs font-medium text-emerald-200/80">Total Simpanan Saya</p>
-            <h2 id="memSimpanan" class="text-2xl md:text-3xl font-bold tracking-tight mt-0.5">Rp 2.500.000</h2>
-          </div>
-        </div>
-
-        <!-- CARD AKUMULASI POTONGAN GAJI DENGAN FILTER -->
-        <div class="p-4 bg-amber-50/80 rounded-2xl border border-amber-200/80 text-xs space-y-4 text-amber-950">
-          <div class="flex flex-wrap justify-between items-center gap-2 border-b border-amber-200 pb-3">
-            <div class="flex items-center gap-2 font-bold text-amber-900 text-sm">
-              <i data-lucide="calculator" class="w-5 h-5 text-amber-700"></i>
-              <span>AKUMULASI TOTAL POTONGAN GAJI BULANAN SAYA</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <select id="filterPotonganBulan" class="p-1.5 bg-white border border-amber-300 rounded-lg text-xs font-semibold" onchange="updateAkumulasiPotonganGaji()">
-                <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
-                <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
-                <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
-                <option value="Oktober">Oktober</option><option value="November" selected>November</option><option value="Desember">Desember</option>
-              </select>
-              <select id="filterPotonganTahun" class="p-1.5 bg-white border border-amber-300 rounded-lg text-xs font-semibold" onchange="updateAkumulasiPotonganGaji()">
-                <option value="2025">2025</option><option value="2026" selected>2026</option><option value="2027">2027</option>
-              </select>
-            </div>
+            <p class="text-xs font-medium text-emerald-200/80">Akumulasi Total Simpanan Saya</p>
+            <h2 id="memTotalSimpanan" class="text-2xl md:text-3xl font-bold tracking-tight mt-0.5">Rp 2.700.000</h2>
           </div>
 
-          <div class="bg-white p-3.5 rounded-xl border border-amber-200 space-y-2.5 font-mono">
-            <div class="flex justify-between text-slate-700"><span>1. Simpanan Wajib:</span> <span id="summarySimpWajib" class="font-bold">Rp 100.000</span></div>
-            <div class="flex justify-between text-slate-700"><span>2. Total Angsuran Pinjaman Uang:</span> <span id="summaryAngsUang" class="font-bold">Rp 491.667</span></div>
-            <div class="flex justify-between text-slate-700"><span>3. Total Angsuran Pinjaman Barang:</span> <span id="summaryAngsBarang" class="font-bold">Rp 200.000</span></div>
-            <div class="flex justify-between border-t pt-2.5 text-sm font-bold text-emerald-800 bg-emerald-50 p-2.5 rounded-lg">
-              <span id="labelTotalPotonganHeader">TOTAL POTONGAN GAJI:</span> <span id="summaryTotalPotongan">Rp 791.667</span>
+          <hr class="border-emerald-800/80">
+
+          <div class="grid grid-cols-3 gap-y-3 gap-x-2 text-xs">
+            <div>
+              <p class="text-emerald-300/70">Simpanan Pokok</p>
+              <p id="memSimPokok" class="font-bold text-sm text-white mt-0.5">Rp 500.000</p>
+            </div>
+            <div>
+              <p class="text-emerald-300/70">Simpanan Wajib</p>
+              <p id="memSimWajib" class="font-bold text-sm text-white mt-0.5">Rp 2.200.000</p>
+            </div>
+            <div>
+              <p class="text-emerald-300/70">Simpanan Sukarela</p>
+              <p id="memSimSukarela" class="font-bold text-sm text-white mt-0.5">Rp 0</p>
             </div>
           </div>
         </div>
 
-        <!-- STATUS PEMBAYARAN POTONG GAJI -->
-        <div id="boxStatusPembayaranGaji" class="p-4 rounded-2xl border text-xs space-y-2 shadow-xs"></div>
-
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex justify-end items-center gap-2">
-          <button onclick="bukaModalForm('Pengajuan')" class="text-xs bg-indigo-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">Pinjam Baru</button>
-          <button onclick="bukaModalForm('Topup')" class="text-xs bg-amber-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-amber-700 transition">Top-Up Pinjaman</button>
-        </div>
-
-        <!-- TABEL RIWAYAT PINJAMAN SAYA -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-2">
-          <div class="p-4 border-b border-slate-100 bg-slate-50">
-            <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
-              <i data-lucide="history" class="w-4 h-4 text-indigo-600"></i> Rincian Pinjaman Aktif & Status Pengajuan Saya
-            </h4>
-          </div>
-          <div class="overflow-x-auto px-4 pb-4">
-            <table class="w-full text-left text-sm">
-              <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
-                <tr>
-                  <th class="p-3">Tanggal</th>
-                  <th class="p-3">Kategori</th>
-                  <th class="p-3">Status</th>
-                  <th class="p-3">Plafon/Jumlah</th>
-                  <th class="p-3">Angsuran/Bulan</th>
-                  <th class="p-3">Tenor</th>
-                  <th class="p-3">Periode</th>
-                </tr>
-              </thead>
-              <tbody id="tableRiwayatPinjamanAnggota" class="divide-y divide-slate-100">
-                <!-- Dinamis JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
       </div>
     </div>
 
-  </div>
-
-  <!-- MODAL 1: SETUJUI BATCH DENGAN PILIH TANGGAL PENCAIRAN -->
-  <div id="modalPencairanBatch" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
-    <div class="bg-white max-w-sm w-full rounded-2xl shadow-xl p-6 space-y-4">
-      <h3 class="font-bold text-slate-800 text-sm">Konfirmasi Tanggal Pencairan Massal</h3>
-      <p class="text-xs text-slate-500">Tentukan jadwal tanggal pencairan dana untuk data pengajuan terpilih:</p>
-      <div>
-        <label class="text-xs font-semibold text-slate-700">Tanggal Pencairan Dana</label>
-        <input type="date" id="inputBatchTglCair" value="2026-10-20" class="w-full p-2 border rounded-lg text-xs mt-1 bg-white">
-      </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="tutupModal('modalPencairanBatch')" class="px-3 py-1.5 bg-slate-200 text-slate-700 text-xs rounded-lg font-semibold">Batal</button>
-        <button onclick="eksekusiSetujuiBatch()" class="px-3 py-1.5 bg-emerald-600 text-white text-xs rounded-lg font-semibold">Setujui & Teruskan ke Anggota</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 2: EDIT TOLAK / PERUBAHAN OLEH PENGURUS -->
-  <div id="modalEditTolak" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
-    <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-6 space-y-4">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="font-bold text-slate-800 text-sm">Edit Pengajuan & Minta Persetujuan Anggota</h3>
-        <button onclick="tutupModal('modalEditTolak')"><i data-lucide="x" class="w-5 h-5 text-slate-400"></i></button>
-      </div>
-      <input type="hidden" id="editIdPengajuan">
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="font-semibold text-slate-600">Nominal Plafon Baru (Rp)</label>
-          <input type="text" id="editNominal" class="w-full p-2 border rounded-lg mt-1 bg-white" oninput="formatInputRibuan(this)">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="font-semibold text-slate-600">Tenor Baru (Bulan)</label>
-            <input type="number" id="editTenor" class="w-full p-2 border rounded-lg mt-1 bg-white">
-          </div>
-          <div>
-            <label class="font-semibold text-slate-600">Bulan Pencairan</label>
-            <select id="editBulanCair" class="w-full p-2 border rounded-lg mt-1 bg-white">
-              <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
-              <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
-              <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
-              <option value="Oktober">Oktober</option><option value="November" selected>November</option><option value="Desember">Desember</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label class="font-semibold text-slate-600">Tahun Pencairan</label>
-          <input type="number" id="editTahunCair" value="2026" class="w-full p-2 border rounded-lg mt-1 bg-white">
-        </div>
-      </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="simpanEditDanKirimPersetujuan()" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold text-xs hover:bg-indigo-700">Simpan & Kirim ke Anggota</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 3: RESTRUKTURISASI TENOR DI TENGAH PEMBAYARAN -->
-  <div id="modalRestrukturisasi" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
-    <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-6 space-y-4">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="font-bold text-slate-800 text-sm">Restrukturisasi Tenor Pinjaman Berjalan</h3>
-        <button onclick="tutupModal('modalRestrukturisasi')"><i data-lucide="x" class="w-5 h-5 text-slate-400"></i></button>
-      </div>
-      <input type="hidden" id="restructId">
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="text-slate-500">Anggota / Kategori:</label>
-          <p id="restructInfoNamaKat" class="font-bold text-slate-800 text-sm">-</p>
-        </div>
-        <div>
-          <label class="text-slate-500">Sisa Pokok Saat Ini:</label>
-          <p id="restructInfoSisaPokok" class="font-bold text-indigo-700 text-sm">-</p>
-        </div>
-        <div>
-          <label class="font-semibold text-slate-700">Tenor Baru yang Diinginkan (Bulan)</label>
-          <input type="number" id="restructTenorBaru" value="12" class="w-full p-2 border rounded-lg mt-1 font-bold bg-white" oninput="hitungPreviewRestrukturisasi()">
-        </div>
-        <div class="p-3 bg-slate-50 rounded-xl border space-y-1 font-mono">
-          <div class="flex justify-between"><span>Angsuran Pokok Baru/Bln:</span> <span id="prevRestructPokok">Rp 0</span></div>
-          <div class="flex justify-between"><span>Bunga Tetap (1.5%):</span> <span id="prevRestructBunga">Rp 0</span></div>
-          <div class="flex justify-between border-t pt-1 font-bold text-emerald-700 text-sm"><span>Total Angsuran Baru/Bln:</span> <span id="prevRestructTotal">Rp 0</span></div>
-        </div>
-      </div>
-      <button onclick="simpanRestrukturisasiTenor()" class="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold text-xs hover:bg-emerald-700">Simpan Perubahan Tenor</button>
-    </div>
-  </div>
-
-  <!-- MODAL 4: EKSPORT DATA PENCAIRAN PERIODE -->
-  <div id="modalExportPencairan" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
-    <div class="bg-white max-w-sm w-full rounded-2xl shadow-xl p-6 space-y-4">
-      <h3 class="font-bold text-slate-800 text-sm">Eksport Data Pencairan Periode Tertentu</h3>
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="font-semibold text-slate-700">Bulan Pencairan</label>
-          <select id="exportBulan" class="w-full p-2 border rounded-lg mt-1 bg-white">
-            <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
-            <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
-            <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
-            <option value="Oktober">Oktober</option><option value="November" selected>November</option><option value="Desember">Desember</option>
-          </select>
-        </div>
-        <div>
-          <label class="font-semibold text-slate-700">Tahun Pencairan</label>
-          <input type="number" id="exportTahun" value="2026" class="w-full p-2 border rounded-lg mt-1 bg-white">
-        </div>
-      </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="tutupModal('modalExportPencairan')" class="px-3 py-1.5 bg-slate-200 text-slate-700 text-xs rounded-lg font-semibold">Batal</button>
-        <button onclick="eksekusiExportPencairan()" class="px-3 py-1.5 bg-indigo-600 text-white text-xs rounded-lg font-semibold">Download CSV</button>
-      </div>
-    </div>
   </div>
 
   <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mt-8">
@@ -484,41 +266,20 @@
       nia: "KSP-1001", 
       nama: "Budi Santoso", 
       tipe: "Staff", 
-      sisaPinjamanUang: 2500000,
-      sisaPinjamanBarang: 1200000
+      simPokok: 500000,
+      simWajib: 2000000,
+      simSukarela: 0,
+      statusOtomatisPerusahaan: true
     };
 
-    // State Data Pengajuan Pinjaman
-    let daftarPengajuan = [
-      { id: "P-001", tanggal: "2026-10-18", nia: "KSP-1001", nama: "Budi Santoso", kategori: "Pinjaman Uang", plafon: 5000000, tenor: 12, status: "Pending", bulanCair: "November", tahunCair: "2026" }
+    let dataSimpananSemuaAnggota = [
+      { nia: "KSP-1001", nama: "Budi Santoso", tipe: "Staff", simPokok: 500000, simWajib: 2000000, simSukarela: 0, terverifikasiOtomatis: true },
+      { nia: "KSP-1002", nama: "Siti Aminah", tipe: "Pelaksana", simPokok: 500000, simWajib: 1200000, simSukarela: 100000, terverifikasiOtomatis: true },
+      { nia: "KSP-1003", nama: "Ahmad Fauzi", tipe: "Management", simPokok: 1000000, simWajib: 2400000, simSukarela: 500000, terverifikasiOtomatis: false }
     ];
-
-    // State Data Pinjaman Berjalan Anggota
-    let daftarPinjamanAktif = [
-      { id: "L-101", nia: "KSP-1001", nama: "Budi Santoso", kategori: "Pinjaman Uang", sisaPokok: 2500000, angsuranPerBulan: 491667, tenorSisa: 6, akhirPotongan: "Okt 2027" }
-    ];
-
-    // Status Notifikasi Anggota
-    let notifikasiAnggota = {
-      tipe: "info", // info, dicairkan, diedit_pengurus
-      pesan: "Pengajuan Pinjaman Uang sebesar Rp 5.000.000 sedang dalam antrean verifikasi pengurus."
-    };
-
-    const statusVerifikasiPembayaran = { "November 2026": false };
 
     function formatRupiah(num) {
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num || 0);
-    }
-    function formatAngkaRibuan(num) {
-      if (!num && num !== 0) return "";
-      return num.toString().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-    function parseAngka(str) {
-      return Number(str.toString().replace(/\./g, "").replace(/[^0-9]/g, "")) || 0;
-    }
-    function formatInputRibuan(input) {
-      let val = parseAngka(input.value);
-      input.value = formatAngkaRibuan(val);
     }
 
     function pilihPortal(role) {
@@ -527,12 +288,11 @@
       if (role === 'pengurus') {
         document.getElementById('viewPengurus').classList.remove('hidden');
         document.getElementById('viewAnggota').classList.add('hidden');
-        renderTablePending();
-        renderTablePinjamanAktif();
+        renderTabelSimpananPengurus();
       } else {
         document.getElementById('viewPengurus').classList.add('hidden');
         document.getElementById('viewAnggota').classList.remove('hidden');
-        muatDataAnggotaPortal();
+        muatDataSimpananAnggota();
       }
     }
 
@@ -543,7 +303,6 @@
       document.getElementById('headerNav').classList.add('hidden');
     }
 
-    // --- TAB & RENDER PENGURUS ---
     function switchTabAdmin(tabName) {
       document.getElementById('contentTabKpi').classList.add('hidden');
       document.getElementById('contentTabApproval').classList.add('hidden');
@@ -551,342 +310,77 @@
       document.getElementById('contentTabPinjaman').classList.add('hidden');
 
       if (tabName === 'tabKpi') document.getElementById('contentTabKpi').classList.remove('hidden');
-      else if (tabName === 'tabApproval') { document.getElementById('contentTabApproval').classList.remove('hidden'); renderTablePending(); }
-      else if (tabName === 'tabSimpanan') document.getElementById('contentTabSimpanan').classList.remove('hidden');
-      else if (tabName === 'tabPinjaman') { document.getElementById('contentTabPinjaman').classList.remove('hidden'); renderTablePinjamanAktif(); }
+      else if (tabName === 'tabApproval') document.getElementById('contentTabApproval').classList.remove('hidden');
+      else if (tabName === 'tabSimpanan') {
+        document.getElementById('contentTabSimpanan').classList.remove('hidden');
+        renderTabelSimpananPengurus();
+      }
+      else if (tabName === 'tabPinjaman') document.getElementById('contentTabPinjaman').classList.remove('hidden');
     }
 
-    // Render Tabel Pending Pengajuan (Dengan Filter Tanggal & Hitung Jumlah Belum Disetujui)
-    function renderTablePending() {
-      const tbody = document.getElementById('tablePendingLoans');
-      const tglMulai = document.getElementById('filterTglMulai').value;
-      const tglAkhir = document.getElementById('filterTglAkhir').value;
-
-      let filtered = daftarPengajuan.filter(p => p.status === 'Pending');
-      if (tglMulai) filtered = filtered.filter(p => p.tanggal >= tglMulai);
-      if (tglAkhir) filtered = filtered.filter(p => p.tanggal <= tglAkhir);
-
-      // Update badge jumlah pengajuan belum disetujui (Poin 7)
-      const count = filtered.length;
-      document.getElementById('badgePendingCount').innerText = count;
-      document.getElementById('statPendingCount').innerText = count;
-      document.getElementById('badgeCountLabel').innerText = `${count} Pengajuan Belum Disetujui`;
-
+    // Render Tabel Simpanan Pengurus
+    function renderTabelSimpananPengurus() {
+      const tbody = document.getElementById('tableSimpananPengurus');
       tbody.innerHTML = '';
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-slate-400">Tidak ada pengajuan pinjaman pending.</td></tr>`;
-        return;
-      }
+      dataSimpananSemuaAnggota.forEach(item => {
+        const total = item.simPokok + item.simWajib + item.simSukarela;
+        const badgeVerif = item.terverifikasiOtomatis 
+          ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-1 rounded-full font-bold">Terverifikasi Otomatis (Perusahaan)</span>`
+          : `<span class="bg-amber-100 text-amber-800 text-[10px] px-2.5 py-1 rounded-full font-bold">Manual / Non-Potong Gaji</span>`;
 
-      filtered.forEach(p => {
-        tbody.innerHTML += `
-          <tr class="border-b border-slate-100 hover:bg-slate-50">
-            <td class="p-3"><input type="checkbox" class="batchCheckbox" value="${p.id}" checked></td>
-            <td class="p-3 text-xs font-mono">${p.tanggal}</td>
-            <td class="p-3 font-mono font-bold">${p.nia}</td>
-            <td class="p-3 font-medium">${p.nama}</td>
-            <td class="p-3">${p.kategori}</td>
-            <td class="p-3 font-semibold">${formatRupiah(p.plafon)}</td>
-            <td class="p-3">${p.tenor} Bln</td>
-            <td class="p-3 text-xs font-mono">${p.bulanCair} ${p.tahunCair}</td>
-            <td class="p-3 text-center space-x-1">
-              <button onclick="bukaModalPencairanSingle('${p.id}')" class="bg-emerald-600 text-white text-xs px-2.5 py-1 rounded font-semibold hover:bg-emerald-700">Setujui</button>
-              <button onclick="bukaModalEditTolak('${p.id}')" class="bg-amber-600 text-white text-xs px-2.5 py-1 rounded font-semibold hover:bg-amber-700">Edit / Tolak</button>
-            </td>
-          </tr>
-        `;
-      });
-      lucide.createIcons();
-    }
-
-    // Tombol Pilih Semua (Poin 3)
-    function toggleSelectAll(source) {
-      document.querySelectorAll('.batchCheckbox').forEach(cb => cb.checked = source.checked);
-    }
-
-    // Aksi Setujui Batch dengan Pilihan Tanggal Pencairan (Poin 1 & 4)
-    let selectedSingleIdForApprove = null;
-    function bukaModalPencairanBatch() {
-      const checked = document.querySelectorAll('.batchCheckbox:checked');
-      if (checked.length === 0) return alert("Pilih minimal satu pengajuan terlebih dahulu!");
-      selectedSingleIdForApprove = null;
-      document.getElementById('modalPencairanBatch').classList.remove('hidden');
-    }
-    function bukaModalPencairanSingle(id) {
-      selectedSingleIdForApprove = id;
-      document.getElementById('modalPencairanBatch').classList.remove('hidden');
-    }
-    function eksekusiSetujuiBatch() {
-      const tglCair = document.getElementById('inputBatchTglCair').value;
-      let idsToApprove = [];
-      if (selectedSingleIdForApprove) {
-        idsToApprove = [selectedSingleIdForApprove];
-      } else {
-        document.querySelectorAll('.batchCheckbox:checked').forEach(cb => idsToApprove.push(cb.value));
-      }
-
-      daftarPengajuan.forEach(p => {
-        if (idsToApprove.includes(p.id)) {
-          p.status = "Disetujui";
-          // Pindahkan ke Data Pinjaman Anggota (Poin 5)
-          daftarPinjamanAktif.push({
-            id: "L-" + Math.floor(Math.random()*1000),
-            nia: p.nia,
-            nama: p.nama,
-            kategori: p.kategori,
-            sisaPokok: p.plafon,
-            angsuranPerBulan: Math.round((p.plafon * 0.015) + (p.plafon / p.tenor)),
-            tenorSisa: p.tenor,
-            akhirPotongan: `${p.bulanCair} ${p.tahunCair}`
-          });
-        }
-      });
-
-      // Update Info Notifikasi ke Anggota (Poin 1)
-      notifikasiAnggota = {
-        tipe: "dicairkan",
-        pesan: `Dana pinjaman Anda telah DISETUJUI dan dicairkan pada tanggal **${tglCair}**. Silakan cek rincian saldo dan angsuran.`
-      };
-
-      tutupModal('modalPencairanBatch');
-      renderTablePending();
-      renderTablePinjamanAktif();
-      alert("Pengajuan berhasil disetujui, dipindahkan ke data pinjaman, dan notifikasi dikirim ke anggota!");
-    }
-
-    // Edit / Tolak oleh Pengurus & Kirim Persetujuan ke Anggota (Poin 2)
-    function bukaModalEditTolak(id) {
-      const p = daftarPengajuan.find(x => x.id === id);
-      if (!p) return;
-      document.getElementById('editIdPengajuan').value = p.id;
-      document.getElementById('editNominal').value = formatAngkaRibuan(p.plafon);
-      document.getElementById('editTenor').value = p.tenor;
-      document.getElementById('editBulanCair').value = p.bulanCair;
-      document.getElementById('editTahunCair').value = p.tahunCair;
-      document.getElementById('modalEditTolak').classList.remove('hidden');
-    }
-    function simpanEditDanKirimPersetujuan() {
-      const id = document.getElementById('editIdPengajuan').value;
-      const p = daftarPengajuan.find(x => x.id === id);
-      if (p) {
-        p.plafon = parseAngka(document.getElementById('editNominal').value);
-        p.tenor = Number(document.getElementById('editTenor').value);
-        p.bulanCair = document.getElementById('editBulanCair').value;
-        p.tahunCair = document.getElementById('editTahunCair').value;
-        p.status = "Pending_Persetujuan_Anggota";
-
-        notifikasiAnggota = {
-          tipe: "diedit_pengurus",
-          pesan: `Pengurus mengubah pengajuan Anda (Nominal: ${formatRupiah(p.plafon)}, Tenor: ${p.tenor} Bulan, Pencairan: ${p.bulanCair} ${p.tahunCair}). Harap setujui perubahan ini.`
-        };
-      }
-      tutupModal('modalEditTolak');
-      renderTablePending();
-      alert("Perubahan dikirim ke portal anggota untuk meminta persetujuan!");
-    }
-
-    // Upload Persetujuan Cepat (Poin 8)
-    function importPersetujuanCepat(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      // Simulasi setujui kilat data pending pertama
-      if (daftarPengajuan.length > 0) {
-        daftarPengajuan[0].status = "Disetujui";
-        notifikasiAnggota = { tipe: "dicairkan", pesan: "Pengajuan disetujui secara kilat via upload data oleh pengurus." };
-      }
-      renderTablePending();
-      renderTablePinjamanAktif();
-      alert("Upload persetujuan cepat via file berhasil dieksekusi!");
-    }
-
-    // Render Data Pinjaman Anggota & Restrukturisasi Tenor di Tengah Jalan
-    function renderTablePinjamanAktif() {
-      const tbody = document.getElementById('tablePinjamanAnggota');
-      tbody.innerHTML = '';
-      daftarPinjamanAktif.forEach(l => {
         tbody.innerHTML += `
           <tr class="border-b border-slate-100 hover:bg-slate-50 text-xs">
-            <td class="p-3 font-mono font-bold">${l.nia}</td>
-            <td class="p-3 font-medium">${l.nama}</td>
-            <td class="p-3">${l.kategori}</td>
-            <td class="p-3 font-semibold">${formatRupiah(l.sisaPokok)}</td>
-            <td class="p-3 font-bold text-indigo-700">${formatRupiah(l.angsuranPerBulan)}</td>
-            <td class="p-3">${l.tenorSisa} Bulan</td>
-            <td class="p-3 font-mono">${l.akhirPotongan}</td>
-            <td class="p-3 text-center">
-              <button onclick="bukaModalRestrukturisasi('${l.id}')" class="bg-indigo-600 text-white px-2.5 py-1 rounded font-semibold hover:bg-indigo-700">Ubah Tenor</button>
-            </td>
+            <td class="p-3 font-mono font-bold">${item.nia}</td>
+            <td class="p-3 font-medium">${item.nama}</td>
+            <td class="p-3">${item.tipe}</td>
+            <td class="p-3">${formatRupiah(item.simPokok)}</td>
+            <td class="p-3">${formatRupiah(item.simWajib)}</td>
+            <td class="p-3">${formatRupiah(item.simSukarela)}</td>
+            <td class="p-3 font-bold text-emerald-700">${formatRupiah(total)}</td>
+            <td class="p-3 text-center">${badgeVerif}</td>
           </tr>
         `;
       });
       lucide.createIcons();
     }
 
-    let activeRestructItem = null;
-    function bukaModalRestrukturisasi(id) {
-      activeRestructItem = daftarPinjamanAktif.find(x => x.id === id);
-      if (!activeRestructItem) return;
-      document.getElementById('restructId').value = id;
-      document.getElementById('restructInfoNamaKat').innerText = `${activeRestructItem.nama} - ${activeRestructItem.kategori}`;
-      document.getElementById('restructInfoSisaPokok').innerText = formatRupiah(activeRestructItem.sisaPokok);
-      document.getElementById('restructTenorBaru').value = activeRestructItem.tenorSisa;
-      hitungPreviewRestrukturisasi();
-      document.getElementById('modalRestrukturisasi').classList.remove('hidden');
-    }
-    function hitungPreviewRestrukturisasi() {
-      if (!activeRestructItem) return;
-      const tenorBaru = Number(document.getElementById('restructTenorBaru').value) || 1;
-      const sisaPokok = activeRestructItem.sisaPokok;
-      const pokokBulan = sisaPokok / tenorBaru;
-      const bungaBulan = sisaPokok * 0.015;
-      const totalBulan = pokokBulan + bungaBulan;
+    // Import Data Simpanan Pengurus (Otomatis memetakan kolom Simpanan Pokok & Wajib)
+    function importDataSimpananPengurus(event) {
+      const file = event.target.files[0];
+      if (!file) return;
 
-      document.getElementById('prevRestructPokok').innerText = formatRupiah(pokokBulan);
-      document.getElementById('prevRestructBunga').innerText = formatRupiah(bungaBulan);
-      document.getElementById('prevRestructTotal').innerText = formatRupiah(totalBulan);
-    }
-    function simpanRestrukturisasiTenor() {
-      const tenorBaru = Number(document.getElementById('restructTenorBaru').value) || 1;
-      const pokokBulan = activeRestructItem.sisaPokok / tenorBaru;
-      const bungaBulan = activeRestructItem.sisaPokok * 0.015;
-
-      activeRestructItem.tenorSisa = tenorBaru;
-      activeRestructItem.angsuranPerBulan = Math.round(pokokBulan + bungaBulan);
-      activeRestructItem.akhirPotongan = `Sesuai Tenor (${tenorBaru} Bln Baru)`;
-
-      tutupModal('modalRestrukturisasi');
-      renderTablePinjamanAktif();
-      alert("Perubahan tenor berhasil disimpan! Tagihan per bulan dan akhir potongan otomatis diperbarui.");
-    }
-
-    // Eksport Data Pencairan Periode Tertentu
-    function bukaModalExportPencairan() {
-      document.getElementById('modalExportPencairan').classList.remove('hidden');
-    }
-    function eksekusiExportPencairan() {
-      const bulan = document.getElementById('exportBulan').value;
-      const tahun = document.getElementById('exportTahun').value;
-      let csv = "No.Register,Nama,Kategori,Plafon,BulanCair,TahunCair\n";
-      daftarPinjamanAktif.forEach(l => {
-        csv += `${l.nia},${l.nama},${l.kategori},${l.sisaPokok},${bulan},${tahun}\n`;
+      // Simulasi hasil parsing CSV yang mendeteksi kolom simpanan pokok dan wajib
+      dataSimpananSemuaAnggota.forEach(item => {
+        item.simWajib += 100000; // Menambah simpanan wajib hasil import/pembayaran baru
+        item.simSukarela += 25000;
       });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `Data_Pencairan_${bulan}_${tahun}.csv`;
-      link.click();
-      tutupModal('modalExportPencairan');
+
+      renderTabelSimpananPengurus();
+      alert("Data simpanan berhasil di-import! Kolom Simpanan Pokok, Simpanan Wajib, dan Simpanan Sukarela telah otomatis diperbarui.");
     }
 
+    // Verifikasi Pembayaran Rentang Bulan Wajib (Non-Potong Gaji)
+    function terapkanVerifikasiRentangSimpanan() {
+      const bMulai = document.getElementById('verifBulanMulai').value;
+      const tMulai = document.getElementById('verifTahunMulai').value;
+      const bAkhir = document.getElementById('verifBulanAkhir').value;
+      const tAkhir = document.getElementById('verifTahunAkhir').value;
 
-    // --- PORTAL ANGGOTA ---
-    function muatDataAnggotaPortal() {
-      document.getElementById('memNama').innerText = "Halo, " + currentAnggota.nama;
-      document.getElementById('memRegText').innerText = currentAnggota.nia;
-      document.getElementById('badgeTipeAnggota').innerText = currentAnggota.tipe;
-
-      // Render Notifikasi
-      const notifBox = document.getElementById('boxNotifikasiAnggota');
-      if (notifikasiAnggota.tipe === 'dicairkan') {
-        notifBox.innerHTML = `
-          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900 space-y-2">
-            <p class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Informasi Pencairan Dana:</p>
-            <p>${notifikasiAnggota.pesan}</p>
-          </div>
-        `;
-      } else if (notifikasiAnggota.tipe === 'diedit_pengurus') {
-        notifBox.innerHTML = `
-          <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950 space-y-2">
-            <p class="font-bold flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i> Permintaan Persetujuan Perubahan Pengurus:</p>
-            <p>${notifikasiAnggota.pesan}</p>
-            <div class="flex gap-2 pt-1">
-              <button onclick="setujuiPerubahanOlehAnggota(true)" class="bg-emerald-600 text-white px-3 py-1 rounded font-semibold">Setujui Perubahan</button>
-              <button onclick="setujuiPerubahanOlehAnggota(false)" class="bg-rose-600 text-white px-3 py-1 rounded font-semibold">Tolak / Batalkan</button>
-            </div>
-          </div>
-        `;
-      } else {
-        notifBox.innerHTML = `
-          <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-xl text-xs text-indigo-950">
-            <p>${notifikasiAnggota.pesan}</p>
-          </div>
-        `;
-      }
-
-      updateAkumulasiPotonganGaji();
-      renderRiwayatPinjamanAnggota();
-      lucide.createIcons();
-    }
-
-    function setujuiPerubahanOlehAnggota(isSetuju) {
-      if (isSetuju) {
-        alert("Anda telah menyetujui perubahan dari pengurus!");
-        notifikasiAnggota = { tipe: "dicairkan", pesan: "Perubahan disetujui anggota dan telah resmi masuk sistem." };
-      } else {
-        alert("Perubahan ditolak, transaksi dibatalkan.");
-        notifikasiAnggota = { tipe: "info", pesan: "Pengajuan dibatalkan atas penolakan perubahan." };
-      }
-      muatDataAnggotaPortal();
-    }
-
-    function updateAkumulasiPotonganGaji() {
-      const bulan = document.getElementById('filterPotonganBulan').value;
-      const tahun = document.getElementById('filterPotonganTahun').value;
-      document.getElementById('labelTotalPotonganHeader').innerText = `TOTAL POTONGAN GAJI BULAN ${bulan.toUpperCase()} ${tahun}:`;
-
-      const simWajib = 100000;
-      const angsUang = 491667;
-      const angsBarang = 200000;
-      const total = simWajib + angsUang + angsBarang;
-
-      document.getElementById('summarySimpWajib').innerText = formatRupiah(simWajib);
-      document.getElementById('summaryAngsUang').innerText = formatRupiah(angsUang);
-      document.getElementById('summaryAngsBarang').innerText = formatRupiah(angsBarang);
-      document.getElementById('summaryTotalPotongan').innerText = formatRupiah(total);
-
-      // Status Pembayaran
-      const boxStatus = document.getElementById('boxStatusPembayaranGaji');
-      boxStatus.className = "p-4 bg-rose-50 rounded-2xl border border-rose-200 text-xs space-y-2 text-rose-950";
-      boxStatus.innerHTML = `
-        <div class="flex items-center gap-2 font-bold text-rose-900 text-sm">
-          <i data-lucide="alert-circle" class="w-5 h-5 text-rose-600"></i>
-          <span>Status Pembayaran Potong Gaji</span>
-        </div>
-        <div class="bg-white p-3 rounded-xl border border-rose-200 space-y-1">
-          <p class="font-bold text-rose-700">Rincian Bulan Tagihan Belum Terbayar s.d. Bulan Berjalan:</p>
-          <ul class="list-disc list-inside font-semibold text-slate-700">
-            <li class="text-rose-600">Oktober 2026</li>
-            <li class="text-rose-600">November 2026</li>
-          </ul>
-        </div>
-      `;
-      lucide.createIcons();
-    }
-
-    function renderRiwayatPinjamanAnggota() {
-      const tbody = document.getElementById('tableRiwayatPinjamanAnggota');
-      tbody.innerHTML = '';
-      daftarPengajuan.forEach(p => {
-        tbody.innerHTML += `
-          <tr class="border-b border-slate-100 text-xs">
-            <td class="p-3 font-mono">${p.tanggal}</td>
-            <td class="p-3 font-medium">${p.kategori}</td>
-            <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">${p.status}</span></td>
-            <td class="p-3 font-semibold">${formatRupiah(p.plafon)}</td>
-            <td class="p-3">-</td>
-            <td class="p-3">${p.tenor} Bulan</td>
-            <td class="p-3 font-mono">${p.bulanCair} ${p.tahunCair}</td>
-          </tr>
-        `;
+      // Simulasi penambahan nilai verifikasi rentang bulan
+      dataSimpananSemuaAnggota.forEach(item => {
+        item.simWajib += 200000; // Simulasi akumulasi rentang bulan
       });
+
+      renderTabelSimpananPengurus();
+      alert(`Verifikasi simpanan wajib untuk rentang ${bMulai} ${tMulai} s.d. ${bAkhir} ${tAkhir} berhasil diterapkan dan menambah saldo simpanan anggota!`);
     }
 
-    function tutupModal(id) {
-      document.getElementById(id).classList.add('hidden');
-    }
-
-    function bukaModalForm(jenis) {
-      alert(`Membuka form ${jenis} pinjaman mandiri.`);
+    // Portal Anggota
+    function muatDataSimpananAnggota() {
+      document.getElementById('memTotalSimpanan').innerText = formatRupiah(currentAnggota.simPokok + currentAnggota.simWajib + currentAnggota.simSukarela);
+      document.getElementById('memSimPokok').innerText = formatRupiah(currentAnggota.simPokok);
+      document.getElementById('memSimWajib').innerText = formatRupiah(currentAnggota.simWajib);
+      document.getElementById('memSimSukarela').innerText = formatRupiah(currentAnggota.simSukarela);
     }
   </script>
 </body>
