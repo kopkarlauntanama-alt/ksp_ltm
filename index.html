@@ -31,63 +31,90 @@
     <!-- 1. DASHBOARD PENGURUS (EXECUTIVE & FINANCIAL REPORT) -->
     <!-- ================================================================= -->
     <div id="viewPengurus" class="space-y-6">
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-          <i data-lucide="layout-dashboard" class="text-indigo-600"></i> Dashboard Pengurus & Keuangan
-        </h2>
-        <div class="flex items-center gap-3">
-          <span class="text-xs bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-semibold">Mode Pengawasan</span>
+      
+      <!-- SUB MENU NAVIGATION PENGURUS -->
+      <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
+        <button onclick="switchTabAdmin('tabKpi')" id="btnTabKpi" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Ringkasan Eksekutif
+        </button>
+        <button onclick="switchTabAdmin('tabApproval')" id="btnTabApproval" class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200">
+          <i data-lucide="file-text" class="w-4 h-4"></i> Persetujuan Pinjaman
+        </button>
+        <button onclick="switchTabAdmin('tabAnggota')" id="btnTabAnggota" class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200">
+          <i data-lucide="users" class="w-4 h-4"></i> Data Anggota
+        </button>
+      </div>
+
+      <!-- KONTEN TAB 1: RINGKASAN & KPI -->
+      <div id="contentTabKpi" class="space-y-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="trending-up" class="text-indigo-600"></i> Dashboard Pengurus & Keuangan
+          </h2>
           <button onclick="loadDashboardData()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5 transition">
             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Segarkan Data
           </button>
         </div>
+
+        <!-- KPI METRICS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <p class="text-xs font-medium text-slate-500 uppercase">Total Aset KSP</p>
+            <h3 id="admTotalAset" class="text-2xl font-bold text-slate-900 mt-1">Rp 0</h3>
+          </div>
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <p class="text-xs font-medium text-slate-500 uppercase">Total Simpanan</p>
+            <h3 id="admTotalSimpanan" class="text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
+          </div>
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <p class="text-xs font-medium text-slate-500 uppercase">Pinjaman Beredar</p>
+            <h3 id="admTotalPinjaman" class="text-2xl font-bold text-amber-600 mt-1">Rp 0</h3>
+          </div>
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <p class="text-xs font-medium text-slate-500 uppercase">Pending Approval</p>
+            <h3 id="admPendingCount" class="text-2xl font-bold text-rose-600 mt-1">0</h3>
+          </div>
+        </div>
       </div>
 
-      <!-- KPI METRICS -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase">Total Aset KSP</p>
-          <h3 id="admTotalAset" class="text-2xl font-bold text-slate-900 mt-1">Rp 0</h3>
-        </div>
-        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase">Total Simpanan</p>
-          <h3 id="admTotalSimpanan" class="text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
-        </div>
-        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase">Pinjaman Beredar</p>
-          <h3 id="admTotalPinjaman" class="text-2xl font-bold text-amber-600 mt-1">Rp 0</h3>
-        </div>
-        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-          <p class="text-xs font-medium text-slate-500 uppercase">Pending Approval</p>
-          <h3 id="admPendingCount" class="text-2xl font-bold text-rose-600 mt-1">0</h3>
+      <!-- KONTEN TAB 2: PERSETUJUAN PINJAMAN -->
+      <div id="contentTabApproval" class="space-y-6 hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="file-text" class="w-5 h-5 text-indigo-600"></i> Daftar Pengajuan Pinjaman Anggota
+            </h3>
+            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded font-medium">Menunggu Aksi</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
+                <tr>
+                  <th class="p-3">ID Pinjaman</th>
+                  <th class="p-3">NIA</th>
+                  <th class="p-3">Nominal</th>
+                  <th class="p-3">Tenor</th>
+                  <th class="p-3">Tanggal</th>
+                  <th class="p-3 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tablePendingLoans" class="divide-y divide-slate-100">
+                <tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat data...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- TABEL PENGAJUAN PINJAMAN -->
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="p-4 border-b border-slate-100 bg-slate-50">
-          <h3 class="font-bold text-slate-800 flex items-center gap-2">
-            <i data-lucide="file-text" class="w-5 h-5 text-indigo-600"></i> Pengajuan Pinjaman Menunggu Persetujuan
-          </h3>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
-              <tr>
-                <th class="p-3">ID Pinjaman</th>
-                <th class="p-3">NIA</th>
-                <th class="p-3">Nominal</th>
-                <th class="p-3">Tenor</th>
-                <th class="p-3">Tanggal</th>
-                <th class="p-3 text-center">Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="tablePendingLoans" class="divide-y divide-slate-100">
-              <tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat data...</td></tr>
-            </tbody>
-          </table>
+      <!-- KONTEN TAB 3: DATA ANGGOTA -->
+      <div id="contentTabAnggota" class="space-y-6 hidden">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-center py-12">
+          <i data-lucide="users" class="w-12 h-12 text-slate-300 mx-auto mb-3"></i>
+          <h3 class="font-bold text-slate-700">Direktori Anggota Koperasi</h3>
+          <p class="text-xs text-slate-500 mt-1">Fitur manajemen direktori anggota lengkap akan sinkron langsung dengan Google Sheets.</p>
         </div>
       </div>
+
     </div>
 
     <!-- ================================================================= -->
@@ -217,7 +244,7 @@
 
     let currentAnggota = null;
     
-    // URL Web App Google Apps Script Anda (Ganti dengan URL /exec milik Anda)
+    // URL Web App Google Apps Script Anda
     const apiUrl = "https://script.google.com/macros/s/AKfycbzKbjVFd125WCxnlRB_puk4JW0GgizhAoer7YNUpcxXVVK2RskYJYjcEXbTviT1FxM6/exec";
 
     function formatRupiah(num) {
@@ -232,6 +259,28 @@
       } else {
         document.getElementById('viewPengurus').classList.add('hidden');
         document.getElementById('viewAnggota').classList.remove('hidden');
+      }
+    }
+
+    // Fungsi Navigasi Tab Admin / Pengurus
+    function switchTabAdmin(tabName) {
+      document.getElementById('contentTabKpi').classList.add('hidden');
+      document.getElementById('contentTabApproval').classList.add('hidden');
+      document.getElementById('contentTabAnggota').classList.add('hidden');
+
+      document.getElementById('btnTabKpi').className = "px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200";
+      document.getElementById('btnTabApproval').className = "px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200";
+      document.getElementById('btnTabAnggota').className = "px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition flex items-center gap-2 border border-slate-200";
+
+      if (tabName === 'tabKpi') {
+        document.getElementById('contentTabKpi').classList.remove('hidden');
+        document.getElementById('btnTabKpi').className = "px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2";
+      } else if (tabName === 'tabApproval') {
+        document.getElementById('contentTabApproval').classList.remove('hidden');
+        document.getElementById('btnTabApproval').className = "px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2";
+      } else if (tabName === 'tabAnggota') {
+        document.getElementById('contentTabAnggota').classList.remove('hidden');
+        document.getElementById('btnTabAnggota').className = "px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2";
       }
     }
 
