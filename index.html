@@ -102,7 +102,7 @@
           <button onclick="exportDataCSV('pengurus')" class="bg-emerald-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5">
             <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Rekap CSV
           </button>
-          <label class="bg-purple-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-purple-700 transition flex items-center gap-1.5 cursor-pointer" title="Entri serentak Bank Jatim (1x s.d lunas) & Barang Tempo 1 Bln">
+          <label class="bg-purple-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-purple-700 transition flex items-center gap-1.5 cursor-pointer" title="Entri serentak Bank Jatim & Barang Tempo 1 Bln">
             <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i> Import Bank Jatim / Barang Tempo
             <input type="file" accept=".csv" class="hidden" onchange="importDataSerentakPengurus(event)">
           </label>
@@ -336,22 +336,19 @@
           </div>
         </div>
 
-        <!-- INFORMASI STATUS KETERBAYARAN TERVERIFIKASI PENGURUS -->
-        <div id="boxStatusPembayaranGaji" class="p-4 rounded-2xl border text-xs space-y-1.5 shadow-sm transition-all">
-          <!-- Diisi secara dinamis via updateStatusVerifikasiBayar() -->
+        <!-- INFORMASI STATUS PEMBAYARAN POTONG GAJI DISESUAIKAN -->
+        <div id="boxStatusPembayaranGaji" class="p-4 rounded-2xl border text-xs space-y-2 shadow-xs transition-all">
+          <!-- Diisi secara dinamis oleh updateStatusVerifikasiBayar() -->
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <div class="flex justify-between items-center">
-            <div>
-              <p class="text-xs font-semibold text-slate-800">Layanan Pengajuan Pinjaman Mandiri</p>
-              <p class="text-[11px] text-slate-500">Anggota dapat mengajukan <b>Pinjaman Uang</b> & <b>Pinjaman Barang</b>. *(Bank Jatim & Tempo 1 Bulan dientri serentak oleh Pengurus)*.</p>
-            </div>
-            <div class="space-x-1">
-              <button onclick="bukaModalForm('Pengajuan')" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-indigo-700 transition">Pinjam Baru</button>
-              <button onclick="bukaModalForm('Topup')" class="text-xs bg-amber-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-amber-700 transition">Top-Up Pinjaman</button>
-            </div>
-          </div>
+        <!-- TAMPILAN LAYANAN PENGAJUAN (TANPA TEKS DESKRIPSI) -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex justify-end items-center gap-2">
+          <button onclick="bukaModalForm('Pengajuan')" class="text-xs bg-indigo-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">
+            Pinjam Baru
+          </button>
+          <button onclick="bukaModalForm('Topup')" class="text-xs bg-amber-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-amber-700 transition">
+            Top-Up Pinjaman
+          </button>
         </div>
 
         <!-- TABEL RINCIAN PINJAMAN AKTIF BERDASARKAN KATEGORI -->
@@ -419,7 +416,7 @@
 
   </div>
 
-  <!-- MODAL PENGAJUAN PINJAMAN / TOP-UP MANDIRI ANGGOTA (HANYA PINJAMAN UANG & BARANG) -->
+  <!-- MODAL PENGAJUAN PINJAMAN / TOP-UP -->
   <div id="modalLayanan" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-6 space-y-4">
       <div class="flex justify-between items-center border-b pb-3">
@@ -436,7 +433,6 @@
             <option value="Pinjaman Uang">Pinjaman Uang</option>
             <option value="Pinjaman Barang">Pinjaman Barang</option>
           </select>
-          <p class="text-[10px] text-slate-400 mt-1">*Catatan: Pinjaman Bank Jatim & Pembelian Barang Tempo 1 Bulan diinput oleh Pengurus.</p>
         </div>
 
         <div>
@@ -520,8 +516,7 @@
       sisaPinjamanBarang: 1200000
     };
     
-    // Data Simulasi Status Verifikasi Potongan Gaji dari Pengurus
-    // Memetakan bulan-tahun ke status Keterbayaran Perusahaan
+    // Data Pemetaan Verifikasi Potongan Gaji dari Pengurus
     const statusVerifikasiPembayaran = {
       "Januari 2026": true,
       "Februari 2026": true,
@@ -531,9 +526,9 @@
       "Juni 2026": true,
       "Juli 2026": true,
       "Agustus 2026": true,
-      "September 2026": false, // Belum terbayar / terverifikasi
-      "Oktober 2026": false,   // Belum terbayar / terverifikasi
-      "November 2026": false,  // Belum terbayar / terverifikasi
+      "September 2026": false, // Belum terbayar
+      "Oktober 2026": false,   // Belum terbayar
+      "November 2026": false,  // Belum terbayar
       "Desember 2026": false
     };
 
@@ -629,44 +624,43 @@
       const totalPotongan = simWajib + angsUang + angsBarang + angsTempo + angsJatim;
       document.getElementById('summaryTotalPotongan').innerText = formatRupiah(totalPotongan);
 
-      // Memperbarui Status Verifikasi Keterbayaran Potongan Gaji
+      // Memperbarui Tampilan Status Keterbayaran
       updateStatusVerifikasiBayar(bulanSelected, tahunSelected);
     }
 
-    // Fungsi menampilkan status Keterbayaran Realtime dari Verifikasi Pengurus
+    // Fungsi menampilkan status keterbayaran sesuai permintaan terbaru
     function updateStatusVerifikasiBayar(bulan, tahun) {
       const boxStatus = document.getElementById('boxStatusPembayaranGaji');
       const keyBulanTahun = `${bulan} ${tahun}`;
       
-      // Ambil daftar seluruh bulan s.d. bulan berjalan (Oktober 2026) yang belum terbayar
-      const daftarBulanLain = ["September 2026", "Oktober 2026"];
       const isCurrentMonthLunas = statusVerifikasiPembayaran[keyBulanTahun] === true;
+      const daftarBulanBelumBayar = ["September 2026", "Oktober 2026"];
 
       if (isCurrentMonthLunas) {
-        boxStatus.className = "p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs space-y-1 text-emerald-900 shadow-xs";
+        // Tampilan Kotak Hijau jika LUNAS
+        boxStatus.className = "p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs space-y-3 text-emerald-950 shadow-xs";
         boxStatus.innerHTML = `
-          <div class="flex items-center gap-2 font-bold text-emerald-800 text-sm">
+          <div class="flex items-center gap-2 font-bold text-emerald-900 text-sm">
             <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
-            <span>STATUS PEMBAYARAN GAJI BULAN ${bulan.toUpperCase()} ${tahun}: LUNAS</span>
+            <span>Status Pembayaran Potong Gaji</span>
           </div>
-          <p class="text-slate-600 leading-relaxed">
-            Potongan gaji Anda untuk periode <b>${bulan} ${tahun}</b> telah terverifikasi LUNAS oleh pengurus berdasarkan rekonsiliasi transfer pemotongan gaji dari perusahaan.
-          </p>
+          <div class="bg-white p-3 rounded-xl border border-emerald-200 flex justify-between items-center">
+            <span class="text-slate-600 font-medium">Keterangan Verifikasi Tagihan:</span>
+            <span class="font-bold text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full uppercase tracking-wider">LUNAS</span>
+          </div>
         `;
       } else {
-        boxStatus.className = "p-4 bg-rose-50 rounded-2xl border border-rose-200 text-xs space-y-1.5 text-rose-950 shadow-xs";
+        // Tampilan Kotak Merah jika BELUM TERBAYAR (dengan Rincian Bulan)
+        boxStatus.className = "p-4 bg-rose-50 rounded-2xl border border-rose-200 text-xs space-y-3 text-rose-950 shadow-xs";
         boxStatus.innerHTML = `
-          <div class="flex items-center gap-2 font-bold text-rose-800 text-sm">
+          <div class="flex items-center gap-2 font-bold text-rose-900 text-sm">
             <i data-lucide="alert-circle" class="w-5 h-5 text-rose-600"></i>
-            <span>STATUS PEMBAYARAN GAJI BULAN ${bulan.toUpperCase()} ${tahun}: BELUM TERBAYAR</span>
+            <span>Status Pembayaran Potong Gaji</span>
           </div>
-          <p class="text-rose-900 leading-relaxed">
-            Tagihan pemotongan gaji untuk periode <b>${bulan} ${tahun}</b> belum terverifikasi terbayar oleh pengurus.
-          </p>
-          <div class="bg-white p-2.5 rounded-xl border border-rose-200 text-[11px] space-y-1">
+          <div class="bg-white p-3 rounded-xl border border-rose-200 space-y-1.5">
             <p class="font-bold text-rose-700">Rincian Bulan Tagihan Belum Terbayar s.d. Bulan Berjalan:</p>
             <ul class="list-disc list-inside font-semibold text-slate-700 space-y-0.5">
-              ${daftarBulanLain.map(b => `<li class="text-rose-600">${b}</li>`).join('')}
+              ${daftarBulanBelumBayar.map(b => `<li class="text-rose-600">${b}</li>`).join('')}
             </ul>
           </div>
         `;
