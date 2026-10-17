@@ -78,7 +78,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- 1. DASHBOARD PENGURUS (DENGAN TAMBAHAN MENU TAB) -->
+    <!-- 1. DASHBOARD PENGURUS -->
     <!-- ================================================================= -->
     <div id="viewPengurus" class="space-y-6 hidden">
       
@@ -188,7 +188,7 @@
               <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
                 <tr>
                   <th class="p-3">ID Pinjaman</th>
-                  <th class="p-3">NIA</th>
+                  <th class="p-3">No. Register</th>
                   <th class="p-3">Nominal</th>
                   <th class="p-3">Tenor</th>
                   <th class="p-3">Tanggal</th>
@@ -203,7 +203,7 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 3: DATA SIMPANAN ANGGOTA (DETAIL REALTIME) -->
+      <!-- KONTEN TAB 3: DATA SIMPANAN ANGGOTA -->
       <div id="contentTabSimpanan" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
@@ -216,7 +216,7 @@
             <table class="w-full text-left text-sm">
               <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
                 <tr>
-                  <th class="p-3">NIA</th>
+                  <th class="p-3">No. Register</th>
                   <th class="p-3">Nama Anggota</th>
                   <th class="p-3">Simpanan Pokok</th>
                   <th class="p-3">Simpanan Wajib</th>
@@ -232,7 +232,7 @@
         </div>
       </div>
 
-      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA (DETAIL REALTIME) -->
+      <!-- KONTEN TAB 4: DATA PINJAMAN ANGGOTA -->
       <div id="contentTabPinjaman" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
@@ -245,7 +245,7 @@
             <table class="w-full text-left text-sm">
               <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
                 <tr>
-                  <th class="p-3">NIA</th>
+                  <th class="p-3">No. Register</th>
                   <th class="p-3">Nama Anggota</th>
                   <th class="p-3">Jumlah Pinjaman</th>
                   <th class="p-3">Bunga (1%)</th>
@@ -280,7 +280,7 @@
             </div>
             <div>
               <h3 id="memNama" class="text-base font-bold text-slate-900 leading-tight">Halo, Budi Santoso</h3>
-              <p id="memNia" class="text-xs text-slate-500">Nomor anggota: KSP-1001</p>
+              <p id="memNia" class="text-xs text-slate-500">No. Register: KSP-1001</p>
             </div>
           </div>
           <div class="flex items-center gap-2">
@@ -545,7 +545,6 @@
       document.getElementById('modalLayanan').classList.add('hidden');
     }
 
-    // Fungsi Navigasi Tab Admin / Pengurus
     function switchTabAdmin(tabName) {
       document.getElementById('contentTabKpi').classList.add('hidden');
       document.getElementById('contentTabApproval').classList.add('hidden');
@@ -606,7 +605,6 @@
       }
     }
 
-    // Fungsi Ambil Data Realtime Simpanan Anggota untuk Pengurus
     async function loadDataSimpananPengurus() {
       const tableBody = document.getElementById('tableSimpananAnggota');
       tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat data realtime...</td></tr>`;
@@ -635,7 +633,6 @@
       }
     }
 
-    // Fungsi Ambil Data Realtime Pinjaman Anggota untuk Pengurus
     async function loadDataPinjamanPengurus() {
       const tableBody = document.getElementById('tablePinjamanAnggota');
       tableBody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">Memuat data realtime...</td></tr>`;
