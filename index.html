@@ -27,19 +27,6 @@
 
   <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
 
-    <!-- CONFIGURATION CARD (API URL AUTO-DETECTED) -->
-    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-3 items-center justify-between">
-      <div class="flex items-center gap-2 text-sm text-slate-600">
-        <i data-lucide="link" class="w-4 h-4 text-indigo-600"></i>
-        <span><strong>Web App API URL:</strong></span>
-      </div>
-      <input type="text" id="apiUrl" value="<?= scriptUrl ?>" readonly
-             class="flex-1 w-full text-sm p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-500 outline-none">
-      <button onclick="initApp()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition">
-        <i data-lucide="refresh-cw" class="w-4 h-4"></i> Muat Data
-      </button>
-    </div>
-
     <!-- ================================================================= -->
     <!-- 1. DASHBOARD PENGURUS (EXECUTIVE & FINANCIAL REPORT) -->
     <!-- ================================================================= -->
@@ -48,7 +35,12 @@
         <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
           <i data-lucide="layout-dashboard" class="text-indigo-600"></i> Dashboard Pengurus & Keuangan
         </h2>
-        <span class="text-xs bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-semibold">Mode Pengawasan</span>
+        <div class="flex items-center gap-3">
+          <span class="text-xs bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-semibold">Mode Pengawasan</span>
+          <button onclick="loadDashboardData()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5 transition">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Segarkan Data
+          </button>
+        </div>
       </div>
 
       <!-- KPI METRICS -->
@@ -91,7 +83,7 @@
               </tr>
             </thead>
             <tbody id="tablePendingLoans" class="divide-y divide-slate-100">
-              <tr><td colspan="6" class="p-4 text-center text-slate-400">Tekan 'Muat Data' untuk melihat data.</td></tr>
+              <tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat data...</td></tr>
             </tbody>
           </table>
         </div>
@@ -224,6 +216,9 @@
     lucide.createIcons();
 
     let currentAnggota = null;
+    
+    // URL Web App Google Apps Script Anda (Ganti dengan URL /exec milik Anda)
+    const apiUrl = "https://script.google.com/macros/s/AKfycbzKbjVFd125WCxnlRB_puk4JW0GgizhAoer7YNUpcxXVVK2RskYJYjcEXbTviT1FxM6/exec";
 
     function formatRupiah(num) {
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num || 0);
@@ -240,23 +235,11 @@
       }
     }
 
-    function getApiUrl() {
-      return document.getElementById('apiUrl').value.trim();
-    }
-
-    function initApp() {
-      loadDashboardData();
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
-      initApp();
+      loadDashboardData();
     });
 
-    // DASHBOARD PENGURUS
     async function loadDashboardData() {
-      const apiUrl = getApiUrl();
-      if (!apiUrl) return;
-
       try {
         const resSum = await fetch(`${apiUrl}?action=admin_dashboard`);
         const dataSum = await resSum.json();
@@ -299,9 +282,6 @@
     }
 
     async function approveLoan(idPinjaman, status) {
-      const apiUrl = getApiUrl();
-      if (!apiUrl) return;
-
       try {
         const res = await fetch(apiUrl, {
           method: 'POST',
@@ -315,13 +295,11 @@
       }
     }
 
-    // LOGIN & PORTAL ANGGOTA
     async function submitLoginAnggota() {
-      const apiUrl = getApiUrl();
       const nia = document.getElementById('loginNia').value.trim();
       const pin = document.getElementById('loginPin').value.trim();
 
-      if (!apiUrl || !nia || !pin) {
+      if (!nia || !pin) {
         alert("Lengkapi NIA dan PIN!");
         return;
       }
@@ -357,11 +335,10 @@
     }
 
     async function submitPengajuanPinjaman() {
-      const apiUrl = getApiUrl();
       const jumlah = document.getElementById('formPinjamNominal').value;
       const tenor = document.getElementById('formPinjamTenor').value;
 
-      if (!apiUrl || !jumlah) return alert("Masukkan nominal!");
+      if (!jumlah) return alert("Masukkan nominal!");
 
       try {
         const res = await fetch(apiUrl, {
@@ -377,11 +354,10 @@
     }
 
     async function submitTransaksi() {
-      const apiUrl = getApiUrl();
       const jenis = document.getElementById('formTrxJenis').value;
       const nominal = document.getElementById('formTrxNominal').value;
 
-      if (!apiUrl || !nominal) return alert("Masukkan nominal!");
+      if (!nominal) return alert("Masukkan nominal!");
 
       try {
         const res = await fetch(apiUrl, {
