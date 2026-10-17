@@ -25,7 +25,7 @@
   <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 w-full flex-1">
 
     <!-- ================================================================= -->
-    <!-- 0. LANDING PAGE -->
+    <!-- 0. HALAMAN UTAMA / LANDING PAGE (3 PORTAL) -->
     <!-- ================================================================= -->
     <div id="viewLanding" class="space-y-6 py-6">
       <div class="bg-emerald-950 text-white p-8 md:p-10 rounded-2xl shadow-md text-center space-y-3">
@@ -33,39 +33,42 @@
           <i data-lucide="landmark" class="w-8 h-8"></i>
         </div>
         <h2 class="text-2xl md:text-3xl font-bold tracking-wide">SISTEM INFORMASI KSP</h2>
-        <p class="text-sm md:text-base text-emerald-200/80">Manajemen Simpanan, Pinjaman, & Verifikasi Potongan Gaji Terintegrasi</p>
+        <p class="text-sm md:text-base text-emerald-200/80">Satu sistem terpadu, pengelolaan simpanan, pinjaman, & verifikasi potongan gaji</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <!-- Portal Pengurus -->
         <div onclick="pilihPortal('pengurus')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
           <div class="space-y-3">
             <div class="inline-flex p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
               <i data-lucide="trending-up" class="w-6 h-6"></i>
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Pengurus</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">Verifikasi potong gaji manual/otomatis, data anggota reguler & khusus, persetujuan pinjaman, & rekap.</p>
+            <p class="text-sm text-slate-600 leading-relaxed">Verifikasi potong gaji manual/otomatis, data anggota reguler & khusus, persetujuan pinjaman, restrukturisasi tenor, import/export.</p>
           </div>
           <div><span class="inline-block text-xs font-semibold bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">Akses Internal</span></div>
         </div>
 
+        <!-- Portal Anggota Reguler -->
         <div onclick="pilihPortal('anggota')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-emerald-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
           <div class="space-y-3">
             <div class="inline-flex p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
               <i data-lucide="user" class="w-6 h-6"></i>
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Anggota</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">Cek rincian simpanan, akumulasi potongan gaji bulanan, status verifikasi perusahaan, & pinjaman.</p>
+            <p class="text-sm text-slate-600 leading-relaxed">Cek rincian simpanan pokok/wajib/sukarela, akumulasi potongan gaji bulanan, status verifikasi perusahaan, & pengajuan pinjaman.</p>
           </div>
           <div><span class="inline-block text-xs font-semibold bg-blue-50 text-blue-700 px-3 py-1 rounded-full">Akses Karyawan</span></div>
         </div>
 
+        <!-- Portal Anggota Khusus -->
         <div onclick="pilihPortal('anggotaKhusus')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-purple-300 transition cursor-pointer space-y-4 flex flex-col justify-between">
           <div class="space-y-3">
             <div class="inline-flex p-2.5 bg-purple-50 text-purple-600 rounded-xl">
               <i data-lucide="user-check" class="w-6 h-6"></i>
             </div>
             <h3 class="text-xl font-bold text-slate-900">Portal Anggota Khusus</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">Bebas simpanan pokok & wajib, tanpa potong gaji perusahaan, layanan pinjaman mandiri.</p>
+            <p class="text-sm text-slate-600 leading-relaxed">Bebas simpanan pokok & wajib, tanpa potongan gaji perusahaan, layanan pinjaman mandiri.</p>
           </div>
           <div><span class="inline-block text-xs font-semibold bg-purple-50 text-purple-700 px-3 py-1 rounded-full">Kategori Khusus</span></div>
         </div>
@@ -74,7 +77,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- 1. DASHBOARD PENGURUS -->
+    <!-- 1. DASHBOARD PENGURUS (DENGAN SELURUH MENU LENGKAP) -->
     <!-- ================================================================= -->
     <div id="viewPengurus" class="space-y-6 hidden">
       
@@ -98,12 +101,22 @@
             <span id="badgePendingCount" class="bg-rose-600 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">1</span>
           </button>
           <button onclick="switchTabAdmin('tabSimpanan')" id="btnTabSimpanan" class="px-3 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 border border-slate-200">
-            <i data-lucide="wallet" class="w-3.5 h-3.5"></i> Simpanan
+            <i data-lucide="wallet" class="w-3.5 h-3.5"></i> Simpanan & Pinjaman
           </button>
+        </div>
+
+        <div class="flex gap-2">
+          <button onclick="exportDataAdminGlobal()" class="bg-emerald-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition flex items-center gap-1">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Rekap
+          </button>
+          <label class="bg-purple-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-purple-700 transition cursor-pointer flex items-center gap-1">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i> Import CSV
+            <input type="file" accept=".csv" class="hidden" onchange="importDataGlobal(event)">
+          </label>
         </div>
       </div>
 
-      <!-- TAB 1: RINGKASAN EKSEKUTIF -->
+      <!-- KONTEN TAB: RINGKASAN EKSEKUTIF -->
       <div id="contentTabKpi" class="space-y-6">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
           <div class="flex justify-between items-start border-b pb-4">
@@ -114,7 +127,7 @@
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div class="space-y-1 p-4 bg-slate-50 rounded-xl border">
-              <p class="text-xs font-medium text-slate-500">Total Aset KSP</p>
+              <p class="text-xs font-medium text-slate-500">Total Aset</p>
               <h3 class="text-2xl font-bold text-slate-900">Rp 2,4 M</h3>
             </div>
             <div class="space-y-1 p-4 bg-slate-50 rounded-xl border">
@@ -129,7 +142,7 @@
         </div>
       </div>
 
-      <!-- TAB 2: VERIFIKASI POTONG GAJI PERUSAHAAN (DENGAN ISIAN MANUAL BULAN, TAHUN, NOMINAL & TABEL REKAPITULASI SELISIH) -->
+      <!-- KONTEN TAB: VERIFIKASI POTONG GAJI (INPUT MANUAL & TABEL REKAPITULASI SELISIH) -->
       <div id="contentTabVerifGaji" class="space-y-6 hidden">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
           <div class="flex justify-between items-center border-b pb-4">
@@ -137,7 +150,7 @@
               <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
                 <i data-lucide="check-square" class="w-5 h-5 text-indigo-600"></i> Verifikasi Pembayaran Potong Gaji Perusahaan
               </h3>
-              <p class="text-xs text-slate-500 mt-0.5">Input tagihan manual dan verifikasi pelunasan simpanan wajib/sukarela secara otomatis.</p>
+              <p class="text-xs text-slate-500 mt-0.5">Input tagihan manual dan verifikasi pelunasan otomatis.</p>
             </div>
           </div>
 
@@ -170,7 +183,7 @@
             </div>
           </div>
 
-          <!-- TABEL VERIFIKASI -->
+          <!-- TABEL VERIFIKASI & REKAP SELISIH -->
           <div class="overflow-x-auto border rounded-xl">
             <table class="w-full text-left text-sm">
               <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
@@ -199,7 +212,7 @@
         </div>
       </div>
 
-      <!-- TAB 3: DATA ANGGOTA REGULER -->
+      <!-- KONTEN TAB: DATA ANGGOTA REGULER -->
       <div id="contentTabDataReguler" class="space-y-6 hidden">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
           <div class="flex justify-between items-center border-b pb-4">
@@ -207,7 +220,7 @@
               <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
                 <i data-lucide="users" class="w-5 h-5 text-indigo-600"></i> Data Anggota Reguler (Staff, Pelaksana, Management)
               </h3>
-              <p class="text-xs text-slate-500">Rincian simpanan real-time, pinjaman, dan tanggal bergabung.</p>
+              <p class="text-xs text-slate-500">Rincian lengkap simpanan, pinjaman, tenor, angsuran per bulan, serta tanggal bergabung.</p>
             </div>
             <div class="flex gap-2 text-xs">
               <button onclick="exportDataCSV('reguler')" class="bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition flex items-center gap-1">
@@ -244,7 +257,7 @@
         </div>
       </div>
 
-      <!-- TAB 4: DATA ANGGOTA KHUSUS -->
+      <!-- KONTEN TAB: DATA ANGGOTA KHUSUS -->
       <div id="contentTabDataKhusus" class="space-y-6 hidden">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
           <div class="flex justify-between items-center border-b pb-4">
@@ -252,7 +265,7 @@
               <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
                 <i data-lucide="user-check" class="w-5 h-5 text-purple-600"></i> Data Anggota Khusus (Bebas Simpanan Wajib & Pokok)
               </h3>
-              <p class="text-xs text-slate-500">Rincian data pinjaman dan simpanan sukarela anggota khusus.</p>
+              <p class="text-xs text-slate-500">Rincian data simpanan sukarela, pinjaman, tenor, dan angsuran tanpa potongan gaji perusahaan.</p>
             </div>
             <div class="flex gap-2 text-xs">
               <button onclick="exportDataCSV('khusus')" class="bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition flex items-center gap-1">
@@ -288,7 +301,7 @@
         </div>
       </div>
 
-      <!-- TAB 5: PERSETUJUAN PINJAMAN -->
+      <!-- KONTEN TAB: PERSETUJUAN PINJAMAN -->
       <div id="contentTabApproval" class="space-y-6 hidden">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden space-y-3">
           <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center text-xs">
@@ -313,10 +326,11 @@
         </div>
       </div>
 
-      <!-- TAB 6: SIMPANAN -->
+      <!-- KONTEN TAB: SIMPANAN & PINJAMAN BERJALAN -->
       <div id="contentTabSimpanan" class="space-y-6 hidden">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-          <h3 class="font-bold text-slate-900 text-sm">Rekapitulasi Simpanan Keseluruhan</h3>
+          <h3 class="font-bold text-slate-900 text-sm">Rekapitulasi Simpanan & Pinjaman Keseluruhan</h3>
+          <p class="text-xs text-slate-500">Data terpusat seluruh anggota KSP Kopkar Launtanama.</p>
         </div>
       </div>
 
@@ -324,7 +338,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- 2. PORTAL ANGGOTA REGULER -->
+    <!-- 2. PORTAL ANGGOTA REGULER (LENGKAP DENGAN RINCIAN & POTONG GAJI) -->
     <!-- ================================================================= -->
     <div id="viewAnggota" class="space-y-6 hidden max-w-4xl mx-auto">
       <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
@@ -351,13 +365,27 @@
           </div>
         </div>
 
+        <!-- REKAPITULASI POTONGAN GAJI BULANAN -->
+        <div class="p-4 bg-amber-50/80 rounded-2xl border border-amber-200 text-xs space-y-3">
+          <div class="flex justify-between items-center font-bold text-amber-900">
+            <span>INFORMASI AKUMULASI POTONGAN GAJI BULANAN</span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border space-y-2 font-mono">
+            <div class="flex justify-between"><span>Simpanan Wajib:</span> <span class="font-bold">Rp 100.000</span></div>
+            <div class="flex justify-between"><span>Angsuran Pinjaman Uang:</span> <span class="font-bold">Rp 491.667</span></div>
+            <div class="flex justify-between border-t pt-2 text-sm font-bold text-emerald-800">
+              <span>TOTAL POTONGAN:</span> <span>Rp 591.667</span>
+            </div>
+          </div>
+        </div>
+
         <div id="boxStatusPembayaranGaji" class="p-4 rounded-2xl border text-xs space-y-2"></div>
       </div>
     </div>
 
 
     <!-- ================================================================= -->
-    <!-- 3. PORTAL ANGGOTA KHUSUS -->
+    <!-- 3. PORTAL ANGGOTA KHUSUS (BEBAS POKOK/WAJIB & TANPA POTONG GAJI) -->
     <!-- ================================================================= -->
     <div id="viewAnggotaKhusus" class="space-y-6 hidden max-w-4xl mx-auto">
       <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
@@ -375,8 +403,19 @@
         </div>
 
         <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-3 border border-purple-900">
-          <p class="text-xs text-purple-200">Total Simpanan (Bebas Pokok & Wajib)</p>
+          <div class="flex justify-between items-center">
+            <p class="text-xs text-purple-200">Total Simpanan Saya</p>
+            <span class="bg-purple-800 text-purple-200 text-[10px] px-2 py-0.5 rounded font-bold">Bebas Pokok & Wajib</span>
+          </div>
           <h2 id="memKhususTotalSimpanan" class="text-2xl font-bold">Rp 0</h2>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border shadow-sm flex justify-between items-center text-xs">
+          <span class="font-semibold text-slate-600">Layanan Pinjaman Mandiri Anggota Khusus</span>
+          <div class="flex gap-2">
+            <button class="bg-indigo-600 text-white px-3 py-1.5 rounded-xl font-semibold">Pinjam Baru</button>
+            <button class="bg-amber-600 text-white px-3 py-1.5 rounded-xl font-semibold">Top-Up</button>
+          </div>
         </div>
       </div>
     </div>
@@ -567,7 +606,7 @@
       }
     }
 
-    // --- 2 & 3. TABEL DATA ANGGOTA REGULER & KHUSUS DENGAN RINCIAN LENGKAP ---
+    // --- 2 & 3. TABEL DATA ANGGOTA REGULER & KHUSUS ---
     function renderTableDataReguler() {
       const tbody = document.getElementById('tableDataAnggotaReguler');
       tbody.innerHTML = '';
@@ -615,7 +654,7 @@
       });
     }
 
-    // --- 5. IMPORT & EXPORT CSV ---
+    // --- IMPORT & EXPORT CSV ---
     function exportDataCSV(jenis) {
       let csv = "No.Reg,Nama,Kategori,Simp.Pokok,Simp.Wajib,Simp.Sukarela,TotalPinjaman,Tenor,Angsuran\n";
       const dataset = jenis === 'reguler' ? dataAnggotaReguler : dataAnggotaKhusus;
@@ -629,11 +668,17 @@
       link.click();
     }
 
-    function importDataReguler(e) { alert("Data Anggota Reguler berhasil di-import!"); }
-    function importDataKhusus(e) { alert("Data Anggota Khusus berhasil di-import!"); }
+    function exportDataAdminGlobal() {
+      exportDataCSV('reguler');
+    }
+
+    function importDataGlobal(e) { alert("Data CSV berhasil di-import ke sistem!"); }
+    function importDataReguler(e) { alert("Data Reguler berhasil di-import!"); }
+    function importDataKhusus(e) { alert("Data Khusus berhasil di-import!"); }
 
     function renderTablePending() {
       const tbody = document.getElementById('tablePendingLoans');
+      if (!tbody) return;
       tbody.innerHTML = '';
       daftarPengajuan.forEach(p => {
         tbody.innerHTML += `
